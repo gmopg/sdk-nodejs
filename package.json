@@ -1,0 +1,22 @@
+{
+  "name": "@motionpicture/gmo-service",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "dependencies": {
+    "@types/request": "0.0.36",
+    "request": "^2.79.0"
+  },
+  "description": "GMO Client Library for Node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {},
+  "keywords": [],
+  "author": "Tetsu Yamazaki <yamazaki@motionpicture.jp>",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=7.0.0",
+    "npm": ">=3.10.0"
+  }
+}
