@@ -1,5 +1,7 @@
 export declare namespace entryTranInterface {
     interface Args {
+        shop_id: string;
+        shop_pass: string;
         order_id: string;
         job_cd: string;
         amount: number;
@@ -16,7 +18,7 @@ export declare namespace execTranInterface {
         access_pass: string;
         order_id: string;
         method?: string;
-        pay_times?: string;
+        pay_times?: number;
         card_no?: string;
         expire?: string;
         security_code?: string;
@@ -44,6 +46,8 @@ export declare namespace execTranInterface {
 }
 export declare namespace alterTranInterface {
     interface Args {
+        shop_id: string;
+        shop_pass: string;
         access_id: string;
         access_pass: string;
         job_cd: string;

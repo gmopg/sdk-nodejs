@@ -25,6 +25,20 @@ export var PAY_TYPE_CVS = "3";
 
 
 
+/** 一括 */
+export var METHOD_LUMP = "1";
+/** 分割 */
+export var METHOD_INSTALLMENT = "2";
+/** ボーナス一括 */
+export var METHOD_BONUS_LUMP = "3";
+/** リボ */
+export var METHOD_REVOLVING = "4";
+/** ボーナス分割 */
+export var METHOD_BONUS_INSTALLMENT = "5";
+
+
+
+
 
 /** 未決済 */
 export var STATUS_CVS_UNPROCESSED = "UNPROCESSED";
@@ -81,6 +95,8 @@ export var JOB_CD_SAUTH = "SAUTH";
  * ショップ情報確認文字列を作成する
  */
 export function createShopPassString(args: {
+    shop_id: string,
+    shop_pass: string,
     order_id: string,
     amount: number,
     date_time: string
@@ -88,6 +104,6 @@ export function createShopPassString(args: {
     // 「ショップ ID + オーダーID + 利用金額＋税送料＋ショップパスワード + 日時情報」を MD5 でハッシュした文字列。
     let crypto = require("crypto");
     let md5hash = crypto.createHash("md5");
-    md5hash.update(`${process.env.GMO_process.env.GMO_SHOP_ID}${args.order_id}${args.amount.toString()}${process.env.GMO_process.env.GMO_SHOP_PASS}${args.date_time}`, "utf8");
+    md5hash.update(`${args.shop_id}${args.order_id}${args.amount.toString()}${args.shop_pass}${args.date_time}`, "utf8");
     return md5hash.digest("hex");
 }

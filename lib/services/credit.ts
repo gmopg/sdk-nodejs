@@ -6,6 +6,8 @@ import querystring = require("querystring");
  */
 export namespace entryTranInterface {
     export interface Args {
+        shop_id: string,
+        shop_pass: string,
         order_id: string,
         job_cd: string,
         amount: number,
@@ -22,8 +24,8 @@ export namespace entryTranInterface {
             request.post({
                 url: `${process.env.GMO_ENDPOINT}/payment/EntryTran.idPass`,
                 form: {
-                    ShopID: process.env.GMO_SHOP_ID,
-                    ShopPass: process.env.GMO_SHOP_PASS,
+                    ShopID: args.shop_id,
+                    ShopPass: args.shop_pass,
                     OrderID: args.order_id,
                     JobCd: args.job_cd,
                     Amount: args.amount,
@@ -54,7 +56,7 @@ export namespace execTranInterface {
         access_pass: string,
         order_id: string,
         method?: string,
-        pay_times?: string,
+        pay_times?: number,
         card_no?: string,
         expire?: string,
         security_code?: string,
@@ -132,6 +134,8 @@ export namespace execTranInterface {
  */
 export namespace alterTranInterface {
     export interface Args {
+        shop_id: string,
+        shop_pass: string,
         access_id: string,
         access_pass: string,
         job_cd: string,
@@ -154,8 +158,8 @@ export namespace alterTranInterface {
             request.post({
                 url: `${process.env.GMO_ENDPOINT}/payment/AlterTran.idPass`,
                 form: {
-                    ShopID: process.env.GMO_SHOP_ID,
-                    ShopPass: process.env.GMO_SHOP_PASS,
+                    ShopID: args.shop_id,
+                    ShopPass: args.shop_pass,
                     AccessID: args.access_id,
                     AccessPass: args.access_pass,
                     JobCd: args.job_cd,
