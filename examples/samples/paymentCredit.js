@@ -1,10 +1,9 @@
-var GMO = require("../../index");
-
+"use strict";
+const GMO = require("../../index");
 GMO.initialize({
     endpoint: "https://pt01.mul-pay.jp",
 });
-
-let orderId = Date.now();
+let orderId = Date.now().toString();
 let amount = 1800;
 GMO.CreditService.entryTranInterface.call({
     shop_id: "tshop00024015",

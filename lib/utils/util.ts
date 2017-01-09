@@ -1,11 +1,11 @@
 /** カード */
-export var PAY_TYPE_CREDIT = "0";
+export const PAY_TYPE_CREDIT = "0";
 /** モバイルSuica */
-export var PAY_TYPE_SUICA = "1";
+export const PAY_TYPE_SUICA = "1";
 /** 楽天Edy */
-export var PAY_TYPE_EDY = "2";
+export const PAY_TYPE_EDY = "2";
 /** コンビニ */
-export var PAY_TYPE_CVS = "3";
+export const PAY_TYPE_CVS = "3";
 // 4：Pay-easy
 // 5：PayPal
 // 6：iD
@@ -26,70 +26,70 @@ export var PAY_TYPE_CVS = "3";
 
 
 /** 一括 */
-export var METHOD_LUMP = "1";
+export const METHOD_LUMP = "1";
 /** 分割 */
-export var METHOD_INSTALLMENT = "2";
+export const METHOD_INSTALLMENT = "2";
 /** ボーナス一括 */
-export var METHOD_BONUS_LUMP = "3";
+export const METHOD_BONUS_LUMP = "3";
 /** リボ */
-export var METHOD_REVOLVING = "4";
+export const METHOD_REVOLVING = "4";
 /** ボーナス分割 */
-export var METHOD_BONUS_INSTALLMENT = "5";
+export const METHOD_BONUS_INSTALLMENT = "5";
 
 
 
 
 
 /** 未決済 */
-export var STATUS_CVS_UNPROCESSED = "UNPROCESSED";
+export const STATUS_CVS_UNPROCESSED = "UNPROCESSED";
 /** 要求成功 */
-export var STATUS_CVS_REQSUCCESS = "REQSUCCESS";
+export const STATUS_CVS_REQSUCCESS = "REQSUCCESS";
 /** 決済完了 */
-export var STATUS_CVS_PAYSUCCESS = "PAYSUCCESS";
+export const STATUS_CVS_PAYSUCCESS = "PAYSUCCESS";
 /** 決済失敗 */
-export var STATUS_CVS_PAYFAIL = "PAYFAIL";
+export const STATUS_CVS_PAYFAIL = "PAYFAIL";
 /** 期限切れ */
-export var STATUS_CVS_EXPIRED = "EXPIRED";
+export const STATUS_CVS_EXPIRED = "EXPIRED";
 /** 支払い停止 */
-export var STATUS_CVS_CANCEL = "CANCEL";
+export const STATUS_CVS_CANCEL = "CANCEL";
 
 /** 未決済 */
-export var STATUS_CREDIT_UNPROCESSED = "UNPROCESSED";
+export const STATUS_CREDIT_UNPROCESSED = "UNPROCESSED";
 /** 未決済(3D 登録済) */
-export var STATUS_CREDIT_AUTHENTICATED = "AUTHENTICATED";
+export const STATUS_CREDIT_AUTHENTICATED = "AUTHENTICATED";
 /** 有効性チェック */
-export var STATUS_CREDIT_CHECK = "CHECK";
+export const STATUS_CREDIT_CHECK = "CHECK";
 /** 即時売上 */
-export var STATUS_CREDIT_CAPTURE = "CAPTURE";
+export const STATUS_CREDIT_CAPTURE = "CAPTURE";
 /** 仮売上 */
-export var STATUS_CREDIT_AUTH = "AUTH";
+export const STATUS_CREDIT_AUTH = "AUTH";
 /** 実売上 */
-export var STATUS_CREDIT_SALES = "SALES";
+export const STATUS_CREDIT_SALES = "SALES";
 /** 取消 */
-export var STATUS_CREDIT_VOID = "VOID";
+export const STATUS_CREDIT_VOID = "VOID";
 /** 返品 */
-export var STATUS_CREDIT_RETURN = "RETURN";
+export const STATUS_CREDIT_RETURN = "RETURN";
 /** 月跨り返品 */
-export var STATUS_CREDIT_RETURNX = "RETURNX";
+export const STATUS_CREDIT_RETURNX = "RETURNX";
 /** 簡易オーソリ */
-export var STATUS_CREDIT_SAUTH = "SAUTH";
+export const STATUS_CREDIT_SAUTH = "SAUTH";
 
 /** 有効性チェック */
-export var JOB_CD_CHECK = "CHECK";
+export const JOB_CD_CHECK = "CHECK";
 /** 即時売上 */
-export var JOB_CD_CAPTURE = "CAPTURE";
+export const JOB_CD_CAPTURE = "CAPTURE";
 /** 仮売上 */
-export var JOB_CD_AUTH = "AUTH";
+export const JOB_CD_AUTH = "AUTH";
 /** 実売上 */
-export var JOB_CD_SALES = "SALES";
+export const JOB_CD_SALES = "SALES";
 /** 取消 */
-export var JOB_CD_VOID = "VOID";
+export const JOB_CD_VOID = "VOID";
 /** 返品 */
-export var JOB_CD_RETURN = "RETURN";
+export const JOB_CD_RETURN = "RETURN";
 /** 月跨り返品 */
-export var JOB_CD_RETURNX = "RETURNX";
+export const JOB_CD_RETURNX = "RETURNX";
 /** 簡易オーソリ */
-export var JOB_CD_SAUTH = "SAUTH";
+export const JOB_CD_SAUTH = "SAUTH";
 
 /**
  * ショップ情報確認文字列を作成する
