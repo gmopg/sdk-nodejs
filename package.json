@@ -1,11 +1,13 @@
 {
   "name": "@motionpicture/gmo-service",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./index.js",
   "types": "./index.d.ts",
   "dependencies": {
     "@types/request": "0.0.36",
-    "request": "^2.79.0"
+    "@types/request-promise-native": "^1.0.2",
+    "request": "^2.79.0",
+    "request-promise-native": "^1.0.3"
   },
   "description": "GMO Client Library for Node.js",
   "scripts": {
