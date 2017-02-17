@@ -1,11 +1,10 @@
-// read http://json.schemastore.org/tsconfig
 {
     "compilerOptions": {
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
         "charset": "utf8",
         "declaration": true,
-        // "declarationDir": "./declarations",
+        "declarationDir": "./types",
         "diagnostics": false,
         "disableSizeLimit": false,
         "emitDecoratorMetadata": true,
@@ -27,11 +26,9 @@
         "noResolve": false,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        // "outDir": "",
-        // "outFile": "./bin/tiff.js",
         "preserveConstEnums": false,
         "pretty": false,
-        "removeComments": true,
+        "removeComments": false,
         "sourceMap": false,
         "strictNullChecks": true,
         "stripInternal": false,
@@ -41,7 +38,8 @@
         "watch": false
     },
     "exclude": [
+        "docs",
         "node_modules",
-        "declarations"
+        "types"
     ]
 }

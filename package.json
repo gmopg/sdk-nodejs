@@ -1,17 +1,31 @@
 {
   "name": "@motionpicture/gmo-service",
   "version": "1.0.3",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./lib/gmo_service.js",
+  "types": "./lib/gmo_service.d.ts",
   "dependencies": {
-    "@types/request": "0.0.36",
-    "@types/request-promise-native": "^1.0.2",
     "request": "^2.79.0",
     "request-promise-native": "^1.0.3"
   },
   "description": "GMO Client Library for Node.js",
+  "devDependencies": {
+    "@types/mocha": "^2.2.39",
+    "@types/request": "0.0.36",
+    "@types/request-promise-native": "^1.0.2",
+    "grunt": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-jsdoc": "^2.1.0",
+    "ink-docstrap": "^1.3.0",
+    "mocha": "^3.2.0",
+    "tslint": "^4.4.2",
+    "tslint-microsoft-contrib": "^4.0.0",
+    "typescript": "^2.1.6"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --no-timeouts --recursive",
+    "tslint": "tslint -c tslint.json lib/**/*.ts",
+    "tslint-fix": "tslint -c tslint.json lib/**/*.ts --fix",
+    "jsdoc": "grunt jsdoc"
   },
   "repository": {},
   "keywords": [],

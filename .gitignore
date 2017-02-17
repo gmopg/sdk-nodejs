@@ -3,3 +3,4 @@ examples/**/*.d.ts
 
 !.gitignore
 !.gitkeep
+docs/
