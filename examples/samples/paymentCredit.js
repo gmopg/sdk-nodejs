@@ -1,19 +1,18 @@
 "use strict";
-const GMO = require("../../lib/gmo_service");
+const GMO = require("../../lib/gmo-service");
 /**
  * creditサンプル
  */
-process.env.GMO_ENDPOINT = 'https://pt01.mul-pay.jp';
 const orderId = Date.now().toString();
 const amount = 1800;
-GMO.CreditService.entryTranInterface({
-    shopId: 'tshop00024015',
-    shopPass: 'hf3wsuyy',
+GMO.CreditService.entryTran({
+    shopId: 'your shopId',
+    shopPass: 'sour shopPass',
     orderId: orderId,
     jobCd: GMO.Util.JOB_CD_AUTH,
     amount: amount
 }).then((entryTranResult) => {
-    GMO.CreditService.execTranInterface({
+    GMO.CreditService.execTran({
         accessId: entryTranResult.accessId,
         accessPass: entryTranResult.accessPass,
         orderId: orderId,
@@ -24,9 +23,9 @@ GMO.CreditService.entryTranInterface({
     }).then((execTranResult) => {
         // tslint:disable-next-line:no-console
         console.log(execTranResult);
-        GMO.CreditService.alterTranInterface({
-            shopId: 'tshop00024015',
-            shopPass: 'hf3wsuyy',
+        GMO.CreditService.alterTran({
+            shopId: 'your shopId',
+            shopPass: 'sour shopPass',
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
             jobCd: GMO.Util.JOB_CD_SALES,

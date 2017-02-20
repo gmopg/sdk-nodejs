@@ -1,21 +1,20 @@
-import * as GMO from '../../lib/gmo_service';
+import * as GMO from '../../lib/gmo-service';
 
 /**
  * creditサンプル
  */
-process.env.GMO_ENDPOINT = 'https://pt01.mul-pay.jp';
 
 const orderId = Date.now().toString();
 const amount = 1800;
-GMO.CreditService.entryTranInterface({
-    shopId: 'tshop00024015',
-    shopPass: 'hf3wsuyy',
+GMO.CreditService.entryTran({
+    shopId: 'your shopId',
+    shopPass: 'sour shopPass',
     orderId: orderId,
     jobCd: GMO.Util.JOB_CD_AUTH,
     amount: amount
 }).then(
-    (entryTranResult: GMO.CreditService.EntryTranInterfaceResult) => {
-        GMO.CreditService.execTranInterface({
+    (entryTranResult) => {
+        GMO.CreditService.execTran({
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
             orderId: orderId,
@@ -24,32 +23,32 @@ GMO.CreditService.entryTranInterface({
             expire: '2012',
             securityCode: '123'
         }).then(
-            (execTranResult: GMO.CreditService.ExecTranInterfaceResult) => {
+            (execTranResult) => {
                 // tslint:disable-next-line:no-console
                 console.log(execTranResult);
-                GMO.CreditService.alterTranInterface({
-                    shopId: 'tshop00024015',
-                    shopPass: 'hf3wsuyy',
+                GMO.CreditService.alterTran({
+                    shopId: 'your shopId',
+                    shopPass: 'sour shopPass',
                     accessId: entryTranResult.accessId,
                     accessPass: entryTranResult.accessPass,
                     jobCd: GMO.Util.JOB_CD_SALES,
                     amount: amount
                 }).then(
-                    (result: GMO.CreditService.AlterTranInterfaceResult) => {
+                    (result) => {
                         // tslint:disable-next-line:no-console
                         console.log(result);
                     },
                     (err: any) => {
                         console.error(err);
                     }
-                );
+                    );
             },
             (err: any) => {
                 console.error(err);
             }
-        );
+            );
     },
     (err: any) => {
         console.error(err);
     }
-);
+    );

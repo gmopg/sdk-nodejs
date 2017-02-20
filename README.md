@@ -31,9 +31,18 @@ set GMO_ENDPOINT=*****
 
 コードサンプルは./examplesにあります。
 
+## Debug
+
+DEBUG環境変数をセットすることでリクエストのIN,OUTをデバッグできます。
+
+```shell
+set DEBUG=gmo-service:*
+```
+
+
 # Tests
 
-単体テストは以下で実行できます。
+単体テストは以下で実行。
 
 ```shell
 npm test

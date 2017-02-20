@@ -1,6 +1,7 @@
-node_modules/
-examples/**/*.d.ts
+*.log
+node_modules
+docs/
+.vscode/
 
 !.gitignore
 !.gitkeep
-docs/

@@ -1,17 +1,20 @@
 /**
  * GMO　クレジット
- * @namespace Credit
+ * @namespace services/credit
  */
 
+import * as createDebug from 'debug';
 import * as querystring from 'querystring';
 import * as request from 'request-promise-native';
 
+const debug = createDebug('gmo-service:credit');
+
 /**
  * 取引登録in
- * @memberOf Credit
- * @interface EntryTranInterfaceArgs
+ * @memberOf services/credit
+ * @interface EntryTranArgs
  */
-export interface EntryTranInterfaceArgs {
+export interface EntryTranArgs {
     shopId: string;
     shopPass: string;
     orderId: string;
@@ -20,28 +23,27 @@ export interface EntryTranInterfaceArgs {
 }
 /**
  * 取引登録out
- * @memberOf Credit
- * @interface EntryTranInterfaceResult
+ * @memberOf services/credit
+ * @interface EntryTranResult
  */
-export interface EntryTranInterfaceResult {
+export interface EntryTranResult {
     accessId: string;
     accessPass: string;
 }
 /**
  * 取引登録
- * @memberOf Credit
- * @function entryTranInterface
- * @param {EntryTranInterfaceArgs} args 取引登録in
+ * @memberOf services/credit
+ * @function entryTran
+ * @param {EntryTranArgs} args 取引登録in
  * @param {string} args.shopId
  * @param {string} args.shopPass
  * @param {string} args.orderId
  * @param {string} args.jobCd
  * @param {string} args.amount
- * @returns {Promise<EntryTranInterfaceResult>} 取引登録out
+ * @returns {Promise<EntryTranResult>} 取引登録out
  */
-export async function entryTranInterface(args: EntryTranInterfaceArgs): Promise<EntryTranInterfaceResult> {
-    // tslint:disable-next-line:no-console
-    console.log('requesting...', args);
+export async function entryTran(args: EntryTranArgs): Promise<EntryTranResult> {
+    debug('requesting...', args);
     const body = await request.post({
         url: `${process.env.GMO_ENDPOINT}/payment/EntryTran.idPass`,
         form: {
@@ -52,11 +54,12 @@ export async function entryTranInterface(args: EntryTranInterfaceArgs): Promise<
             Amount: args.amount
         }
     });
-    // tslint:disable-next-line:no-console
-    console.log('request processed.', body);
+    debug('request processed.', body);
 
     const result = querystring.parse(body);
-    if (result.ErrCode) throw new Error(body);
+    if (result.ErrCode) {
+        throw new Error(body);
+    }
 
     return {
         accessId: result.AccessID,
@@ -66,10 +69,10 @@ export async function entryTranInterface(args: EntryTranInterfaceArgs): Promise<
 
 /**
  * 決済実行in
- * @memberOf Credit
+ * @memberOf services/credit
  * @interface
  */
-export interface ExecTranInterfaceArgs {
+export interface ExecTranArgs {
     accessId: string;
     accessPass: string;
     orderId: string;
@@ -87,10 +90,10 @@ export interface ExecTranInterfaceArgs {
 
 /**
  * 決済実行out
- * @memberOf Credit
+ * @memberOf services/credit
  * @interface
  */
-export interface ExecTranInterfaceResult {
+export interface ExecTranResult {
     acs: string;
     orderId: string;
     forward: string;
@@ -107,9 +110,9 @@ export interface ExecTranInterfaceResult {
 
 /**
  * 決済実行
- * @memberOf Credit
- * @function execTranInterface
- * @param {ExecTranInterfaceArgs} args 決済実行in
+ * @memberOf services/credit
+ * @function execTran
+ * @param {ExecTranArgs} args 決済実行in
  * @param {string} args.accessId
  * @param {string} args.accessPass
  * @param {string} args.orderId
@@ -122,11 +125,10 @@ export interface ExecTranInterfaceResult {
  * @param {string} args.clientField1
  * @param {string} args.clientField2
  * @param {string} args.clientField3
- * @returns {Promise<ExecTranInterfaceResult>} 決済実行out
+ * @returns {Promise<ExecTranResult>} 決済実行out
  */
-export async function execTranInterface(args: ExecTranInterfaceArgs): Promise<ExecTranInterfaceResult> {
-    // tslint:disable-next-line:no-console
-    console.log('requesting...', args);
+export async function execTran(args: ExecTranArgs): Promise<ExecTranResult> {
+    debug('requesting...', args);
     const body = await request.post({
         url: `${process.env.GMO_ENDPOINT}/payment/ExecTran.idPass`,
         form: {
@@ -145,11 +147,12 @@ export async function execTranInterface(args: ExecTranInterfaceArgs): Promise<Ex
             ClientField3: args.clientField3
         }
     });
-    // tslint:disable-next-line:no-console
-    console.log('request processed.', body);
+    debug('request processed.', body);
 
     const result = querystring.parse(body);
-    if (result.ErrCode) throw new Error(body);
+    if (result.ErrCode) {
+        throw new Error(body);
+    }
 
     return {
         acs: result.ACS,
@@ -169,10 +172,10 @@ export async function execTranInterface(args: ExecTranInterfaceArgs): Promise<Ex
 
 /**
  * 決済変更in
- * @memberOf Credit
+ * @memberOf services/credit
  * @interface
  */
-export interface AlterTranInterfaceArgs {
+export interface AlterTranArgs {
     shopId: string;
     shopPass: string;
     accessId: string;
@@ -183,10 +186,10 @@ export interface AlterTranInterfaceArgs {
 }
 /**
  * 決済変更out
- * @memberOf Credit
+ * @memberOf services/credit
  * @interface
  */
-export interface AlterTranInterfaceResult {
+export interface AlterTranResult {
     accessId: string;
     accessPass: string;
     forward: string;
@@ -197,9 +200,9 @@ export interface AlterTranInterfaceResult {
 
 /**
  * 決済変更
- * @memberOf Credit
- * @function alterTranInterface
- * @param {AlterTranInterfaceArgs} args 決済変更in
+ * @memberOf services/credit
+ * @function alterTran
+ * @param {AlterTranArgs} args 決済変更in
  * @param {string} args.shopId
  * @param {string} args.shopPass
  * @param {string} args.accessId
@@ -207,11 +210,10 @@ export interface AlterTranInterfaceResult {
  * @param {string} args.jobCd
  * @param {number} args.amount
  * @param {string} args.method
- * @returns {Promise<AlterTranInterfaceResult>} 決済変更out
+ * @returns {Promise<AlterTranResult>} 決済変更out
  */
-export async function alterTranInterface(args: AlterTranInterfaceArgs): Promise<AlterTranInterfaceResult> {
-    // tslint:disable-next-line:no-console
-    console.log('requesting...', args);
+export async function alterTran(args: AlterTranArgs): Promise<AlterTranResult> {
+    debug('requesting...', args);
     const body = await request.post({
         url: `${process.env.GMO_ENDPOINT}/payment/AlterTran.idPass`,
         form: {
@@ -224,11 +226,12 @@ export async function alterTranInterface(args: AlterTranInterfaceArgs): Promise<
             Method: args.method
         }
     });
-    // tslint:disable-next-line:no-console
-    console.log('request processed.', body);
+    debug('request processed.', body);
 
     const result = querystring.parse(body);
-    if (result.ErrCode) throw new Error(body);
+    if (result.ErrCode) {
+        throw new Error(body);
+    }
 
     return {
         accessId: result.AccessID,

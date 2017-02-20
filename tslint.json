@@ -12,8 +12,7 @@
       true
     ],
     "await-promise": false,
-    "class-name": true,
-    "curly": false,
+    "curly": true,
     "export-name": false,
     "import-name": false,
     "interface-name": [
@@ -37,7 +36,7 @@
     "no-unnecessary-initializer": true,
     "no-unnecessary-qualifier": false,
     "object-literal-shorthand": false,
-    "prefer-function-over-method": false,
+    "prefer-function-over-method": true,
     "prefer-method-signature": true,
     "restrict-plus-operands": false,
     "strict-type-predicates": false

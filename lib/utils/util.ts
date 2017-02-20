@@ -1,28 +1,28 @@
 /**
  * GMO　ユーティリティー
- * @namespace Util
+ * @namespace utils/util
  */
 
 import * as crypto from 'crypto';
 
 /**
  * カード
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const PAY_TYPE_CREDIT = '0';
 /**
  * モバイルSuica
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const PAY_TYPE_SUICA = '1';
 /**
  * 楽天Edy
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const PAY_TYPE_EDY = '2';
 /**
  * コンビニ
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const PAY_TYPE_CVS = '3';
 // 4：Pay-easy
@@ -44,156 +44,156 @@ export const PAY_TYPE_CVS = '3';
 
 /**
  * 一括
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const METHOD_LUMP = '1';
 /**
  * 分割
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const METHOD_INSTALLMENT = '2';
 /**
  * ボーナス一括
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const METHOD_BONUS_LUMP = '3';
 /**
  * リボ
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const METHOD_REVOLVING = '4';
 /**
  * ボーナス分割
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const METHOD_BONUS_INSTALLMENT = '5';
 
 /**
  * 未決済
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CVS_UNPROCESSED = 'UNPROCESSED';
 /**
  * 要求成功
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CVS_REQSUCCESS = 'REQSUCCESS';
 /**
  * 決済完了
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CVS_PAYSUCCESS = 'PAYSUCCESS';
 /**
  * 決済失敗
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CVS_PAYFAIL = 'PAYFAIL';
 /**
  * 期限切れ
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CVS_EXPIRED = 'EXPIRED';
 /**
  * 支払い停止
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CVS_CANCEL = 'CANCEL';
 
 /**
  * 未決済
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CREDIT_UNPROCESSED = 'UNPROCESSED';
 /**
  * 未決済(3D 登録済)
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CREDIT_AUTHENTICATED = 'AUTHENTICATED';
 /**
  * 有効性チェック
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CREDIT_CHECK = 'CHECK';
 /**
  * 即時売上
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CREDIT_CAPTURE = 'CAPTURE';
 /**
  * 仮売上
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CREDIT_AUTH = 'AUTH';
 /**
  * 実売上
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CREDIT_SALES = 'SALES';
 /**
  * 取消
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CREDIT_VOID = 'VOID';
 /**
  * 返品
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CREDIT_RETURN = 'RETURN';
 /**
  * 月跨り返品
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CREDIT_RETURNX = 'RETURNX';
 /**
  * 簡易オーソリ
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const STATUS_CREDIT_SAUTH = 'SAUTH';
 
 /**
  * 有効性チェック
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const JOB_CD_CHECK = 'CHECK';
 /**
  * 即時売上
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const JOB_CD_CAPTURE = 'CAPTURE';
 /**
  * 仮売上
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const JOB_CD_AUTH = 'AUTH';
 /**
  * 実売上
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const JOB_CD_SALES = 'SALES';
 /**
  * 取消
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const JOB_CD_VOID = 'VOID';
 /**
  * 返品
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const JOB_CD_RETURN = 'RETURN';
 /**
  * 月跨り返品
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const JOB_CD_RETURNX = 'RETURNX';
 /**
  * 簡易オーソリ
- * @memberOf Util
+ * @memberOf utils/util
  */
 export const JOB_CD_SAUTH = 'SAUTH';
 
 /**
  * ショップ情報確認文字列を作成するin
- * @memberOf Util
+ * @memberOf utils/util
  * @interface CreateShopPassStringArgs
  */
 export interface CreateShopPassStringArgs {
@@ -206,7 +206,7 @@ export interface CreateShopPassStringArgs {
 
 /**
  * ショップ情報確認文字列を作成する
- * @memberOf Util
+ * @memberOf utils/util
  * @function createShopPassString
  * @param {CreateShopPassStringArgs} args
  * @param {string} args.shopId

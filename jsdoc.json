@@ -10,7 +10,7 @@
     "dateFormat"            : "ddd MMM Do YYYY",
     "outputSourceFiles"     : true,
     "outputSourcePath"      : true,
-    "systemName"            : "gmo service library for node.js",
+    "systemName"            : "GMO service library for node.js",
     "footer"                : "",
     "navType"               : "vertical",
     "theme"                 : "cosmo",
