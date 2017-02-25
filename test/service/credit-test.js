@@ -1,6 +1,6 @@
 "use strict";
 process.env.GMO_ENDPOINT = 'https://pt01.mul-pay.jp';
-const GMO = require("../../lib/gmo-service");
+const GMO = require("../../lib/index");
 /**
  * creditテスト
  */

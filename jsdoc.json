@@ -1,27 +1,41 @@
 {
-  "tags"      : {
-    "allowUnknownTags" : true
-  },
-  "plugins"   : ["plugins/markdown"],
-
-  "templates" : {
-    "cleverLinks"           : false,
-    "monospaceLinks"        : false,
-    "dateFormat"            : "ddd MMM Do YYYY",
-    "outputSourceFiles"     : true,
-    "outputSourcePath"      : true,
-    "systemName"            : "GMO service library for node.js",
-    "footer"                : "",
-    "navType"               : "vertical",
-    "theme"                 : "cosmo",
-    "linenums"              : true,
-    "collapseSymbols"       : false,
-    "inverseNav"            : true,
-    "highlightTutorialCode" : false,
-    "protocol": "fred://"
-  },
-  "markdown"  : {
-    "parser"   : "gfm",
-    "hardwrap" : true
-  }
+    "opts": {
+        "template": "node_modules/ink-docstrap/template",
+        "encoding": "utf8",
+        "destination": "./docs/",
+        "recurse": true
+    },
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "source": {
+        "include": [
+            "README.md",
+            "lib"
+        ],
+        "exclude": []
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "dateFormat": "ddd MMM Do YYYY",
+        "outputSourceFiles": true,
+        "outputSourcePath": true,
+        "systemName": "GMO Client Library for Node.js",
+        "footer": "",
+        "navType": "vertical",
+        "theme": "cosmo",
+        "linenums": true,
+        "collapseSymbols": false,
+        "inverseNav": true,
+        "highlightTutorialCode": false,
+        "protocol": "fred://"
+    },
+    "markdown": {
+        "parser": "gfm",
+        "hardwrap": true
+    }
 }

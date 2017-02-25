@@ -1,5 +1,5 @@
 "use strict";
-const GMO = require("../../lib/gmo-service");
+const GMO = require("../../lib/index");
 /**
  * creditサンプル
  */

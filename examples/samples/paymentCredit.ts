@@ -1,4 +1,4 @@
-import * as GMO from '../../lib/gmo-service';
+import * as GMO from '../../lib/index';
 
 /**
  * creditサンプル

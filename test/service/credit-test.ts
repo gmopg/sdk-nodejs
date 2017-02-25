@@ -1,5 +1,5 @@
 process.env.GMO_ENDPOINT = 'https://pt01.mul-pay.jp';
-import * as GMO from '../../lib/gmo-service';
+import * as GMO from '../../lib/index';
 
 /**
  * creditテスト

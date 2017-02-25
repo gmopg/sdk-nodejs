@@ -13,20 +13,18 @@
     }
   ],
   "dependencies": {
-    "@types/debug": "0.0.29",
-    "@types/request": "0.0.36",
-    "@types/request-promise-native": "^1.0.2",
-    "debug": "2.6.1",
+    "debug": "^2.6.1",
     "request": "^2.79.0",
     "request-promise-native": "^1.0.3"
   },
   "description": "GMO Client Library for Node.js",
   "devDependencies": {
+    "@types/debug": "0.0.29",
     "@types/mocha": "^2.2.39",
-    "grunt": "^1.0.1",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-jsdoc": "^2.1.0",
+    "@types/request": "0.0.40",
+    "@types/request-promise-native": "^1.0.2",
     "ink-docstrap": "^1.3.0",
+    "jsdoc": "^3.4.3",
     "mocha": "^3.2.0",
     "tslint": "^4.4.2",
     "tslint-microsoft-contrib": "^4.0.0",
@@ -38,16 +36,16 @@
   },
   "keywords": [],
   "license": "UNLICENSED",
-  "main": "./lib/gmo-service.js",
+  "main": "./lib/index.js",
   "name": "@motionpicture/gmo-service",
   "repository": {},
   "scripts": {
-    "jsdoc": "grunt jsdoc",
+    "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.json",
     "test": "mocha --no-timeouts --recursive",
     "tsc": "tsc -w",
     "tslint": "tslint -c tslint.json lib/**/*.ts",
     "tslint-fix": "tslint -c tslint.json lib/**/*.ts --fix"
   },
-  "types": "./types/lib/gmo-service.d.ts",
+  "types": "./types/lib/index.d.ts",
   "version": "2.0.10"
 }
