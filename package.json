@@ -26,6 +26,7 @@
     "ink-docstrap": "^1.3.0",
     "jsdoc": "^3.4.3",
     "mocha": "^3.2.0",
+    "rimraf": "^2.6.1",
     "tslint": "^4.4.2",
     "tslint-microsoft-contrib": "^4.0.0",
     "typescript": "^2.1.6"
@@ -40,9 +41,11 @@
   "name": "@motionpicture/gmo-service",
   "repository": {},
   "scripts": {
+    "build": "tsc",
+    "clean": "rimraf examples/**/*.js lib/**/*.js test/**/*.js types/**/*.d.ts",
     "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.json",
+    "prepublishOnly": "npm run clean && npm run tslint && npm run build",
     "test": "mocha --no-timeouts --recursive",
-    "tsc": "tsc -w",
     "tslint": "tslint -c tslint.json lib/**/*.ts",
     "tslint-fix": "tslint -c tslint.json lib/**/*.ts --fix"
   },

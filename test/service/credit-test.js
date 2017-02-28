@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 process.env.GMO_ENDPOINT = 'https://pt01.mul-pay.jp';
 const GMO = require("../../lib/index");
 /**
