@@ -1,7 +1,11 @@
 *.log
+logs
+.env*
+npm-debug.log*
+
 node_modules
-docs/
 .vscode/
+docs/
 
 !.gitignore
 !.gitkeep

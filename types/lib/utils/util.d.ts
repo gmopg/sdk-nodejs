@@ -168,7 +168,7 @@ export declare const JOB_CD_SAUTH = "SAUTH";
  * @memberOf utils/util
  * @interface CreateShopPassStringArgs
  */
-export interface CreateShopPassStringArgs {
+export interface ICreateShopPassStringArgs {
     shopId: string;
     shopPass: string;
     orderId: string;
@@ -179,7 +179,7 @@ export interface CreateShopPassStringArgs {
  * ショップ情報確認文字列を作成する
  * @memberOf utils/util
  * @function createShopPassString
- * @param {CreateShopPassStringArgs} args
+ * @param {ICreateShopPassStringArgs} args
  * @param {string} args.shopId
  * @param {string} args.shopPass
  * @param {string} args.orderId
@@ -187,4 +187,4 @@ export interface CreateShopPassStringArgs {
  * @param {string} args.dateTime
  * @returns {string}
  */
-export declare function createShopPassString(args: CreateShopPassStringArgs): string;
+export declare function createShopPassString(args: ICreateShopPassStringArgs): string;

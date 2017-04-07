@@ -13,26 +13,28 @@
     }
   ],
   "dependencies": {
-    "debug": "^2.6.1",
-    "request": "^2.79.0",
+    "debug": "^2.6.3",
+    "request": "^2.81.0",
     "request-promise-native": "^1.0.3"
   },
   "description": "GMO Client Library for Node.js",
   "devDependencies": {
     "@types/debug": "0.0.29",
-    "@types/mocha": "^2.2.39",
+    "@types/mocha": "^2.2.40",
     "@types/request": "0.0.40",
     "@types/request-promise-native": "^1.0.2",
     "ink-docstrap": "^1.3.0",
     "jsdoc": "^3.4.3",
     "mocha": "^3.2.0",
+    "nsp": "^2.6.3",
     "rimraf": "^2.6.1",
-    "tslint": "^4.4.2",
-    "tslint-microsoft-contrib": "^4.0.0",
-    "typescript": "^2.1.6"
+    "snyk": "^1.27.1",
+    "tslint": "^4.5.1",
+    "tslint-microsoft-contrib": "^4.0.1",
+    "typescript": "^2.2.2"
   },
   "engines": {
-    "node": ">=7.0.0",
+    "node": ">=6.9.1",
     "npm": ">=3.10.0"
   },
   "keywords": [],
@@ -42,12 +44,14 @@
   "repository": {},
   "scripts": {
     "build": "tsc",
-    "clean": "rimraf examples/**/*.js lib/**/*.js test/**/*.js types/**/*.d.ts",
+    "check": "tslint --type-check --project tsconfig.json -c tslint.json lib/**/*.ts && nsp check && snyk auth && snyk test --ignore-policy",
+    "clean": "rimraf examples/**/*.js lib/**/*.js test/**/*.js types/* npm-debug.log* docs/*",
     "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.json",
-    "prepublishOnly": "npm run clean && npm run tslint && npm run build",
-    "test": "mocha --no-timeouts --recursive",
-    "tslint": "tslint -c tslint.json lib/**/*.ts",
-    "tslint-fix": "tslint -c tslint.json lib/**/*.ts --fix"
+    "prepublishOnly": "npm run clean && npm run build && npm test",
+    "test": "npm run check && mocha --no-timeouts --recursive",
+    "preversion": "npm run clean && npm run build && npm test",
+    "version": "git add -A",
+    "postversion": "git push origin --tags"
   },
   "types": "./types/lib/index.d.ts",
   "version": "2.0.10"

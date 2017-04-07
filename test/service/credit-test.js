@@ -1,19 +1,28 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-process.env.GMO_ENDPOINT = 'https://pt01.mul-pay.jp';
-const GMO = require("../../lib/index");
+const assert = require("assert");
+const CreditService = require("../../lib/services/credit");
+const Util = require("../../lib/utils/util");
 /**
  * creditテスト
  */
-describe('creditサービス', () => {
-    it('取引登録失敗', (done) => {
+describe('カード決済 取引登録', () => {
+    it('失敗', (done) => {
         const orderId = Date.now().toString();
         const amount = 1800;
-        GMO.CreditService.entryTran({
+        CreditService.entryTran({
             shopId: '********',
             shopPass: '********',
             orderId: orderId,
-            jobCd: GMO.Util.JOB_CD_AUTH,
+            jobCd: Util.JOB_CD_AUTH,
             amount: amount
         }).then(() => {
             done(new Error('entryTran should be failed.'));
@@ -21,4 +30,54 @@ describe('creditサービス', () => {
             done();
         });
     });
+});
+describe('カード決済 取引状態参照', () => {
+    it('オーダーIDが不適切なので参照できないはず', () => __awaiter(this, void 0, void 0, function* () {
+        const orderId = '********';
+        const shopId = process.env.TEST_GMO_SHOP_ID;
+        const shopPass = process.env.TEST_GMO_SHOP_PASS;
+        try {
+            yield CreditService.searchTrade({
+                shopId: shopId,
+                shopPass: shopPass,
+                orderId: orderId
+            });
+        }
+        catch (error) {
+            assert(error instanceof Error);
+            return;
+        }
+        throw new Error('失敗するはず');
+    }));
+    it('オーソリ後に参照できるはず', () => __awaiter(this, void 0, void 0, function* () {
+        const orderId = Date.now().toString();
+        const shopId = process.env.TEST_GMO_SHOP_ID;
+        const shopPass = process.env.TEST_GMO_SHOP_PASS;
+        const jobCd = Util.JOB_CD_AUTH;
+        const amount = 1234;
+        const entryTranResult = yield CreditService.entryTran({
+            shopId: shopId,
+            shopPass: shopPass,
+            orderId: orderId,
+            jobCd: jobCd,
+            amount: amount
+        });
+        yield CreditService.execTran({
+            accessId: entryTranResult.accessId,
+            accessPass: entryTranResult.accessPass,
+            orderId: orderId,
+            method: '1',
+            cardNo: '4111111111111111',
+            expire: '2012',
+            securityCode: '123'
+        });
+        const result = yield CreditService.searchTrade({
+            shopId: shopId,
+            shopPass: shopPass,
+            orderId: orderId
+        });
+        assert.equal(result.orderId, orderId);
+        assert.equal(result.jobCd, jobCd);
+        assert.equal(result.amount, amount);
+    }));
 });
