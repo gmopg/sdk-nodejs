@@ -1,28 +1,32 @@
+/**
+ * クレジットサービステスト
+ *
+ * @ignore
+ */
+
 import * as assert from 'assert';
 import * as CreditService from '../../lib/services/credit';
 import * as Util from '../../lib/utils/util';
 
-/**
- * creditテスト
- */
-
 describe('カード決済 取引登録', () => {
-    it('失敗', (done) => {
+    it('失敗', async () => {
         const orderId = Date.now().toString();
         const amount = 1800;
-        CreditService.entryTran({
-            shopId: '********',
-            shopPass: '********',
-            orderId: orderId,
-            jobCd: Util.JOB_CD_AUTH,
-            amount: amount
-        }).then(
-            () => {
-                done(new Error('entryTran should be failed.'));
-            }
-            ).catch(() => {
-                done();
+
+        let entryTranError: any;
+        try {
+            await CreditService.entryTran({
+                shopId: '********',
+                shopPass: '********',
+                orderId: orderId,
+                jobCd: Util.JOB_CD_AUTH,
+                amount: amount
             });
+        } catch (error) {
+            entryTranError = error;
+        }
+
+        assert(entryTranError instanceof Error);
     });
 });
 
@@ -32,6 +36,7 @@ describe('カード決済 取引状態参照', () => {
         const shopId = process.env.TEST_GMO_SHOP_ID;
         const shopPass = process.env.TEST_GMO_SHOP_PASS;
 
+        let searchTradeError: any;
         try {
             await CreditService.searchTrade({
                 shopId: shopId,
@@ -39,11 +44,10 @@ describe('カード決済 取引状態参照', () => {
                 orderId: orderId
             });
         } catch (error) {
-            assert(error instanceof Error);
-            return;
+            searchTradeError = error;
         }
 
-        throw new Error('失敗するはず');
+        assert(searchTradeError instanceof Error);
     });
 
     it('オーソリ後に参照できるはず', async () => {

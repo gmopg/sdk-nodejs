@@ -1,3 +1,8 @@
+/**
+ * クレジットサービステスト
+ *
+ * @ignore
+ */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -11,31 +16,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const assert = require("assert");
 const CreditService = require("../../lib/services/credit");
 const Util = require("../../lib/utils/util");
-/**
- * creditテスト
- */
 describe('カード決済 取引登録', () => {
-    it('失敗', (done) => {
+    it('失敗', () => __awaiter(this, void 0, void 0, function* () {
         const orderId = Date.now().toString();
         const amount = 1800;
-        CreditService.entryTran({
-            shopId: '********',
-            shopPass: '********',
-            orderId: orderId,
-            jobCd: Util.JOB_CD_AUTH,
-            amount: amount
-        }).then(() => {
-            done(new Error('entryTran should be failed.'));
-        }).catch(() => {
-            done();
-        });
-    });
+        let entryTranError;
+        try {
+            yield CreditService.entryTran({
+                shopId: '********',
+                shopPass: '********',
+                orderId: orderId,
+                jobCd: Util.JOB_CD_AUTH,
+                amount: amount
+            });
+        }
+        catch (error) {
+            entryTranError = error;
+        }
+        assert(entryTranError instanceof Error);
+    }));
 });
 describe('カード決済 取引状態参照', () => {
     it('オーダーIDが不適切なので参照できないはず', () => __awaiter(this, void 0, void 0, function* () {
         const orderId = '********';
         const shopId = process.env.TEST_GMO_SHOP_ID;
         const shopPass = process.env.TEST_GMO_SHOP_PASS;
+        let searchTradeError;
         try {
             yield CreditService.searchTrade({
                 shopId: shopId,
@@ -44,10 +50,9 @@ describe('カード決済 取引状態参照', () => {
             });
         }
         catch (error) {
-            assert(error instanceof Error);
-            return;
+            searchTradeError = error;
         }
-        throw new Error('失敗するはず');
+        assert(searchTradeError instanceof Error);
     }));
     it('オーソリ後に参照できるはず', () => __awaiter(this, void 0, void 0, function* () {
         const orderId = Date.now().toString();
