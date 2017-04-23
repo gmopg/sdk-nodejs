@@ -94,17 +94,60 @@ export interface IExecTranArgs {
  * @interface
  */
 export interface IExecTranResult {
+    /**
+     * ACS呼出判定
+     */
     acs: string;
+    /**
+     * オーダーID
+     */
     orderId: string;
+    /**
+     * 仕向先コード
+     * 与信を行ったカード会社の会社コードを返却します。
+     */
     forward: string;
+    /**
+     * 支払方法
+     * お客様が入力もしくは選択した支払方法を返却します。
+     */
     method: string;
+    /**
+     * 支払回数
+     * お客様が入力もしくは選択した支払回数を返却します。
+     */
     payTimes: string;
+    /**
+     * 承認番号
+     * カード会社が発行した与信の承認番号を返却します。
+     */
     approve: string;
+    /**
+     * トランザクションID
+     * GMOが処理を行う毎に発行している処理番号を返却します。
+     */
     tranId: string;
+    /**
+     * 決済日付
+     * 与信を実施した日時を返却します。(yyyyMMddHHmmss形式)
+     */
     tranDate: string;
+    /**
+     * MD5ハッシュ
+     * OrderID～TranDate+ショップパスワードのハッシュ値(※1)を返却します。
+     */
     checkString: string;
+    /**
+     * 加盟店自由項目1
+     */
     clientField1: string;
+    /**
+     * 加盟店自由項目2
+     */
     clientField2: string;
+    /**
+     * 加盟店自由項目3
+     */
     clientField3: string;
 }
 

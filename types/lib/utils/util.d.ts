@@ -1,4 +1,10 @@
 /**
+ * 現金(実際GMOではありえないが)
+ *
+ * @memberOf utils/util
+ */
+export declare const PAY_TYPE_CASH = "Z";
+/**
  * カード
  * @memberOf utils/util
  */

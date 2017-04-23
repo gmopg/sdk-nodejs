@@ -6,6 +6,13 @@
 import * as crypto from 'crypto';
 
 /**
+ * 現金(実際GMOではありえないが)
+ *
+ * @memberOf utils/util
+ */
+export const PAY_TYPE_CASH = 'Z';
+
+/**
  * カード
  * @memberOf utils/util
  */
