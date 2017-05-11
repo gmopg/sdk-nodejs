@@ -86,3 +86,24 @@ describe('カード決済 取引状態参照', () => {
         assert.equal(result.amount, amount);
     });
 });
+
+describe('カード決済 金額変更', () => {
+    it('失敗', async () => {
+        let entryTranError: any;
+        try {
+            // 決済変更
+            await CreditService.changeTran({
+                shopId: '********',
+                shopPass: '********',
+                accessId: '********',
+                accessPass: '********',
+                jobCd: Util.JOB_CD_AUTH,
+                amount: 300
+            });
+        } catch (error) {
+            entryTranError = error;
+        }
+
+        assert(entryTranError instanceof Error);
+    });
+});
