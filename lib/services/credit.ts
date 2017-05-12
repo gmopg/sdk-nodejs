@@ -459,3 +459,76 @@ export async function searchTrade(args: ISearchTradeArgs): Promise<ISearchTradeR
         errInfo: result.ErrInfo
     };
 }
+
+/**
+ * 金額変更in
+ * @memberof services/credit
+ * @interface
+ */
+export interface IChangeTranArgs {
+    shopId: string;
+    shopPass: string;
+    accessId: string;
+    accessPass: string;
+    jobCd: string;
+    amount: number;
+    tax?: string;
+}
+/**
+ * 金額変更out
+ * @memberof services/credit
+ * @interface
+ */
+export interface IChangeTranResult {
+    accessId: string;
+    accessPass: string;
+    forward: string;
+    approve: string;
+    tranId: string;
+    tranDate: string;
+}
+
+/**
+ * 金額変更
+ * @memberof services/credit
+ * @function changeTran
+ * @param {IChangeTranArgs} args 決済変更in
+ * @param {string} args.shopId ショップID
+ * @param {string} args.shopPass ショップパスワード
+ * @param {string} args.accessId 取引ID
+ * @param {string} args.accessPass 取引パスワード
+ * @param {string} args.jobCd 処理区分
+ * @param {number} args.amount 利用金額
+ * @param {string} args.tax 税送料
+ * @returns {Promise<IChangeTranResult>} 金額変更out
+ */
+export async function changeTran(args: IChangeTranArgs): Promise<IChangeTranResult> {
+    debug('requesting...', args);
+    const body = await request.post({
+        url: `${process.env.GMO_ENDPOINT}/payment/ChangeTran.idPass`,
+        form: {
+            ShopID: args.shopId,
+            ShopPass: args.shopPass,
+            AccessID: args.accessId,
+            AccessPass: args.accessPass,
+            JobCd: args.jobCd,
+            Amount: args.amount,
+            Tax: args.tax
+        }
+    }).promise();
+    debug('request processed.', body);
+
+    const result = querystring.parse(body);
+    if (result.ErrCode !== undefined) {
+        throw new Error(body);
+    }
+
+    return {
+        accessId: result.AccessID,
+        accessPass: result.AccessPass,
+        forward: result.Forward,
+        approve: result.Approve,
+        tranId: result.TranID,
+        tranDate: result.TranDate
+    };
+}

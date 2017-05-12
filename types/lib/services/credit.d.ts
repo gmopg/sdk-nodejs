@@ -305,3 +305,45 @@ export interface ISearchTradeResult {
  * @returns {Promise<ISearchTradeResult>} 取引状態参照out
  */
 export declare function searchTrade(args: ISearchTradeArgs): Promise<ISearchTradeResult>;
+/**
+ * 金額変更in
+ * @memberof services/credit
+ * @interface
+ */
+export interface IChangeTranArgs {
+    shopId: string;
+    shopPass: string;
+    accessId: string;
+    accessPass: string;
+    jobCd: string;
+    amount: number;
+    tax?: string;
+}
+/**
+ * 金額変更out
+ * @memberof services/credit
+ * @interface
+ */
+export interface IChangeTranResult {
+    accessId: string;
+    accessPass: string;
+    forward: string;
+    approve: string;
+    tranId: string;
+    tranDate: string;
+}
+/**
+ * 金額変更
+ * @memberof services/credit
+ * @function changeTran
+ * @param {IChangeTranArgs} args 決済変更in
+ * @param {string} args.shopId ショップID
+ * @param {string} args.shopPass ショップパスワード
+ * @param {string} args.accessId 取引ID
+ * @param {string} args.accessPass 取引パスワード
+ * @param {string} args.jobCd 処理区分
+ * @param {number} args.amount 利用金額
+ * @param {string} args.tax 税送料
+ * @returns {Promise<IChangeTranResult>} 金額変更out
+ */
+export declare function changeTran(args: IChangeTranArgs): Promise<IChangeTranResult>;
