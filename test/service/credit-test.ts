@@ -89,7 +89,7 @@ describe('カード決済 取引状態参照', () => {
 
 describe('カード決済 金額変更', () => {
     it('失敗', async () => {
-        let entryTranError: any;
+        let changeTranError: any;
         try {
             // 金額変更
             await CreditService.changeTran({
@@ -101,10 +101,10 @@ describe('カード決済 金額変更', () => {
                 amount: 300
             });
         } catch (error) {
-            entryTranError = error;
+            changeTranError = error;
         }
 
-        assert(entryTranError instanceof Error);
+        assert(changeTranError instanceof Error);
     });
 
     it('正常 仮-実-仮-実', async () => {
