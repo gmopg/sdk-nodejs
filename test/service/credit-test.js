@@ -161,6 +161,7 @@ describe('カード決済 金額変更', () => {
             shopPass: shopPass,
             orderId: orderId
         });
+        assert.equal(searchTradeResult.status, Util.JOB_CD_SALES);
         assert.equal(searchTradeResult.orderId, orderId);
         assert.equal(searchTradeResult.amount, changeAmount);
     }));
@@ -211,6 +212,7 @@ describe('カード決済 金額変更', () => {
             shopPass: shopPass,
             orderId: orderId
         });
+        assert.equal(searchTradeResult.status, Util.JOB_CD_CAPTURE);
         assert.equal(searchTradeResult.orderId, orderId);
         assert.equal(searchTradeResult.amount, changeAmount);
     }));
