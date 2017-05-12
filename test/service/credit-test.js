@@ -90,7 +90,7 @@ describe('カード決済 金額変更', () => {
     it('失敗', () => __awaiter(this, void 0, void 0, function* () {
         let entryTranError;
         try {
-            // 決済変更
+            // 金額変更
             yield CreditService.changeTran({
                 shopId: '********',
                 shopPass: '********',
@@ -101,9 +101,117 @@ describe('カード決済 金額変更', () => {
             });
         }
         catch (error) {
-            console.log(error);
             entryTranError = error;
         }
         assert(entryTranError instanceof Error);
+    }));
+    it('正常 仮-実-仮-実', () => __awaiter(this, void 0, void 0, function* () {
+        const orderId = Date.now().toString();
+        const shopId = process.env.TEST_GMO_SHOP_ID;
+        const shopPass = process.env.TEST_GMO_SHOP_PASS;
+        const amount = 1800;
+        const changeAmount = 300;
+        // 取引作成
+        const entryTranResult = yield CreditService.entryTran({
+            shopId: shopId,
+            shopPass: shopPass,
+            orderId: orderId,
+            jobCd: Util.JOB_CD_AUTH,
+            amount: amount
+        });
+        // 決済実行
+        yield CreditService.execTran({
+            accessId: entryTranResult.accessId,
+            accessPass: entryTranResult.accessPass,
+            orderId: orderId,
+            method: '1',
+            cardNo: '4111111111111111',
+            expire: '2012',
+            securityCode: '123'
+        });
+        // 決済変更
+        yield CreditService.alterTran({
+            shopId: shopId,
+            shopPass: shopPass,
+            accessId: entryTranResult.accessId,
+            accessPass: entryTranResult.accessPass,
+            jobCd: Util.JOB_CD_SALES,
+            amount: amount
+        });
+        // 金額変更
+        yield CreditService.changeTran({
+            shopId: shopId,
+            shopPass: shopPass,
+            accessId: entryTranResult.accessId,
+            accessPass: entryTranResult.accessPass,
+            jobCd: Util.JOB_CD_AUTH,
+            amount: changeAmount
+        });
+        // 決済変更
+        yield CreditService.alterTran({
+            shopId: shopId,
+            shopPass: shopPass,
+            accessId: entryTranResult.accessId,
+            accessPass: entryTranResult.accessPass,
+            jobCd: Util.JOB_CD_SALES,
+            amount: changeAmount
+        });
+        const searchTradeResult = yield CreditService.searchTrade({
+            shopId: shopId,
+            shopPass: shopPass,
+            orderId: orderId
+        });
+        assert.equal(searchTradeResult.orderId, orderId);
+        assert.equal(searchTradeResult.amount, changeAmount);
+    }));
+    it('正常 仮-実-即', () => __awaiter(this, void 0, void 0, function* () {
+        const orderId = Date.now().toString();
+        const shopId = process.env.TEST_GMO_SHOP_ID;
+        const shopPass = process.env.TEST_GMO_SHOP_PASS;
+        const amount = 1800;
+        const changeAmount = 300;
+        // 取引作成
+        const entryTranResult = yield CreditService.entryTran({
+            shopId: shopId,
+            shopPass: shopPass,
+            orderId: orderId,
+            jobCd: Util.JOB_CD_AUTH,
+            amount: amount
+        });
+        // 決済実行
+        yield CreditService.execTran({
+            accessId: entryTranResult.accessId,
+            accessPass: entryTranResult.accessPass,
+            orderId: orderId,
+            method: '1',
+            cardNo: '4111111111111111',
+            expire: '2012',
+            securityCode: '123'
+        });
+        // 決済変更
+        yield CreditService.alterTran({
+            shopId: shopId,
+            shopPass: shopPass,
+            accessId: entryTranResult.accessId,
+            accessPass: entryTranResult.accessPass,
+            jobCd: Util.JOB_CD_SALES,
+            amount: amount
+        });
+        // 金額変更
+        yield CreditService.changeTran({
+            shopId: shopId,
+            shopPass: shopPass,
+            accessId: entryTranResult.accessId,
+            accessPass: entryTranResult.accessPass,
+            jobCd: Util.JOB_CD_CAPTURE,
+            amount: changeAmount
+        });
+        const searchTradeResult = yield CreditService.searchTrade({
+            shopId: shopId,
+            shopPass: shopPass,
+            orderId: orderId
+        });
+        assert.equal(searchTradeResult.orderId, orderId);
+        assert.equal(searchTradeResult.amount, changeAmount);
     }));
 });
