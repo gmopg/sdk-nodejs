@@ -4,9 +4,21 @@
  * @interface ISaveMemberArgs
  */
 export interface ISaveMemberArgs {
+    /**
+     * サイトID
+     */
     siteId: string;
+    /**
+     * サイトパスワード
+     */
     sitePass: string;
+    /**
+     * 会員ID
+     */
     memberId: string;
+    /**
+     * 会員名
+     */
     memberName?: string;
 }
 /**
@@ -15,6 +27,9 @@ export interface ISaveMemberArgs {
  * @interface ISaveMemberResult
  */
 export interface ISaveMemberResult {
+    /**
+     * 会員ID
+     */
     memberId: string;
 }
 /**
@@ -35,9 +50,21 @@ export declare function saveMember(args: ISaveMemberArgs): Promise<ISaveMemberRe
  * @interface IUpdateMemberArgs
  */
 export interface IUpdateMemberArgs {
+    /**
+     * サイトID
+     */
     siteId: string;
+    /**
+     * サイトパスワード
+     */
     sitePass: string;
+    /**
+     * 会員ID
+     */
     memberId: string;
+    /**
+     * 会員名
+     */
     memberName?: string;
 }
 /**
@@ -46,6 +73,9 @@ export interface IUpdateMemberArgs {
  * @interface IUpdateMemberResult
  */
 export interface IUpdateMemberResult {
+    /**
+     * 会員ID
+     */
     memberId: string;
 }
 /**
@@ -66,8 +96,17 @@ export declare function updateMember(args: IUpdateMemberArgs): Promise<IUpdateMe
  * @interface IDeleteMemberArgs
  */
 export interface IDeleteMemberArgs {
+    /**
+     * サイトID
+     */
     siteId: string;
+    /**
+     * サイトパスワード
+     */
     sitePass: string;
+    /**
+     * 会員ID
+     */
     memberId: string;
 }
 /**
@@ -76,6 +115,9 @@ export interface IDeleteMemberArgs {
  * @interface IDeleteMemberResult
  */
 export interface IDeleteMemberResult {
+    /**
+     * 会員ID
+     */
     memberId: string;
 }
 /**
@@ -95,8 +137,17 @@ export declare function deleteMember(args: IDeleteMemberArgs): Promise<IDeleteMe
  * @interface ISearchMemberArgs
  */
 export interface ISearchMemberArgs {
+    /**
+     * サイトID
+     */
     siteId: string;
+    /**
+     * サイトパスワード
+     */
     sitePass: string;
+    /**
+     * 会員ID
+     */
     memberId: string;
 }
 /**
@@ -105,8 +156,17 @@ export interface ISearchMemberArgs {
  * @interface ISearchMemberResult
  */
 export interface ISearchMemberResult {
+    /**
+     * 会員ID
+     */
     memberId: string;
+    /**
+     * 会員名
+     */
     memberName: string;
+    /**
+     * 削除フラグ（0:未削除 を返却します。）
+     */
     deleteFlag: string;
 }
 /**

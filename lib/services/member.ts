@@ -15,9 +15,21 @@ const debug = createDebug('gmo-service:member');
  * @interface ISaveMemberArgs
  */
 export interface ISaveMemberArgs {
+    /**
+     * サイトID
+     */
     siteId: string;
+    /**
+     * サイトパスワード
+     */
     sitePass: string;
+    /**
+     * 会員ID
+     */
     memberId: string;
+    /**
+     * 会員名
+     */
     memberName?: string;
 }
 /**
@@ -26,6 +38,9 @@ export interface ISaveMemberArgs {
  * @interface ISaveMemberResult
  */
 export interface ISaveMemberResult {
+    /**
+     * 会員ID
+     */
     memberId: string;
 }
 /**
@@ -68,9 +83,21 @@ export async function saveMember(args: ISaveMemberArgs): Promise<ISaveMemberResu
  * @interface IUpdateMemberArgs
  */
 export interface IUpdateMemberArgs {
+    /**
+     * サイトID
+     */
     siteId: string;
+    /**
+     * サイトパスワード
+     */
     sitePass: string;
+    /**
+     * 会員ID
+     */
     memberId: string;
+    /**
+     * 会員名
+     */
     memberName?: string;
 }
 /**
@@ -79,6 +106,9 @@ export interface IUpdateMemberArgs {
  * @interface IUpdateMemberResult
  */
 export interface IUpdateMemberResult {
+    /**
+     * 会員ID
+     */
     memberId: string;
 }
 /**
@@ -121,8 +151,17 @@ export async function updateMember(args: IUpdateMemberArgs): Promise<IUpdateMemb
  * @interface IDeleteMemberArgs
  */
 export interface IDeleteMemberArgs {
+    /**
+     * サイトID
+     */
     siteId: string;
+    /**
+     * サイトパスワード
+     */
     sitePass: string;
+    /**
+     * 会員ID
+     */
     memberId: string;
 }
 /**
@@ -131,6 +170,9 @@ export interface IDeleteMemberArgs {
  * @interface IDeleteMemberResult
  */
 export interface IDeleteMemberResult {
+    /**
+     * 会員ID
+     */
     memberId: string;
 }
 /**
@@ -171,8 +213,17 @@ export async function deleteMember(args: IDeleteMemberArgs): Promise<IDeleteMemb
  * @interface ISearchMemberArgs
  */
 export interface ISearchMemberArgs {
+    /**
+     * サイトID
+     */
     siteId: string;
+    /**
+     * サイトパスワード
+     */
     sitePass: string;
+    /**
+     * 会員ID
+     */
     memberId: string;
 }
 /**
@@ -181,8 +232,17 @@ export interface ISearchMemberArgs {
  * @interface ISearchMemberResult
  */
 export interface ISearchMemberResult {
+    /**
+     * 会員ID
+     */
     memberId: string;
+    /**
+     * 会員名
+     */
     memberName: string;
+    /**
+     * 削除フラグ（0:未削除 を返却します。）
+     */
     deleteFlag: string;
 }
 /**
