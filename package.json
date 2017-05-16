@@ -13,7 +13,7 @@
     }
   ],
   "dependencies": {
-    "debug": "^2.6.3",
+    "debug": "^2.6.6",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.3"
   },
@@ -44,7 +44,8 @@
   "repository": {},
   "scripts": {
     "build": "tsc",
-    "check": "tslint --type-check --project tsconfig.json -c tslint.json lib/**/*.ts && nsp check && snyk auth && snyk test --ignore-policy",
+    "check": "tslint --type-check --project tsconfig.json -c tslint.json lib/**/*.ts && nsp check",
+    "snyk": "snyk auth && snyk test --ignore-policy",
     "clean": "rimraf examples/**/*.js lib/**/*.js test/**/*.js types/* npm-debug.log* docs/*",
     "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.json",
     "prepublishOnly": "npm run clean && npm run build && npm test",
