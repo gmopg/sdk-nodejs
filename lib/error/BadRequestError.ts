@@ -49,6 +49,7 @@ export class BadRequestError extends Error {
                     userMessage: notApplicable.userMessage
                 };
             }
+
             return error;
         });
     }

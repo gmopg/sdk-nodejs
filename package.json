@@ -29,8 +29,8 @@
     "nsp": "^2.6.3",
     "rimraf": "^2.6.1",
     "snyk": "^1.28.1",
-    "tslint": "^4.5.1",
-    "tslint-microsoft-contrib": "^4.0.1",
+    "tslint": "^5.2.0",
+    "tslint-microsoft-contrib": "^5.0.0",
     "typescript": "^2.3.0"
   },
   "engines": {
@@ -55,5 +55,5 @@
     "postversion": "git push origin --tags"
   },
   "types": "./types/lib/index.d.ts",
-  "version": "3.2.0"
+  "version": "3.2.1"
 }

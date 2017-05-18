@@ -13,4 +13,4 @@ import * as Util from './utils/util';
 export {
     Util,
     CreditService
-}
+};
