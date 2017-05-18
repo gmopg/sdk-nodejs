@@ -1,5 +1,28 @@
 /**
- * @const エラー一覧
+ * @desc エラー定義
+ * @namespace error/errors
+ */
+
+/**
+ * 該当なし
+ * @memberof error/errors
+ * @const notApplicableContent
+ */
+export const notApplicable = {
+    /**
+     * エラー内容
+     */
+    content: '該当なし',
+    /**
+     * ユーザへ表示するメッセージ
+     */
+    userMessage: '特になし'
+};
+
+/**
+ * エラー一覧
+ * @memberof error/errors
+ * @const errors
  */
 export const errors = {
     version: '1.72',

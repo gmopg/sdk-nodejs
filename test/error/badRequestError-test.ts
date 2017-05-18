@@ -6,9 +6,28 @@
 
 import * as assert from 'assert';
 import { BadRequestError } from '../../lib/error/BadRequestError';
-import { errors } from '../../lib/error/errors';
+import { errors, notApplicable } from '../../lib/error/errors';
 
 describe('BadRequestエラー', () => {
+    it('正常 該当なし', async () => {
+        const code = '***';
+        const info = '***';
+        const message = `ErrCode=${code}&ErrInfo=${info}`;
+        const badRequestError = new BadRequestError(message);
+        const error = errors.list.find((value) => {
+            return (value.code === code && value.info === info);
+        });
+        if (error === undefined) {
+            return;
+        }
+        assert.equal(badRequestError.message, message);
+        assert.equal(badRequestError.errors[0].code, code);
+        assert.equal(badRequestError.errors[0].info, info);
+        assert.equal(badRequestError.errors[0].state, '');
+        assert.equal(badRequestError.errors[0].billing, '');
+        assert.equal(badRequestError.errors[0].content, notApplicable.content);
+        assert.equal(badRequestError.errors[0].userMessage, notApplicable.userMessage);
+    });
     it('正常', async () => {
         const code = 'E01';
         const info = 'E01010008';
@@ -70,6 +89,6 @@ describe('BadRequestエラー', () => {
 
         assert(badRequestError instanceof Error);
         assert.equal(badRequestError.message, error.message);
-        assert.equal(badRequestError.name, error.name);
+        assert.equal(badRequestError.name, 'GMOServiceBadRequestError');
     });
 });

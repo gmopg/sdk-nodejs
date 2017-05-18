@@ -1,10 +1,13 @@
 /**
+ * @namespace error/badRequestError
  * @desc エラー
  */
 import * as querystring from 'querystring';
-import { errors } from './errors';
+import { errors, notApplicable } from './errors';
+
 /**
  * エラー
+ * @memberof error/badRequestError
  * @class BadRequestError
  * @extends Error
  */
@@ -13,6 +16,7 @@ export class BadRequestError extends Error {
 
     constructor(message?: string) {
         super(message);
+        this.name = 'GMOServiceBadRequestError';
         this.errors = this.parseErrorMessage();
     }
     /**
@@ -41,8 +45,8 @@ export class BadRequestError extends Error {
                     info: info,
                     state: '',
                     billing: '',
-                    content: '',
-                    userMessage: ''
+                    content: notApplicable.content,
+                    userMessage: notApplicable.userMessage
                 };
             }
             return error;

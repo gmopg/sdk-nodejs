@@ -1,5 +1,6 @@
 /**
  * エラー
+ * @memberof error/badRequestError
  * @class BadRequestError
  * @extends Error
  */

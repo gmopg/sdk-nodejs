@@ -1,5 +1,20 @@
 /**
- * @const エラー一覧
+ * @desc エラー定義
+ * @namespace error/errors
+ */
+/**
+ * 該当なし
+ * @memberof error/errors
+ * @const notApplicableContent
+ */
+export declare const notApplicable: {
+    content: string;
+    userMessage: string;
+};
+/**
+ * エラー一覧
+ * @memberof error/errors
+ * @const errors
  */
 export declare const errors: {
     version: string;
