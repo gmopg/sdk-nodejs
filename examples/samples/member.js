@@ -21,21 +21,21 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const memberId = Date.now().toString();
         // 会員登録
-        const saveMemberResult = yield GMO.MemberService.saveMember({
+        const saveMemberResult = yield GMO.services.card.saveMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: memberId,
             memberName: 'test'
         });
         // 会員更新
-        const updateMemberResult = yield GMO.MemberService.updateMember({
+        const updateMemberResult = yield GMO.services.card.updateMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: saveMemberResult.memberId,
             memberName: 'test2'
         });
         // 会員削除
-        yield GMO.MemberService.deleteMember({
+        yield GMO.services.card.deleteMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: updateMemberResult.memberId

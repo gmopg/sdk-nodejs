@@ -21,14 +21,14 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const memberId = Date.now().toString();
         // 会員登録
-        const saveMemberResult = yield GMO.MemberService.saveMember({
+        const saveMemberResult = yield GMO.services.card.saveMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: memberId,
             memberName: 'test'
         });
         // カード登録
-        const saveCardResult = yield GMO.CardService.saveCard({
+        const saveCardResult = yield GMO.services.card.saveCard({
             siteId: siteId,
             sitePass: sitePass,
             memberId: saveMemberResult.memberId,
@@ -36,7 +36,7 @@ function main() {
             expire: '2012'
         });
         // カード削除
-        yield GMO.CardService.deleteCard({
+        yield GMO.services.card.deleteCard({
             siteId: siteId,
             sitePass: sitePass,
             memberId: saveMemberResult.memberId,

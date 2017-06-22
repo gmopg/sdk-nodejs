@@ -251,5 +251,6 @@ export function createShopPassString(args: ICreateShopPassStringArgs) {
     // 「ショップ ID + オーダーID + 利用金額＋税送料＋ショップパスワード + 日時情報」を MD5 でハッシュした文字列。
     const md5hash = crypto.createHash('md5');
     md5hash.update(`${args.shopId}${args.orderId}${args.amount.toString()}${args.shopPass}${args.dateTime}`, 'utf8');
+
     return md5hash.digest('hex');
 }

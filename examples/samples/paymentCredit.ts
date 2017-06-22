@@ -6,7 +6,7 @@ import * as GMO from '../../lib/index';
 
 const orderId = Date.now().toString();
 const amount = 1800;
-GMO.CreditService.entryTran({
+GMO.services.credit.entryTran({
     shopId: 'your shopId',
     shopPass: 'sour shopPass',
     orderId: orderId,
@@ -14,7 +14,7 @@ GMO.CreditService.entryTran({
     amount: amount
 }).then(
     (entryTranResult) => {
-        GMO.CreditService.execTran({
+        GMO.services.credit.execTran({
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
             orderId: orderId,
@@ -26,7 +26,7 @@ GMO.CreditService.entryTran({
             (execTranResult) => {
                 // tslint:disable-next-line:no-console
                 console.log(execTranResult);
-                GMO.CreditService.alterTran({
+                GMO.services.credit.alterTran({
                     shopId: 'your shopId',
                     shopPass: 'sour shopPass',
                     accessId: entryTranResult.accessId,

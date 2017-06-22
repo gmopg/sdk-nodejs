@@ -3,26 +3,20 @@
  *
  * @ignore
  */
-before((done) => {
+before(async () => {
     if (process.env.TEST_GMO_SHOP_ID === undefined) {
-        done(new Error('process.env.TEST_GMO_SHOP_ID required for test'));
-        return;
+        throw new Error('process.env.TEST_GMO_SHOP_ID required for test');
     }
 
     if (process.env.TEST_GMO_SHOP_PASS === undefined) {
-        done(new Error('process.env.TEST_GMO_SHOP_PASS required for test'));
-        return;
+        throw new Error('process.env.TEST_GMO_SHOP_PASS required for test');
     }
 
     if (process.env.TEST_GMO_SITE_ID === undefined) {
-        done(new Error('process.env.TEST_GMO_SITE_ID required for test'));
-        return;
+        throw new Error('process.env.TEST_GMO_SITE_ID required for test');
     }
 
     if (process.env.TEST_GMO_SITE_PASS === undefined) {
-        done(new Error('process.env.TEST_GMO_SITE_PASS required for test'));
-        return;
+        throw new Error('process.env.TEST_GMO_SITE_PASS required for test');
     }
-
-    done();
 });

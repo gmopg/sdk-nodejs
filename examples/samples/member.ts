@@ -12,21 +12,21 @@ main();
 async function main() {
     const memberId = Date.now().toString();
     // 会員登録
-    const saveMemberResult = await GMO.MemberService.saveMember({
+    const saveMemberResult = await GMO.services.card.saveMember({
         siteId: siteId,
         sitePass: sitePass,
         memberId: memberId,
         memberName: 'test'
     });
     // 会員更新
-    const updateMemberResult = await GMO.MemberService.updateMember({
+    const updateMemberResult = await GMO.services.card.updateMember({
         siteId: siteId,
         sitePass: sitePass,
         memberId: saveMemberResult.memberId,
         memberName: 'test2'
     });
     // 会員削除
-    await GMO.MemberService.deleteMember({
+    await GMO.services.card.deleteMember({
         siteId: siteId,
         sitePass: sitePass,
         memberId: updateMemberResult.memberId

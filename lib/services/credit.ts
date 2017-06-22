@@ -6,6 +6,7 @@
 import * as createDebug from 'debug';
 import * as querystring from 'querystring';
 import * as request from 'request-promise-native';
+import { BadRequestError } from '../error/BadRequestError';
 
 const debug = createDebug('gmo-service:credit');
 
@@ -58,7 +59,7 @@ export async function entryTran(args: IEntryTranArgs): Promise<IEntryTranResult>
 
     const result = querystring.parse(body);
     if (result.ErrCode !== undefined) {
-        throw new Error(body);
+        throw new BadRequestError(body);
     }
 
     return {
@@ -194,7 +195,7 @@ export async function execTran(args: IExecTranArgs): Promise<IExecTranResult> {
 
     const result = querystring.parse(body);
     if (result.ErrCode !== undefined) {
-        throw new Error(body);
+        throw new BadRequestError(body);
     }
 
     return {
@@ -273,7 +274,7 @@ export async function alterTran(args: IAlterTranArgs): Promise<IAlterTranResult>
 
     const result = querystring.parse(body);
     if (result.ErrCode !== undefined) {
-        throw new Error(body);
+        throw new BadRequestError(body);
     }
 
     return {
@@ -430,7 +431,7 @@ export async function searchTrade(args: ISearchTradeArgs): Promise<ISearchTradeR
 
     const result = querystring.parse(body);
     if (result.ErrCode !== undefined) {
-        throw new Error(body);
+        throw new BadRequestError(body);
     }
 
     return {
@@ -520,7 +521,7 @@ export async function changeTran(args: IChangeTranArgs): Promise<IChangeTranResu
 
     const result = querystring.parse(body);
     if (result.ErrCode !== undefined) {
-        throw new Error(body);
+        throw new BadRequestError(body);
     }
 
     return {

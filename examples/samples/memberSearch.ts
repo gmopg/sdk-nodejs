@@ -12,14 +12,14 @@ main();
 async function main() {
     const memberId = Date.now().toString();
     // 会員登録
-    const saveMemberResult = await GMO.MemberService.saveMember({
+    const saveMemberResult = await GMO.services.card.saveMember({
         siteId: siteId,
         sitePass: sitePass,
         memberId: memberId,
         memberName: 'test'
     });
     // 会員照会
-    const result = await GMO.MemberService.searchMember({
+    const result = await GMO.services.card.searchMember({
         siteId: siteId,
         sitePass: sitePass,
         memberId: saveMemberResult.memberId

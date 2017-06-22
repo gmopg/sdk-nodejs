@@ -12,14 +12,14 @@ main();
 async function main() {
     const memberId = Date.now().toString();
     // 会員登録
-    const saveMemberResult = await GMO.MemberService.saveMember({
+    const saveMemberResult = await GMO.services.card.saveMember({
         siteId: siteId,
         sitePass: sitePass,
         memberId: memberId,
         memberName: 'test'
     });
     // カード登録
-    const saveCardResult = await GMO.CardService.saveCard({
+    const saveCardResult = await GMO.services.card.saveCard({
         siteId: siteId,
         sitePass: sitePass,
         memberId: saveMemberResult.memberId,
@@ -27,7 +27,7 @@ async function main() {
         expire: '2012'
     });
     // カード削除
-    await GMO.CardService.deleteCard({
+    await GMO.services.card.deleteCard({
         siteId: siteId,
         sitePass: sitePass,
         memberId: saveMemberResult.memberId,

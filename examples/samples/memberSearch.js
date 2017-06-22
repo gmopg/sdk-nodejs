@@ -21,14 +21,14 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const memberId = Date.now().toString();
         // 会員登録
-        const saveMemberResult = yield GMO.MemberService.saveMember({
+        const saveMemberResult = yield GMO.services.card.saveMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: memberId,
             memberName: 'test'
         });
         // 会員照会
-        const result = yield GMO.MemberService.searchMember({
+        const result = yield GMO.services.card.searchMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: saveMemberResult.memberId
