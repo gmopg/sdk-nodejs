@@ -67,6 +67,7 @@ describe('BadRequestエラー', () => {
                     userMessage: ''
                 };
             }
+
             return error;
         });
 

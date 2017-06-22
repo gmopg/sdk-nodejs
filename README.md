@@ -27,6 +27,14 @@ When using the GMO Service SDK, you must provide connection information. This ca
 set GMO_ENDPOINT=*****
 ```
 
+for test
+```shell
+set TEST_GMO_SHOP_ID=*****
+set TEST_GMO_SHOP_PASS=*****
+set TEST_GMO_SITE_ID=*****
+set TEST_GMO_SITE_PASS=*****
+```
+
 ## Code Samples
 
 コードサンプルは./examplesにあります。

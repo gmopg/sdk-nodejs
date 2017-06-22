@@ -170,6 +170,26 @@ export declare const JOB_CD_RETURNX = "RETURNX";
  */
 export declare const JOB_CD_SAUTH = "SAUTH";
 /**
+ * カード登録連番論理モード
+ * @memberOf utils/util
+ */
+export declare const SEQ_MODE_LOGIC = "0";
+/**
+ * カード登録連番物理モード
+ * @memberOf utils/util
+ */
+export declare const SEQ_MODE_PHYSICS = "1";
+/**
+ * 洗替・継続課金対象としない
+ * @memberOf utils/util
+ */
+export declare const DEFAULT_FLAG_BILLING_OBJECT = "0";
+/**
+ * 洗替・継続課金対象とする
+ * @memberOf utils/util
+ */
+export declare const DEFAULT_FLAG_NOT_SUBJECT_TO_CHARGE = "1";
+/**
  * ショップ情報確認文字列を作成するin
  * @memberOf utils/util
  * @interface CreateShopPassStringArgs
