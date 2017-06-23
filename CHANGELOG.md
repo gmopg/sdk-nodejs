@@ -7,7 +7,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
-- 会員カード検索で、会員は存在してカードが存在しない場合、空配列を返すように変更。
 
 ### Deprecated
 
@@ -16,6 +15,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v3.4.0 - 2017-06-23
+### Changed
+- 会員カード検索で、会員は存在してカードが存在しない場合、空配列を返すように変更。
 
 ## v3.3.0 - 2017-06-23
 ### Added
