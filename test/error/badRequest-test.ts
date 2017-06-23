@@ -5,10 +5,16 @@
  */
 
 import * as assert from 'assert';
-import { BadRequestError } from '../../lib/error/BadRequestError';
+import { BadRequestError } from '../../lib/error/badRequest';
 import { errors, notApplicable } from '../../lib/error/errors';
 
 describe('BadRequestエラー', () => {
+    it('メッセージがundefinedの場合エラーリストは空配列', async () => {
+        const badRequestError = new BadRequestError();
+        assert(Array.isArray(badRequestError.errors));
+        assert.equal(badRequestError.errors.length, 0);
+    });
+
     it('正常 該当なし', async () => {
         const code = '***';
         const info = '***';
@@ -28,6 +34,7 @@ describe('BadRequestエラー', () => {
         assert.equal(badRequestError.errors[0].content, notApplicable.content);
         assert.equal(badRequestError.errors[0].userMessage, notApplicable.userMessage);
     });
+
     it('正常', async () => {
         const code = 'E01';
         const info = 'E01010008';
@@ -47,6 +54,7 @@ describe('BadRequestエラー', () => {
         assert.equal(badRequestError.errors[0].content, error.content);
         assert.equal(badRequestError.errors[0].userMessage, error.userMessage);
     });
+
     it('正常　複数', async () => {
         const codeList = ['E01', 'E01', 'E01'];
         const infoList = ['E01010008', 'E01020008', 'E01030002'];
@@ -67,6 +75,7 @@ describe('BadRequestエラー', () => {
                     userMessage: ''
                 };
             }
+
             return error;
         });
 
@@ -80,6 +89,7 @@ describe('BadRequestエラー', () => {
             assert.equal(badRequestError.errors[i].userMessage, errorList[i].userMessage);
         }
     });
+
     it('Error継承', async () => {
         const code = 'E01';
         const info = 'E01010008';

@@ -88,7 +88,7 @@ describe('カード決済 取引状態参照', () => {
 });
 describe('カード決済 金額変更', () => {
     it('失敗', () => __awaiter(this, void 0, void 0, function* () {
-        let entryTranError;
+        let changeTranError;
         try {
             // 金額変更
             yield CreditService.changeTran({
@@ -101,9 +101,9 @@ describe('カード決済 金額変更', () => {
             });
         }
         catch (error) {
-            entryTranError = error;
+            changeTranError = error;
         }
-        assert(entryTranError instanceof Error);
+        assert(changeTranError instanceof Error);
     }));
     it('正常 仮-実-仮-実', () => __awaiter(this, void 0, void 0, function* () {
         const orderId = Date.now().toString();

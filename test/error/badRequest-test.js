@@ -14,14 +14,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const assert = require("assert");
-const BadRequestError_1 = require("../../lib/error/BadRequestError");
+const badRequest_1 = require("../../lib/error/badRequest");
 const errors_1 = require("../../lib/error/errors");
 describe('BadRequestエラー', () => {
+    it('メッセージがundefinedの場合エラーリストは空配列', () => __awaiter(this, void 0, void 0, function* () {
+        const badRequestError = new badRequest_1.BadRequestError();
+        assert(Array.isArray(badRequestError.errors));
+        assert.equal(badRequestError.errors.length, 0);
+    }));
     it('正常 該当なし', () => __awaiter(this, void 0, void 0, function* () {
         const code = '***';
         const info = '***';
         const message = `ErrCode=${code}&ErrInfo=${info}`;
-        const badRequestError = new BadRequestError_1.BadRequestError(message);
+        const badRequestError = new badRequest_1.BadRequestError(message);
         const error = errors_1.errors.list.find((value) => {
             return (value.code === code && value.info === info);
         });
@@ -40,7 +45,7 @@ describe('BadRequestエラー', () => {
         const code = 'E01';
         const info = 'E01010008';
         const message = `ErrCode=${code}&ErrInfo=${info}`;
-        const badRequestError = new BadRequestError_1.BadRequestError(message);
+        const badRequestError = new badRequest_1.BadRequestError(message);
         const error = errors_1.errors.list.find((value) => {
             return (value.code === code && value.info === info);
         });
@@ -59,7 +64,7 @@ describe('BadRequestエラー', () => {
         const codeList = ['E01', 'E01', 'E01'];
         const infoList = ['E01010008', 'E01020008', 'E01030002'];
         const message = `ErrCode=${codeList.join('|')}&ErrInfo=${infoList.join('|')}`;
-        const badRequestError = new BadRequestError_1.BadRequestError(message);
+        const badRequestError = new badRequest_1.BadRequestError(message);
         const errorList = codeList.map((code, index) => {
             const error = errors_1.errors.list.find((value) => {
                 return (value.code === code && value.info === infoList[index]);
@@ -91,7 +96,7 @@ describe('BadRequestエラー', () => {
         const code = 'E01';
         const info = 'E01010008';
         const message = `ErrCode=${code}&ErrInfo=${info}`;
-        const badRequestError = new BadRequestError_1.BadRequestError(message);
+        const badRequestError = new badRequest_1.BadRequestError(message);
         const error = new Error(message);
         assert(badRequestError instanceof Error);
         assert.equal(badRequestError.message, error.message);
