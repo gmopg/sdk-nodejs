@@ -627,7 +627,14 @@ export async function searchCard(args: ISearchCardArgs): Promise<ISearchCardResu
 
     const result = querystring.parse(body);
     if (result.ErrCode !== undefined) {
-        throw new BadRequestError(body);
+        const error = new BadRequestError(body);
+
+        // 会員は存在してカードが存在しない場合、空配列を返すように、特別扱い
+        if (error.errors.length === 1 && error.errors[0].info === 'E01240002') {
+            return [];
+        }
+
+        throw error;
     }
 
     const cardSeqArry: string[] = result.CardSeq.split('|');
