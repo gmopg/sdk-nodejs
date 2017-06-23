@@ -38,13 +38,13 @@ const getCreditServiceOnRoot = util.deprecate(
 );
 
 /**
- * @deprecated
+ * @deprecated v4.0.0でutils.utilに以降の予定です
  */
 // tslint:disable-next-line:variable-name
 export const Util = <typeof gmoUtil>getUtilOnRoot();
 
 /**
- * @deprecated
+ * @deprecated v4.0.0でservices.creditに以降の予定です
  */
 // tslint:disable-next-line:variable-name
 export const CreditService = <typeof creditService>getCreditServiceOnRoot();

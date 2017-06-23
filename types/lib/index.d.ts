@@ -9,10 +9,10 @@ export declare const utils: {
     util: typeof gmoUtil;
 };
 /**
- * @deprecated
+ * @deprecated v4.0.0でutils.utilに以降の予定です
  */
 export declare const Util: typeof gmoUtil;
 /**
- * @deprecated
+ * @deprecated v4.0.0でservices.creditに以降の予定です
  */
 export declare const CreditService: typeof creditService;

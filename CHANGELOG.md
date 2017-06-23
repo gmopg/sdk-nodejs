@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## Unreleased
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## v3.3.0 - 2017-06-23
+### Added
 - 会員インターフェースを追加。
 
 ### Changed
@@ -12,8 +25,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Deprecated
 - indexファイルのルートオブジェクトにサービスやユーティリティをエクスポートすることを非推奨に設定。
-
-### Removed
 
 ### Fixed
 - BadRequestErrorのコンストラクター引数がundefinedの場合に、適切にエラーオブジェクトを生成できないバグを修正。
@@ -23,7 +34,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - [typescript@^2.4.0](https://github.com/Microsoft/TypeScript)
 - [tslint@^5.4.3](https://github.com/palantir/tslint)に対応
 - テストコード調整。
-
 
 ## v3.2.1 - 2017-05-18
 ### Added
