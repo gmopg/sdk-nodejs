@@ -60,7 +60,7 @@ describe('会員更新', () => {
     let TEST_MEMBER_ID: string;
     let TEST_MEMBER_NAME: string;
     beforeEach(async () => {
-        TEST_MEMBER_ID = Date.now().toString();
+        TEST_MEMBER_ID = `gmo-service.test.services.card-test.${Date.now().toString()}`;
         TEST_MEMBER_NAME = 'test member name';
 
         // テスト会員作成
@@ -192,7 +192,7 @@ describe('カード登録', () => {
     let TEST_MEMBER_ID: string;
     let TEST_MEMBER_NAME: string;
     beforeEach(async () => {
-        TEST_MEMBER_ID = Date.now().toString();
+        TEST_MEMBER_ID = `gmo-service.test.services.card-test.${Date.now().toString()}`;
         TEST_MEMBER_NAME = 'test member name';
 
         // テスト会員作成
@@ -252,7 +252,7 @@ describe('カード削除', () => {
     let TEST_MEMBER_ID: string;
     let TEST_MEMBER_NAME: string;
     beforeEach(async () => {
-        TEST_MEMBER_ID = Date.now().toString();
+        TEST_MEMBER_ID = `gmo-service.test.services.card-test.${Date.now().toString()}`;
         TEST_MEMBER_NAME = 'test member name';
 
         // テスト会員作成
@@ -317,6 +317,30 @@ describe('カード削除', () => {
 });
 
 describe('カード参照', () => {
+    let TEST_MEMBER_ID: string;
+    let TEST_MEMBER_NAME: string;
+    beforeEach(async () => {
+        TEST_MEMBER_ID = `gmo-service.test.services.card-test.${Date.now().toString()}`;
+        TEST_MEMBER_NAME = 'test member name';
+
+        // テスト会員作成
+        await CardService.saveMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            memberName: TEST_MEMBER_NAME
+        });
+    });
+
+    afterEach(async () => {
+        // テスト会員削除
+        await CardService.deleteMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID
+        });
+    });
+
     it('サイトIDが不適切なのでGMOエラー', async () => {
         const memberId = Date.now().toString();
 
@@ -328,5 +352,28 @@ describe('カード参照', () => {
         }).catch((error) => error);
 
         assert(searchCardError instanceof BadRequestError);
+    });
+
+    it('会員が存在しない場合GMOエラー', async () => {
+        const searchCardError = await CardService.searchCard({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: 'xxx',
+            seqMode: Util.SEQ_MODE_PHYSICS
+        }).catch((error) => error);
+
+        assert(searchCardError instanceof BadRequestError);
+    });
+
+    it('会員は存在するがカードがない場合、空配列を返す', async () => {
+        const searchCardResults = await CardService.searchCard({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            seqMode: Util.SEQ_MODE_PHYSICS
+        });
+
+        assert(Array.isArray(searchCardResults));
+        assert.equal(searchCardResults.length, 0);
     });
 });

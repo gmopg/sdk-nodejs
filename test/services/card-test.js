@@ -60,7 +60,7 @@ describe('会員更新', () => {
     let TEST_MEMBER_ID;
     let TEST_MEMBER_NAME;
     beforeEach(() => __awaiter(this, void 0, void 0, function* () {
-        TEST_MEMBER_ID = Date.now().toString();
+        TEST_MEMBER_ID = `gmo-service.test.services.card-test.${Date.now().toString()}`;
         TEST_MEMBER_NAME = 'test member name';
         // テスト会員作成
         yield CardService.saveMember({
@@ -171,7 +171,7 @@ describe('カード登録', () => {
     let TEST_MEMBER_ID;
     let TEST_MEMBER_NAME;
     beforeEach(() => __awaiter(this, void 0, void 0, function* () {
-        TEST_MEMBER_ID = Date.now().toString();
+        TEST_MEMBER_ID = `gmo-service.test.services.card-test.${Date.now().toString()}`;
         TEST_MEMBER_NAME = 'test member name';
         // テスト会員作成
         yield CardService.saveMember({
@@ -223,7 +223,7 @@ describe('カード削除', () => {
     let TEST_MEMBER_ID;
     let TEST_MEMBER_NAME;
     beforeEach(() => __awaiter(this, void 0, void 0, function* () {
-        TEST_MEMBER_ID = Date.now().toString();
+        TEST_MEMBER_ID = `gmo-service.test.services.card-test.${Date.now().toString()}`;
         TEST_MEMBER_NAME = 'test member name';
         // テスト会員作成
         yield CardService.saveMember({
@@ -279,6 +279,27 @@ describe('カード削除', () => {
     }));
 });
 describe('カード参照', () => {
+    let TEST_MEMBER_ID;
+    let TEST_MEMBER_NAME;
+    beforeEach(() => __awaiter(this, void 0, void 0, function* () {
+        TEST_MEMBER_ID = `gmo-service.test.services.card-test.${Date.now().toString()}`;
+        TEST_MEMBER_NAME = 'test member name';
+        // テスト会員作成
+        yield CardService.saveMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            memberName: TEST_MEMBER_NAME
+        });
+    }));
+    afterEach(() => __awaiter(this, void 0, void 0, function* () {
+        // テスト会員削除
+        yield CardService.deleteMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID
+        });
+    }));
     it('サイトIDが不適切なのでGMOエラー', () => __awaiter(this, void 0, void 0, function* () {
         const memberId = Date.now().toString();
         const searchCardError = yield CardService.searchCard({
@@ -288,5 +309,24 @@ describe('カード参照', () => {
             seqMode: Util.SEQ_MODE_PHYSICS
         }).catch((error) => error);
         assert(searchCardError instanceof badRequest_1.BadRequestError);
+    }));
+    it('会員が存在しない場合GMOエラー', () => __awaiter(this, void 0, void 0, function* () {
+        const searchCardError = yield CardService.searchCard({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: 'xxx',
+            seqMode: Util.SEQ_MODE_PHYSICS
+        }).catch((error) => error);
+        assert(searchCardError instanceof badRequest_1.BadRequestError);
+    }));
+    it('会員は存在するがカードがない場合、空配列を返す', () => __awaiter(this, void 0, void 0, function* () {
+        const searchCardResults = yield CardService.searchCard({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            seqMode: Util.SEQ_MODE_PHYSICS
+        });
+        assert(Array.isArray(searchCardResults));
+        assert.equal(searchCardResults.length, 0);
     }));
 });
