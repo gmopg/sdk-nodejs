@@ -6,7 +6,7 @@
 import * as createDebug from 'debug';
 import * as querystring from 'querystring';
 import * as request from 'request-promise-native';
-import { BadRequestError } from '../error/BadRequestError';
+import { BadRequestError } from '../error/badRequest';
 
 const debug = createDebug('gmo-service:services:card');
 

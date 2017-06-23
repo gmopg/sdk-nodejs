@@ -25,7 +25,8 @@ export class BadRequestError extends Error {
      * @returns {IError[]}
      */
     private parseErrorMessage(): IError[] {
-        if (this.message === undefined) {
+        // 継承元のErrorでmessageはstringに変換される
+        if (this.message.length === 0) {
             return [];
         }
         const errorMessage = querystring.parse(this.message);

@@ -14,185 +14,205 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const assert = require("assert");
+const badRequest_1 = require("../../lib/error/badRequest");
 const CardService = require("../../lib/services/card");
 const Util = require("../../lib/utils/util");
+const TEST_INVALID_SITE_ID = '********';
+const TEST_INVALID_SITE_PASS = '********';
+const TEST_SITE_ID = process.env.TEST_GMO_SITE_ID;
+const TEST_SITE_PASS = process.env.TEST_GMO_SITE_PASS;
 describe('会員登録', () => {
-    it('失敗', () => __awaiter(this, void 0, void 0, function* () {
+    it('サイトIDが不適切なのでGMOエラー', () => __awaiter(this, void 0, void 0, function* () {
         const memberId = Date.now().toString();
-        let saveMemberError;
-        try {
-            yield CardService.saveMember({
-                siteId: '********',
-                sitePass: '********',
-                memberId: memberId
-            });
-        }
-        catch (error) {
-            saveMemberError = error;
-        }
-        assert(saveMemberError instanceof Error);
+        const saveMemberError = yield CardService.saveMember({
+            siteId: TEST_INVALID_SITE_ID,
+            sitePass: TEST_INVALID_SITE_PASS,
+            memberId: memberId
+        }).catch((error) => error);
+        assert(saveMemberError instanceof badRequest_1.BadRequestError);
     }));
     it('正常', () => __awaiter(this, void 0, void 0, function* () {
         const memberId = Date.now().toString();
         const siteId = process.env.TEST_GMO_SITE_ID;
         const sitePass = process.env.TEST_GMO_SITE_PASS;
-        const saveMemberResult = yield CardService.saveMember({
+        yield CardService.saveMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: memberId
         });
+        // 会員検索して正常に存在していることを確認
         const searchMemberResult = yield CardService.searchMember({
             siteId: siteId,
             sitePass: sitePass,
-            memberId: saveMemberResult.memberId
+            memberId: memberId
         });
         assert.equal(searchMemberResult.deleteFlag, '0');
         assert.equal(searchMemberResult.memberId, memberId);
+        // テスト会員削除
+        yield CardService.deleteMember({
+            siteId: siteId,
+            sitePass: sitePass,
+            memberId: memberId
+        });
     }));
 });
 describe('会員更新', () => {
-    it('失敗', () => __awaiter(this, void 0, void 0, function* () {
-        const memberId = Date.now().toString();
-        let updateMemberError;
-        try {
-            yield CardService.updateMember({
-                siteId: '********',
-                sitePass: '********',
-                memberId: memberId
-            });
-        }
-        catch (error) {
-            updateMemberError = error;
-        }
-        assert(updateMemberError instanceof Error);
+    let TEST_MEMBER_ID;
+    let TEST_MEMBER_NAME;
+    beforeEach(() => __awaiter(this, void 0, void 0, function* () {
+        TEST_MEMBER_ID = Date.now().toString();
+        TEST_MEMBER_NAME = 'test member name';
+        // テスト会員作成
+        yield CardService.saveMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            memberName: TEST_MEMBER_NAME
+        });
+    }));
+    afterEach(() => __awaiter(this, void 0, void 0, function* () {
+        // テスト会員削除
+        yield CardService.deleteMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID
+        });
+    }));
+    it('サイトIDが不適切なのでGMOエラー', () => __awaiter(this, void 0, void 0, function* () {
+        const updateMemberError = yield CardService.updateMember({
+            siteId: TEST_INVALID_SITE_ID,
+            sitePass: TEST_INVALID_SITE_PASS,
+            memberId: TEST_MEMBER_ID
+        }).catch((error) => error);
+        assert(updateMemberError instanceof badRequest_1.BadRequestError);
     }));
     it('正常', () => __awaiter(this, void 0, void 0, function* () {
-        const memberId = Date.now().toString();
-        const siteId = process.env.TEST_GMO_SITE_ID;
-        const sitePass = process.env.TEST_GMO_SITE_PASS;
-        const memberName = 'TEST';
-        const saveMemberResult = yield CardService.saveMember({
-            siteId: siteId,
-            sitePass: sitePass,
-            memberId: memberId
-        });
-        const updateMemberResult = yield CardService.updateMember({
-            siteId: siteId,
-            sitePass: sitePass,
-            memberId: saveMemberResult.memberId,
-            memberName: memberName
-        });
-        const searchMemberResult = yield CardService.searchMember({
-            siteId: siteId,
-            sitePass: sitePass,
-            memberId: updateMemberResult.memberId
+        const memberNameAfter = 'memberName after';
+        // 会員検索して正常に更新できていることを確認
+        let searchMemberResult = yield CardService.searchMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID
         });
         assert.equal(searchMemberResult.deleteFlag, '0');
-        assert.equal(searchMemberResult.memberId, memberId);
-        assert.equal(searchMemberResult.memberName, memberName);
+        assert.equal(searchMemberResult.memberId, TEST_MEMBER_ID);
+        assert.equal(searchMemberResult.memberName, TEST_MEMBER_NAME);
+        // 更新
+        yield CardService.updateMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            memberName: memberNameAfter
+        });
+        // 会員検索して正常に更新できていることを確認
+        searchMemberResult = yield CardService.searchMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID
+        });
+        assert.equal(searchMemberResult.deleteFlag, '0');
+        assert.equal(searchMemberResult.memberId, TEST_MEMBER_ID);
+        assert.equal(searchMemberResult.memberName, memberNameAfter);
     }));
 });
 describe('会員削除', () => {
-    it('失敗', () => __awaiter(this, void 0, void 0, function* () {
+    it('サイトIDが不適切なのでGMOエラー', () => __awaiter(this, void 0, void 0, function* () {
         const memberId = Date.now().toString();
-        let deleteMemberError;
-        try {
-            yield CardService.deleteMember({
-                siteId: '********',
-                sitePass: '********',
-                memberId: memberId
-            });
-        }
-        catch (error) {
-            deleteMemberError = error;
-        }
-        assert(deleteMemberError instanceof Error);
+        const deleteMemberError = yield CardService.deleteMember({
+            siteId: TEST_INVALID_SITE_ID,
+            sitePass: TEST_INVALID_SITE_PASS,
+            memberId: memberId
+        }).catch((error) => error);
+        assert(deleteMemberError instanceof badRequest_1.BadRequestError);
     }));
     it('正常', () => __awaiter(this, void 0, void 0, function* () {
         const memberId = Date.now().toString();
         const siteId = process.env.TEST_GMO_SITE_ID;
         const sitePass = process.env.TEST_GMO_SITE_PASS;
-        let searchMemberError;
-        const saveMemberResult = yield CardService.saveMember({
+        yield CardService.saveMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: memberId
         });
-        const deleteMemberResult = yield CardService.deleteMember({
+        // 会員の存在を確認
+        const searchMemberResult = yield CardService.searchMember({
             siteId: siteId,
             sitePass: sitePass,
-            memberId: saveMemberResult.memberId
+            memberId: memberId
         });
-        try {
-            yield CardService.searchMember({
-                siteId: siteId,
-                sitePass: sitePass,
-                memberId: deleteMemberResult.memberId
-            });
-        }
-        catch (error) {
-            searchMemberError = error;
-        }
-        assert(searchMemberError instanceof Error);
+        assert.equal(searchMemberResult.deleteFlag, '0');
+        assert.equal(searchMemberResult.memberId, memberId);
+        yield CardService.deleteMember({
+            siteId: siteId,
+            sitePass: sitePass,
+            memberId: memberId
+        });
+        // 会員検索でエラーになることを確認
+        const searchMemberError = yield CardService.searchMember({
+            siteId: siteId,
+            sitePass: sitePass,
+            memberId: memberId
+        }).catch((error) => error);
+        assert(searchMemberError instanceof badRequest_1.BadRequestError);
     }));
 });
 describe('会員参照', () => {
-    it('失敗', () => __awaiter(this, void 0, void 0, function* () {
+    it('サイトIDが不適切なのでGMOエラー', () => __awaiter(this, void 0, void 0, function* () {
         const memberId = Date.now().toString();
-        let searchMemberError;
-        try {
-            yield CardService.searchMember({
-                siteId: '********',
-                sitePass: '********',
-                memberId: memberId
-            });
-        }
-        catch (error) {
-            searchMemberError = error;
-        }
-        assert(searchMemberError instanceof Error);
+        const searchMemberError = yield CardService.searchMember({
+            siteId: TEST_INVALID_SITE_ID,
+            sitePass: TEST_INVALID_SITE_PASS,
+            memberId: memberId
+        }).catch((error) => error);
+        assert(searchMemberError instanceof badRequest_1.BadRequestError);
     }));
 });
 describe('カード登録', () => {
-    it('失敗', () => __awaiter(this, void 0, void 0, function* () {
-        let saveCardError;
-        try {
-            yield CardService.saveCard({
-                siteId: '********',
-                sitePass: '********',
-                memberId: '********',
-                cardNo: '4111111111111111',
-                expire: '2012'
-            });
-        }
-        catch (error) {
-            saveCardError = error;
-        }
-        assert(saveCardError instanceof Error);
+    let TEST_MEMBER_ID;
+    let TEST_MEMBER_NAME;
+    beforeEach(() => __awaiter(this, void 0, void 0, function* () {
+        TEST_MEMBER_ID = Date.now().toString();
+        TEST_MEMBER_NAME = 'test member name';
+        // テスト会員作成
+        yield CardService.saveMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            memberName: TEST_MEMBER_NAME
+        });
+    }));
+    afterEach(() => __awaiter(this, void 0, void 0, function* () {
+        // テスト会員削除
+        yield CardService.deleteMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID
+        });
+    }));
+    it('サイトIDが不適切なのでGMOエラー', () => __awaiter(this, void 0, void 0, function* () {
+        const saveCardError = yield CardService.saveCard({
+            siteId: TEST_INVALID_SITE_ID,
+            sitePass: TEST_INVALID_SITE_PASS,
+            memberId: '********',
+            cardNo: '4111111111111111',
+            expire: '2012'
+        }).catch((error) => error);
+        assert(saveCardError instanceof badRequest_1.BadRequestError);
     }));
     it('正常', () => __awaiter(this, void 0, void 0, function* () {
-        const memberId = Date.now().toString();
-        const siteId = process.env.TEST_GMO_SITE_ID;
-        const sitePass = process.env.TEST_GMO_SITE_PASS;
-        // 会員登録
-        const saveMemberResult = yield CardService.saveMember({
-            siteId: siteId,
-            sitePass: sitePass,
-            memberId: memberId
-        });
         // カード登録
         const saveCardResult = yield CardService.saveCard({
-            siteId: siteId,
-            sitePass: sitePass,
-            memberId: saveMemberResult.memberId,
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
             cardNo: '4111111111111111',
             expire: '2012'
         });
         // カード参照
         const searchCardResults = yield CardService.searchCard({
-            siteId: siteId,
-            sitePass: sitePass,
-            memberId: saveMemberResult.memberId,
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
             seqMode: Util.SEQ_MODE_LOGIC
         });
         assert.equal(searchCardResults[0].cardNo, saveCardResult.cardNo);
@@ -200,51 +220,57 @@ describe('カード登録', () => {
     }));
 });
 describe('カード削除', () => {
-    it('失敗', () => __awaiter(this, void 0, void 0, function* () {
-        let saveCardError;
-        try {
-            yield CardService.deleteCard({
-                siteId: '********',
-                sitePass: '********',
-                memberId: '********',
-                cardSeq: '0'
-            });
-        }
-        catch (error) {
-            saveCardError = error;
-        }
-        assert(saveCardError instanceof Error);
+    let TEST_MEMBER_ID;
+    let TEST_MEMBER_NAME;
+    beforeEach(() => __awaiter(this, void 0, void 0, function* () {
+        TEST_MEMBER_ID = Date.now().toString();
+        TEST_MEMBER_NAME = 'test member name';
+        // テスト会員作成
+        yield CardService.saveMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            memberName: TEST_MEMBER_NAME
+        });
+    }));
+    afterEach(() => __awaiter(this, void 0, void 0, function* () {
+        // テスト会員削除
+        yield CardService.deleteMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID
+        });
+    }));
+    it('サイトIDが不適切なのでGMOエラー', () => __awaiter(this, void 0, void 0, function* () {
+        const saveCardError = yield CardService.deleteCard({
+            siteId: TEST_INVALID_SITE_ID,
+            sitePass: TEST_INVALID_SITE_PASS,
+            memberId: '********',
+            cardSeq: '0'
+        }).catch((error) => error);
+        assert(saveCardError instanceof badRequest_1.BadRequestError);
     }));
     it('正常', () => __awaiter(this, void 0, void 0, function* () {
-        const memberId = Date.now().toString();
-        const siteId = process.env.TEST_GMO_SITE_ID;
-        const sitePass = process.env.TEST_GMO_SITE_PASS;
-        // 会員登録
-        const saveMemberResult = yield CardService.saveMember({
-            siteId: siteId,
-            sitePass: sitePass,
-            memberId: memberId
-        });
         // カード登録
         const saveCardResult = yield CardService.saveCard({
-            siteId: siteId,
-            sitePass: sitePass,
-            memberId: saveMemberResult.memberId,
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
             cardNo: '4111111111111111',
             expire: '2012'
         });
         // カード削除
         yield CardService.deleteCard({
-            siteId: siteId,
-            sitePass: sitePass,
-            memberId: saveMemberResult.memberId,
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
             cardSeq: saveCardResult.cardSeq
         });
         // カード参照
         const searchCardResults = yield CardService.searchCard({
-            siteId: siteId,
-            sitePass: sitePass,
-            memberId: saveMemberResult.memberId,
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
             seqMode: Util.SEQ_MODE_PHYSICS
         });
         assert.equal(searchCardResults[0].cardNo, saveCardResult.cardNo);
@@ -253,20 +279,14 @@ describe('カード削除', () => {
     }));
 });
 describe('カード参照', () => {
-    it('失敗', () => __awaiter(this, void 0, void 0, function* () {
+    it('サイトIDが不適切なのでGMOエラー', () => __awaiter(this, void 0, void 0, function* () {
         const memberId = Date.now().toString();
-        let searchCardError;
-        try {
-            yield CardService.searchCard({
-                siteId: '********',
-                sitePass: '********',
-                memberId: memberId,
-                seqMode: Util.SEQ_MODE_PHYSICS
-            });
-        }
-        catch (error) {
-            searchCardError = error;
-        }
-        assert(searchCardError instanceof Error);
+        const searchCardError = yield CardService.searchCard({
+            siteId: TEST_INVALID_SITE_ID,
+            sitePass: TEST_INVALID_SITE_PASS,
+            memberId: memberId,
+            seqMode: Util.SEQ_MODE_PHYSICS
+        }).catch((error) => error);
+        assert(searchCardError instanceof badRequest_1.BadRequestError);
     }));
 });

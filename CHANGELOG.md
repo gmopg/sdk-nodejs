@@ -16,11 +16,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Removed
 
 ### Fixed
+- BadRequestErrorのコンストラクター引数がundefinedの場合に、適切にエラーオブジェクトを生成できないバグを修正。
 
 ### Security
 - 依存パッケージを最新に更新。
 - [typescript@^2.4.0](https://github.com/Microsoft/TypeScript)
 - [tslint@^5.4.3](https://github.com/palantir/tslint)に対応
+- テストコード調整。
 
 
 ## v3.2.1 - 2017-05-18
