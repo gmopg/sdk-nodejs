@@ -179,7 +179,7 @@ export interface ISearchMemberResult {
  * @param {string} args.memberId 会員ID
  * @returns {Promise<ISearchMemberResult>} 会員参照out
  */
-export declare function searchMember(args: ISearchMemberArgs): Promise<ISearchMemberResult>;
+export declare function searchMember(args: ISearchMemberArgs): Promise<ISearchMemberResult | null>;
 /**
  * カード登録・更新in
  * @memberof services/card

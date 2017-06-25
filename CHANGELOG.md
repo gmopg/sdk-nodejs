@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
+- 会員参照で、指定されたサイトIDと会員IDの会員が存在しない場合、nullを返すように変更。
 
 ### Deprecated
 
@@ -15,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+- [nyc@^11.0.2](https://www.npmjs.com/package/nyc)をテストスクリプトに追加。
 
 ## v3.4.0 - 2017-06-23
 ### Changed

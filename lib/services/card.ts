@@ -256,7 +256,7 @@ export interface ISearchMemberResult {
  * @param {string} args.memberId 会員ID
  * @returns {Promise<ISearchMemberResult>} 会員参照out
  */
-export async function searchMember(args: ISearchMemberArgs): Promise<ISearchMemberResult> {
+export async function searchMember(args: ISearchMemberArgs): Promise<ISearchMemberResult | null> {
     debug('requesting...', args);
     const body = await request.post({
         url: `${process.env.GMO_ENDPOINT}/payment/SearchMember.idPass`,
@@ -270,7 +270,14 @@ export async function searchMember(args: ISearchMemberArgs): Promise<ISearchMemb
 
     const result = querystring.parse(body);
     if (result.ErrCode !== undefined) {
-        throw new BadRequestError(body);
+        const error = new BadRequestError(body);
+
+        // 指定されたサイトIDと会員IDの会員が存在しない場合、nullを返すように、特別扱い
+        if (error.errors.length === 1 && error.errors[0].info === 'E01390002') {
+            return null;
+        }
+
+        throw error;
     }
 
     return {

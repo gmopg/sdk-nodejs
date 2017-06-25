@@ -60,7 +60,7 @@
     "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.json",
     "nyc": "nyc mocha",
     "snyk": "snyk auth && snyk test --ignore-policy",
-    "test": "npm run check && mocha",
+    "test": "npm run check && npm run nyc",
     "tslint": "tslint --type-check --project tsconfig.json -c tslint.json lib/**/*.ts test/**/*.ts",
     "preversion": "npm run clean && npm run build && npm test",
     "version": "git add -A",

@@ -15,20 +15,42 @@ const TEST_SITE_ID = process.env.TEST_GMO_SITE_ID;
 const TEST_SITE_PASS = process.env.TEST_GMO_SITE_PASS;
 
 describe('会員登録', () => {
-    it('サイトIDが不適切なのでGMOエラー', async () => {
-        const memberId = Date.now().toString();
+    let TEST_MEMBER_ID: string;
+    let TEST_MEMBER_NAME: string;
+    beforeEach(async () => {
+        TEST_MEMBER_ID = `gmo-service.test.services.card-test.${Date.now().toString()}`;
+        TEST_MEMBER_NAME = 'test member name';
 
+        // テスト会員作成
+        await CardService.saveMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            memberName: TEST_MEMBER_NAME
+        });
+    });
+
+    afterEach(async () => {
+        // テスト会員削除
+        await CardService.deleteMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID
+        });
+    });
+
+    it('サイトIDが不適切なのでGMOエラー', async () => {
         const saveMemberError = await CardService.saveMember({
             siteId: TEST_INVALID_SITE_ID,
             sitePass: TEST_INVALID_SITE_PASS,
-            memberId: memberId
+            memberId: TEST_MEMBER_ID
         }).catch((error) => error);
 
         assert(saveMemberError instanceof BadRequestError);
     });
 
     it('正常', async () => {
-        const memberId = Date.now().toString();
+        const memberId = `gmo-service.test.services.card-test.${Date.now().toString()}`;
         const siteId = process.env.TEST_GMO_SITE_ID;
         const sitePass = process.env.TEST_GMO_SITE_PASS;
 
@@ -39,11 +61,12 @@ describe('会員登録', () => {
         });
 
         // 会員検索して正常に存在していることを確認
-        const searchMemberResult = await CardService.searchMember({
+        const searchMemberResult = <CardService.ISearchMemberResult>await CardService.searchMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: memberId
         });
+        assert.notEqual(searchMemberResult, null);
         assert.equal(searchMemberResult.deleteFlag, '0');
         assert.equal(searchMemberResult.memberId, memberId);
 
@@ -95,11 +118,12 @@ describe('会員更新', () => {
         const memberNameAfter = 'memberName after';
 
         // 会員検索して正常に更新できていることを確認
-        let searchMemberResult = await CardService.searchMember({
+        let searchMemberResult = <CardService.ISearchMemberResult>await CardService.searchMember({
             siteId: TEST_SITE_ID,
             sitePass: TEST_SITE_PASS,
             memberId: TEST_MEMBER_ID
         });
+        assert.notEqual(searchMemberResult, null);
         assert.equal(searchMemberResult.deleteFlag, '0');
         assert.equal(searchMemberResult.memberId, TEST_MEMBER_ID);
         assert.equal(searchMemberResult.memberName, TEST_MEMBER_NAME);
@@ -113,11 +137,12 @@ describe('会員更新', () => {
         });
 
         // 会員検索して正常に更新できていることを確認
-        searchMemberResult = await CardService.searchMember({
+        searchMemberResult = <CardService.ISearchMemberResult>await CardService.searchMember({
             siteId: TEST_SITE_ID,
             sitePass: TEST_SITE_PASS,
             memberId: TEST_MEMBER_ID
         });
+        assert.notEqual(searchMemberResult, null);
         assert.equal(searchMemberResult.deleteFlag, '0');
         assert.equal(searchMemberResult.memberId, TEST_MEMBER_ID);
         assert.equal(searchMemberResult.memberName, memberNameAfter);
@@ -138,7 +163,7 @@ describe('会員削除', () => {
     });
 
     it('正常', async () => {
-        const memberId = Date.now().toString();
+        const memberId = `gmo-service.test.services.card-test.${Date.now().toString()}`;
         const siteId = process.env.TEST_GMO_SITE_ID;
         const sitePass = process.env.TEST_GMO_SITE_PASS;
 
@@ -149,13 +174,14 @@ describe('会員削除', () => {
         });
 
         // 会員の存在を確認
-        const searchMemberResult = await CardService.searchMember({
+        const searchMemberResultBefore = <CardService.ISearchMemberResult>await CardService.searchMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: memberId
         });
-        assert.equal(searchMemberResult.deleteFlag, '0');
-        assert.equal(searchMemberResult.memberId, memberId);
+        assert.notEqual(searchMemberResultBefore, null);
+        assert.equal(searchMemberResultBefore.deleteFlag, '0');
+        assert.equal(searchMemberResultBefore.memberId, memberId);
 
         await CardService.deleteMember({
             siteId: siteId,
@@ -164,27 +190,71 @@ describe('会員削除', () => {
         });
 
         // 会員検索でエラーになることを確認
-        const searchMemberError = await CardService.searchMember({
+        const searchMemberResultAfter = await CardService.searchMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: memberId
-        }).catch((error) => error);
-
-        assert(searchMemberError instanceof BadRequestError);
+        });
+        assert.equal(searchMemberResultAfter, null);
     });
 });
 
 describe('会員参照', () => {
-    it('サイトIDが不適切なのでGMOエラー', async () => {
-        const memberId = Date.now().toString();
+    let TEST_MEMBER_ID: string;
+    let TEST_MEMBER_NAME: string;
+    beforeEach(async () => {
+        TEST_MEMBER_ID = `gmo-service.test.services.card-test.${Date.now().toString()}`;
+        TEST_MEMBER_NAME = 'test member name';
 
+        // テスト会員作成
+        await CardService.saveMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            memberName: TEST_MEMBER_NAME
+        });
+    });
+
+    afterEach(async () => {
+        // テスト会員削除
+        await CardService.deleteMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID
+        });
+    });
+
+    it('サイトIDが不適切なのでGMOエラー', async () => {
         const searchMemberError = await CardService.searchMember({
             siteId: TEST_INVALID_SITE_ID,
             sitePass: TEST_INVALID_SITE_PASS,
-            memberId: memberId
+            memberId: TEST_MEMBER_ID
         }).catch((error) => error);
 
         assert(searchMemberError instanceof BadRequestError);
+    });
+
+    it('会員が存在しなければ結果はnull', async () => {
+        const memberId = `invalidMemberId-${Date.now().toString()}`;
+
+        const searchMemberResult = await CardService.searchMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: memberId
+        });
+
+        assert.equal(searchMemberResult, null);
+    });
+
+    it('会員が存在する', async () => {
+        const searchMemberResult = <CardService.ISearchMemberResult>await CardService.searchMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID
+        });
+
+        assert.notEqual(searchMemberResult, null);
+        assert.equal(searchMemberResult.memberId, TEST_MEMBER_ID);
     });
 });
 
