@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
+- インターフェースをエクスポートするように、indexモジュールでのエクスポート記述方法を変更。
 
 ### Deprecated
 

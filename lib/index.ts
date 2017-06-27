@@ -14,27 +14,27 @@ import * as cardService from './services/card';
 import * as creditService from './services/credit';
 import * as gmoUtil from './utils/util';
 
-export const services = {
-    card: cardService,
-    credit: creditService
-};
+export namespace services {
+    export import card = cardService;
+    export import credit = creditService;
+}
 
-export const utils = {
-    util: gmoUtil
-};
+export namespace utils {
+    export import util = gmoUtil;
+}
 
 const getUtilOnRoot = util.deprecate(
     () => {
         return gmoUtil;
     },
-    'Util is deprecated, use utils.util'
+    '@motionpicture/gmo-service:Util is deprecated, use utils.util'
 );
 
 const getCreditServiceOnRoot = util.deprecate(
     () => {
         return creditService;
     },
-    'CreditService is deprecated, use services.credit'
+    '@motionpicture/gmo-service:CreditService is deprecated, use services.credit'
 );
 
 /**
