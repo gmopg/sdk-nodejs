@@ -7,7 +7,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
-- インターフェースをエクスポートするように、indexモジュールでのエクスポート記述方法を変更。
 
 ### Deprecated
 
@@ -16,6 +15,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v3.5.1 - 2017-06-27
+### Changed
+- インターフェースをエクスポートするように、indexモジュールでのエクスポート記述方法を変更。
 
 ## v3.5.0 - 2017-06-25
 ### Changed
