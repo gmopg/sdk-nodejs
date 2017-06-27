@@ -1,13 +1,13 @@
 import * as cardService from './services/card';
 import * as creditService from './services/credit';
 import * as gmoUtil from './utils/util';
-export declare const services: {
-    card: typeof cardService;
-    credit: typeof creditService;
-};
-export declare const utils: {
-    util: typeof gmoUtil;
-};
+export declare namespace services {
+    export import card = cardService;
+    export import credit = creditService;
+}
+export declare namespace utils {
+    export import util = gmoUtil;
+}
 /**
  * @deprecated v4.0.0でutils.utilに以降の予定です
  */

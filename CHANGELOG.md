@@ -16,6 +16,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v3.5.1 - 2017-06-27
+### Changed
+- インターフェースをエクスポートするように、indexモジュールでのエクスポート記述方法を変更。
+
 ## v3.5.0 - 2017-06-25
 ### Changed
 - 会員参照で、指定されたサイトIDと会員IDの会員が存在しない場合、nullを返すように変更。
