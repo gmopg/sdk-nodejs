@@ -5,7 +5,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## Unreleased
 ### Added
-- カード会員で決済実行できるように、決済実行のパラメーターを拡張。
 
 ### Changed
 
@@ -16,6 +15,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v3.6.0 - 2017-06-29
+### Added
+- カード会員で決済実行できるように、決済実行のパラメーターを拡張。
 
 ## v3.5.1 - 2017-06-27
 ### Changed
