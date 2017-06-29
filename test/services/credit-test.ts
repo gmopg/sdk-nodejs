@@ -5,8 +5,13 @@
  */
 
 import * as assert from 'assert';
+import { BadRequestError } from '../../lib/error/badRequest';
+import * as CardService from '../../lib/services/card';
 import * as CreditService from '../../lib/services/credit';
 import * as Util from '../../lib/utils/util';
+
+const TEST_SITE_ID = process.env.TEST_GMO_SITE_ID;
+const TEST_SITE_PASS = process.env.TEST_GMO_SITE_PASS;
 
 describe('カード決済 取引登録', () => {
     it('失敗', async () => {
@@ -222,5 +227,96 @@ describe('カード決済 金額変更', () => {
         assert.equal(searchTradeResult.status, Util.JOB_CD_CAPTURE);
         assert.equal(searchTradeResult.orderId, orderId);
         assert.equal(searchTradeResult.amount, changeAmount);
+    });
+});
+
+describe('カード決済 決済実行', () => {
+    let TEST_MEMBER_ID: string;
+    let TEST_MEMBER_NAME: string;
+    let TEST_CARD_SEQ: string;
+    beforeEach(async () => {
+        TEST_MEMBER_ID = `gmo-service.test.services.credit-test.${Date.now().toString()}`;
+        TEST_MEMBER_NAME = 'test member name';
+
+        // テスト会員作成
+        await CardService.saveMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            memberName: TEST_MEMBER_NAME
+        });
+
+        // テストカード登録
+        TEST_CARD_SEQ = await CardService.saveCard({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            cardNo: '4111111111111111',
+            expire: '2812',
+            seqMode: Util.SEQ_MODE_PHYSICS
+        }).then((result) => result.cardSeq);
+    });
+
+    afterEach(async () => {
+        // テスト会員削除
+        await CardService.deleteMember({
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID
+        });
+    });
+
+    it('会員カードで実行できる', async () => {
+        // 取引作成
+        const orderId = Date.now().toString();
+        const entryTranResult = await CreditService.entryTran({
+            shopId: process.env.TEST_GMO_SHOP_ID,
+            shopPass: process.env.TEST_GMO_SHOP_PASS,
+            orderId: orderId,
+            jobCd: Util.JOB_CD_AUTH,
+            amount: 1234
+        });
+
+        // 決済実行
+        await CreditService.execTran({
+            accessId: entryTranResult.accessId,
+            accessPass: entryTranResult.accessPass,
+            orderId: orderId,
+            method: '1',
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            seqMode: Util.SEQ_MODE_PHYSICS,
+            // tslint:disable-next-line:no-magic-numbers
+            cardSeq: parseInt(TEST_CARD_SEQ, 10)
+        });
+    });
+
+    it('カード登録連番が存在しなければエラー', async () => {
+        // 取引作成
+        const orderId = Date.now().toString();
+        const entryTranResult = await CreditService.entryTran({
+            shopId: process.env.TEST_GMO_SHOP_ID,
+            shopPass: process.env.TEST_GMO_SHOP_PASS,
+            orderId: orderId,
+            jobCd: Util.JOB_CD_AUTH,
+            amount: 1234
+        });
+
+        // 決済実行
+        const execTranError = await CreditService.execTran({
+            accessId: entryTranResult.accessId,
+            accessPass: entryTranResult.accessPass,
+            orderId: orderId,
+            method: '1',
+            siteId: TEST_SITE_ID,
+            sitePass: TEST_SITE_PASS,
+            memberId: TEST_MEMBER_ID,
+            seqMode: Util.SEQ_MODE_PHYSICS,
+            // tslint:disable-next-line:no-magic-numbers
+            cardSeq: parseInt(TEST_CARD_SEQ, 10) + 1
+        }).catch((error) => error);
+
+        assert(execTranError instanceof BadRequestError);
     });
 });

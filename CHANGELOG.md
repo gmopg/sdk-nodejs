@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## Unreleased
 ### Added
+- カード会員で決済実行できるように、決済実行のパラメーターを拡張。
 
 ### Changed
 
