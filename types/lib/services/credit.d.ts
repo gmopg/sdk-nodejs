@@ -48,6 +48,12 @@ export interface IExecTranArgs {
     securityCode?: string;
     token?: string;
     pin?: string;
+    siteId?: string;
+    sitePass?: string;
+    memberId?: string;
+    seqMode?: string;
+    cardSeq?: number;
+    cardPass?: string;
     clientField1?: string;
     clientField2?: string;
     clientField3?: string;
@@ -119,18 +125,25 @@ export interface IExecTranResult {
  * @memberOf services/credit
  * @function execTran
  * @param {IExecTranArgs} args 決済実行in
- * @param {string} args.accessId
- * @param {string} args.accessPass
- * @param {string} args.orderId
- * @param {number} args.payTimes
- * @param {string} args.cardNo
- * @param {string} args.expire
- * @param {string} args.securityCode
- * @param {string} args.token
- * @param {string} args.pin
- * @param {string} args.clientField1
- * @param {string} args.clientField2
- * @param {string} args.clientField3
+ * @param {string} args.accessId 取引ID
+ * @param {string} args.accessPass 取引パスワード
+ * @param {string} args.orderId オーダーID
+ * @param {string} args.method 支払方法
+ * @param {number} args.payTimes 支払回数
+ * @param {string} args.cardNo カード番号
+ * @param {string} args.expire 有効期限
+ * @param {string} args.securityCode セキュリティーコード
+ * @param {string} args.token カード情報トークン
+ * @param {string} args.pin 暗証番号
+ * @param {string} args.siteId サイトID
+ * @param {string} args.sitePass サイトパスワード
+ * @param {string} args.memberId 会員ID
+ * @param {string} args.seqMode カード登録連番モード
+ * @param {number} args.cardSeq カード登録連番
+ * @param {string} args.cardPass カードパスワード
+ * @param {string} args.clientField1 加盟店自由項目1
+ * @param {string} args.clientField2 加盟店自由項目2
+ * @param {string} args.clientField3 加盟店自由項目3
  * @returns {Promise<IExecTranResult>} 決済実行out
  */
 export declare function execTran(args: IExecTranArgs): Promise<IExecTranResult>;
