@@ -275,7 +275,7 @@ describe('カード登録', () => {
             siteId: TEST_SITE_ID,
             sitePass: TEST_SITE_PASS,
             memberId: TEST_MEMBER_ID,
-            seqMode: Util.SEQ_MODE_LOGIC
+            seqMode: Util.SeqMode.Logic
         });
         assert.equal(searchCardResults[0].cardNo, saveCardResult.cardNo);
         assert.equal(searchCardResults[0].cardSeq, saveCardResult.cardSeq);
@@ -333,7 +333,7 @@ describe('カード削除', () => {
             siteId: TEST_SITE_ID,
             sitePass: TEST_SITE_PASS,
             memberId: TEST_MEMBER_ID,
-            seqMode: Util.SEQ_MODE_PHYSICS
+            seqMode: Util.SeqMode.Physics
         });
         assert.equal(searchCardResults[0].cardNo, saveCardResult.cardNo);
         assert.equal(searchCardResults[0].cardSeq, saveCardResult.cardSeq);
@@ -368,7 +368,7 @@ describe('カード参照', () => {
             siteId: TEST_INVALID_SITE_ID,
             sitePass: TEST_INVALID_SITE_PASS,
             memberId: memberId,
-            seqMode: Util.SEQ_MODE_PHYSICS
+            seqMode: Util.SeqMode.Physics
         }).catch((error) => error);
         assert(searchCardError instanceof badRequest_1.BadRequestError);
     }));
@@ -377,7 +377,7 @@ describe('カード参照', () => {
             siteId: TEST_SITE_ID,
             sitePass: TEST_SITE_PASS,
             memberId: 'xxx',
-            seqMode: Util.SEQ_MODE_PHYSICS
+            seqMode: Util.SeqMode.Physics
         }).catch((error) => error);
         assert(searchCardError instanceof badRequest_1.BadRequestError);
     }));
@@ -386,7 +386,7 @@ describe('カード参照', () => {
             siteId: TEST_SITE_ID,
             sitePass: TEST_SITE_PASS,
             memberId: TEST_MEMBER_ID,
-            seqMode: Util.SEQ_MODE_PHYSICS
+            seqMode: Util.SeqMode.Physics
         });
         assert(Array.isArray(searchCardResults));
         assert.equal(searchCardResults.length, 0);

@@ -1,197 +1,196 @@
 /**
- * 現金(実際GMOではありえないが)
- *
- * @memberOf utils/util
+ * 決済方法
+ * @memberof utils/util
+ * @enum PayType
  */
-export declare const PAY_TYPE_CASH = "Z";
+export declare enum PayType {
+    /**
+     * 現金(実際GMOではありえないが)
+     */
+    Cash = "Z",
+    /**
+     * カード
+     */
+    Credit = "0",
+    /**
+     * モバイルSuica
+     */
+    Suica = "1",
+    /**
+     * 楽天Edy
+     */
+    Edy = "2",
+    /**
+     * コンビニ
+     */
+    Cvs = "3",
+}
 /**
- * カード
- * @memberOf utils/util
+ * 支払い方法
+ * @memberof utils/util
+ * @enum Method
  */
-export declare const PAY_TYPE_CREDIT = "0";
+export declare enum Method {
+    /**
+     * 一括
+     */
+    Lump = "1",
+    /**
+     * 分割
+     */
+    Installment = "2",
+    /**
+     * ボーナス一括
+     */
+    BonusLump = "3",
+    /**
+     * リボ
+     */
+    Revolving = "4",
+    /**
+     * ボーナス分割
+     */
+    BonusInstallment = "5",
+}
 /**
- * モバイルSuica
- * @memberOf utils/util
+ * 現状態
+ * @memberof utils/util
+ * @enum Status
  */
-export declare const PAY_TYPE_SUICA = "1";
+export declare enum Status {
+    /**
+     * 未決済
+     */
+    Unprocessed = "UNPROCESSED",
+    /**
+     * 未決済(3D 登録済)
+     */
+    Authenticated = "AUTHENTICATED",
+    /**
+     * 有効性チェック
+     */
+    Check = "CHECK",
+    /**
+     * 即時売上
+     */
+    Capture = "CAPTURE",
+    /**
+     * 仮売上
+     */
+    Auth = "AUTH",
+    /**
+     * 実売上
+     */
+    Sales = "SALES",
+    /**
+     * 取消
+     */
+    Void = "VOID",
+    /**
+     * 返品
+     */
+    Return = "RETURN",
+    /**
+     * 月跨り返品
+     */
+    Returnx = "RETURNX",
+    /**
+     * 簡易オーソリ
+     */
+    Sauth = "SAUTH",
+    /**
+     * 要求成功
+     */
+    Reqsuccess = "REQSUCCESS",
+    /**
+     * 決済完了
+     */
+    Paysuccess = "PAYSUCCESS",
+    /**
+     * 決済失敗
+     */
+    Payfail = "PAYFAIL",
+    /**
+     * 期限切れ
+     */
+    Expired = "EXPIRED",
+    /**
+     * 支払い停止
+     */
+    Cancel = "CANCEL",
+}
 /**
- * 楽天Edy
- * @memberOf utils/util
+ * 処理区分
+ * @memberof utils/util
+ * @enum JobCd
  */
-export declare const PAY_TYPE_EDY = "2";
+export declare enum JobCd {
+    /**
+     * 有効性チェック
+     */
+    Check = "CHECK",
+    /**
+     * 即時売上
+     */
+    Capture = "CAPTURE",
+    /**
+     * 仮売上
+     */
+    Auth = "AUTH",
+    /**
+     * 実売上
+     */
+    Sales = "SALES",
+    /**
+     * 取消
+     */
+    Void = "VOID",
+    /**
+     * 返品
+     */
+    Return = "RETURN",
+    /**
+     * 月跨り返品
+     */
+    Returnx = "RETURNX",
+    /**
+     * 簡易オーソリ
+     */
+    Sauth = "SAUTH",
+}
 /**
- * コンビニ
- * @memberOf utils/util
+ * カード登録連番モード
+ * @memberof utils/util
+ * @enum SeqMode
  */
-export declare const PAY_TYPE_CVS = "3";
+export declare enum SeqMode {
+    /**
+     * 論理モード
+     */
+    Logic = "0",
+    /**
+     * カード登録連番物理モード
+     */
+    Physics = "1",
+}
 /**
- * 一括
- * @memberOf utils/util
+ * 洗替・継続課金対象
+ * @memberof utils/util
+ * @enum DefaultFlag
  */
-export declare const METHOD_LUMP = "1";
-/**
- * 分割
- * @memberOf utils/util
- */
-export declare const METHOD_INSTALLMENT = "2";
-/**
- * ボーナス一括
- * @memberOf utils/util
- */
-export declare const METHOD_BONUS_LUMP = "3";
-/**
- * リボ
- * @memberOf utils/util
- */
-export declare const METHOD_REVOLVING = "4";
-/**
- * ボーナス分割
- * @memberOf utils/util
- */
-export declare const METHOD_BONUS_INSTALLMENT = "5";
-/**
- * 未決済
- * @memberOf utils/util
- */
-export declare const STATUS_CVS_UNPROCESSED = "UNPROCESSED";
-/**
- * 要求成功
- * @memberOf utils/util
- */
-export declare const STATUS_CVS_REQSUCCESS = "REQSUCCESS";
-/**
- * 決済完了
- * @memberOf utils/util
- */
-export declare const STATUS_CVS_PAYSUCCESS = "PAYSUCCESS";
-/**
- * 決済失敗
- * @memberOf utils/util
- */
-export declare const STATUS_CVS_PAYFAIL = "PAYFAIL";
-/**
- * 期限切れ
- * @memberOf utils/util
- */
-export declare const STATUS_CVS_EXPIRED = "EXPIRED";
-/**
- * 支払い停止
- * @memberOf utils/util
- */
-export declare const STATUS_CVS_CANCEL = "CANCEL";
-/**
- * 未決済
- * @memberOf utils/util
- */
-export declare const STATUS_CREDIT_UNPROCESSED = "UNPROCESSED";
-/**
- * 未決済(3D 登録済)
- * @memberOf utils/util
- */
-export declare const STATUS_CREDIT_AUTHENTICATED = "AUTHENTICATED";
-/**
- * 有効性チェック
- * @memberOf utils/util
- */
-export declare const STATUS_CREDIT_CHECK = "CHECK";
-/**
- * 即時売上
- * @memberOf utils/util
- */
-export declare const STATUS_CREDIT_CAPTURE = "CAPTURE";
-/**
- * 仮売上
- * @memberOf utils/util
- */
-export declare const STATUS_CREDIT_AUTH = "AUTH";
-/**
- * 実売上
- * @memberOf utils/util
- */
-export declare const STATUS_CREDIT_SALES = "SALES";
-/**
- * 取消
- * @memberOf utils/util
- */
-export declare const STATUS_CREDIT_VOID = "VOID";
-/**
- * 返品
- * @memberOf utils/util
- */
-export declare const STATUS_CREDIT_RETURN = "RETURN";
-/**
- * 月跨り返品
- * @memberOf utils/util
- */
-export declare const STATUS_CREDIT_RETURNX = "RETURNX";
-/**
- * 簡易オーソリ
- * @memberOf utils/util
- */
-export declare const STATUS_CREDIT_SAUTH = "SAUTH";
-/**
- * 有効性チェック
- * @memberOf utils/util
- */
-export declare const JOB_CD_CHECK = "CHECK";
-/**
- * 即時売上
- * @memberOf utils/util
- */
-export declare const JOB_CD_CAPTURE = "CAPTURE";
-/**
- * 仮売上
- * @memberOf utils/util
- */
-export declare const JOB_CD_AUTH = "AUTH";
-/**
- * 実売上
- * @memberOf utils/util
- */
-export declare const JOB_CD_SALES = "SALES";
-/**
- * 取消
- * @memberOf utils/util
- */
-export declare const JOB_CD_VOID = "VOID";
-/**
- * 返品
- * @memberOf utils/util
- */
-export declare const JOB_CD_RETURN = "RETURN";
-/**
- * 月跨り返品
- * @memberOf utils/util
- */
-export declare const JOB_CD_RETURNX = "RETURNX";
-/**
- * 簡易オーソリ
- * @memberOf utils/util
- */
-export declare const JOB_CD_SAUTH = "SAUTH";
-/**
- * カード登録連番論理モード
- * @memberOf utils/util
- */
-export declare const SEQ_MODE_LOGIC = "0";
-/**
- * カード登録連番物理モード
- * @memberOf utils/util
- */
-export declare const SEQ_MODE_PHYSICS = "1";
-/**
- * 洗替・継続課金対象としない
- * @memberOf utils/util
- */
-export declare const DEFAULT_FLAG_BILLING_OBJECT = "0";
-/**
- * 洗替・継続課金対象とする
- * @memberOf utils/util
- */
-export declare const DEFAULT_FLAG_NOT_SUBJECT_TO_CHARGE = "1";
+export declare enum DefaultFlag {
+    /**
+     * 対象としない
+     */
+    BillingObject = "0",
+    /**
+     * 対象とする
+     */
+    NotSubjectToCharge = "1",
+}
 /**
  * ショップ情報確認文字列を作成するin
- * @memberOf utils/util
+ * @memberof utils/util
  * @interface CreateShopPassStringArgs
  */
 export interface ICreateShopPassStringArgs {
@@ -203,7 +202,7 @@ export interface ICreateShopPassStringArgs {
 }
 /**
  * ショップ情報確認文字列を作成する
- * @memberOf utils/util
+ * @memberof utils/util
  * @function createShopPassString
  * @param {ICreateShopPassStringArgs} args
  * @param {string} args.shopId

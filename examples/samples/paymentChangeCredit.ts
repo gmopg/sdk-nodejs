@@ -13,39 +13,39 @@ async function main() {
     const orderId = Date.now().toString();
     const amount = 1800;
     // 取引作成
-    const entryTranResult = await GMO.CreditService.entryTran({
+    const entryTranResult = await GMO.services.credit.entryTran({
         shopId: shopId,
         shopPass: shopPass,
         orderId: orderId,
-        jobCd: GMO.Util.JOB_CD_AUTH,
+        jobCd: GMO.utils.util.JobCd.Auth,
         amount: amount
     });
     // 決済実行
-    await GMO.CreditService.execTran({
+    await GMO.services.credit.execTran({
         accessId: entryTranResult.accessId,
         accessPass: entryTranResult.accessPass,
         orderId: orderId,
-        method: '1',
+        method: GMO.utils.util.Method.Lump,
         cardNo: '4111111111111111',
         expire: '2012',
         securityCode: '123'
     });
     // 決済変更
-    await GMO.CreditService.alterTran({
+    await GMO.services.credit.alterTran({
         shopId: shopId,
         shopPass: shopPass,
         accessId: entryTranResult.accessId,
         accessPass: entryTranResult.accessPass,
-        jobCd: GMO.Util.JOB_CD_SALES,
+        jobCd: GMO.utils.util.JobCd.Sales,
         amount: amount
     });
     // 金額変更
-    await GMO.CreditService.changeTran({
+    await GMO.services.credit.changeTran({
         shopId: shopId,
         shopPass: shopPass,
         accessId: entryTranResult.accessId,
         accessPass: entryTranResult.accessPass,
-        jobCd: GMO.Util.JOB_CD_CAPTURE,
+        jobCd: GMO.utils.util.JobCd.Capture,
         amount: 300
     });
 }

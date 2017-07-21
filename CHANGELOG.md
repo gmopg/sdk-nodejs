@@ -16,6 +16,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v4.0.0 - 2017-07-21
+### Changed
+ - 定数をenumへ変更
+
+### Removed
+ - CardServiceネームスペース削除
+ - Utilネームスペース削除
+
+### Security
+- 依存パッケージを最新に更新。
+- [@types/request-promise-native@^1.0.6](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/request-promise-native)
+- [jsdoc@^3.5.3](https://github.com/jsdoc3/jsdoc)
+- [nyc@^11.1.0](https://www.npmjs.com/package/nyc)
+- [snyk@^1.36.2](https://github.com/snyk/snyk)
+- [tslint@^5.5.0](https://github.com/palantir/tslint)
+- [tslint-microsoft-contrib@^5.0.1](https://github.com/Microsoft/tslint-microsoft-contrib)
+- [typescript@^2.4.2](https://github.com/Microsoft/TypeScript)
+
 ## v3.6.0 - 2017-06-29
 ### Added
 - カード会員で決済実行できるように、決済実行のパラメーターを拡張。

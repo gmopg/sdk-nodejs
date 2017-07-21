@@ -8,11 +8,3 @@ export declare namespace services {
 export declare namespace utils {
     export import util = gmoUtil;
 }
-/**
- * @deprecated v4.0.0でutils.utilに以降の予定です
- */
-export declare const Util: typeof gmoUtil;
-/**
- * @deprecated v4.0.0でservices.creditに以降の予定です
- */
-export declare const CreditService: typeof creditService;
