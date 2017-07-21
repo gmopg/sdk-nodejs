@@ -24,7 +24,7 @@ describe('カード決済 取引登録', () => {
                 shopId: '********',
                 shopPass: '********',
                 orderId: orderId,
-                jobCd: Util.JOB_CD_AUTH,
+                jobCd: Util.JobCd.Auth,
                 amount: amount
             });
         } catch (error) {
@@ -59,7 +59,7 @@ describe('カード決済 取引状態参照', () => {
         const orderId = Date.now().toString();
         const shopId = process.env.TEST_GMO_SHOP_ID;
         const shopPass = process.env.TEST_GMO_SHOP_PASS;
-        const jobCd = Util.JOB_CD_AUTH;
+        const jobCd = Util.JobCd.Auth;
         const amount = 1234;
 
         const entryTranResult = await CreditService.entryTran({
@@ -74,7 +74,7 @@ describe('カード決済 取引状態参照', () => {
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
             orderId: orderId,
-            method: '1',
+            method: Util.Method.Lump,
             cardNo: '4111111111111111',
             expire: '2012',
             securityCode: '123'
@@ -102,7 +102,7 @@ describe('カード決済 金額変更', () => {
                 shopPass: '********',
                 accessId: '********',
                 accessPass: '********',
-                jobCd: Util.JOB_CD_AUTH,
+                jobCd: Util.JobCd.Auth,
                 amount: 300
             });
         } catch (error) {
@@ -123,7 +123,7 @@ describe('カード決済 金額変更', () => {
             shopId: shopId,
             shopPass: shopPass,
             orderId: orderId,
-            jobCd: Util.JOB_CD_AUTH,
+            jobCd: Util.JobCd.Auth,
             amount: amount
         });
         // 決済実行
@@ -131,7 +131,7 @@ describe('カード決済 金額変更', () => {
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
             orderId: orderId,
-            method: '1',
+            method: Util.Method.Lump,
             cardNo: '4111111111111111',
             expire: '2012',
             securityCode: '123'
@@ -142,7 +142,7 @@ describe('カード決済 金額変更', () => {
             shopPass: shopPass,
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
-            jobCd: Util.JOB_CD_SALES,
+            jobCd: Util.JobCd.Sales,
             amount: amount
         });
         // 金額変更
@@ -151,7 +151,7 @@ describe('カード決済 金額変更', () => {
             shopPass: shopPass,
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
-            jobCd: Util.JOB_CD_AUTH,
+            jobCd: Util.JobCd.Auth,
             amount: changeAmount
         });
         // 決済変更
@@ -160,7 +160,7 @@ describe('カード決済 金額変更', () => {
             shopPass: shopPass,
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
-            jobCd: Util.JOB_CD_SALES,
+            jobCd: Util.JobCd.Sales,
             amount: changeAmount
         });
 
@@ -170,7 +170,7 @@ describe('カード決済 金額変更', () => {
             orderId: orderId
         });
 
-        assert.equal(searchTradeResult.status, Util.JOB_CD_SALES);
+        assert.equal(searchTradeResult.status, Util.JobCd.Sales);
         assert.equal(searchTradeResult.orderId, orderId);
         assert.equal(searchTradeResult.amount, changeAmount);
     });
@@ -186,7 +186,7 @@ describe('カード決済 金額変更', () => {
             shopId: shopId,
             shopPass: shopPass,
             orderId: orderId,
-            jobCd: Util.JOB_CD_AUTH,
+            jobCd: Util.JobCd.Auth,
             amount: amount
         });
         // 決済実行
@@ -194,7 +194,7 @@ describe('カード決済 金額変更', () => {
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
             orderId: orderId,
-            method: '1',
+            method: Util.Method.Lump,
             cardNo: '4111111111111111',
             expire: '2012',
             securityCode: '123'
@@ -205,7 +205,7 @@ describe('カード決済 金額変更', () => {
             shopPass: shopPass,
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
-            jobCd: Util.JOB_CD_SALES,
+            jobCd: Util.JobCd.Sales,
             amount: amount
         });
         // 金額変更
@@ -214,7 +214,7 @@ describe('カード決済 金額変更', () => {
             shopPass: shopPass,
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
-            jobCd: Util.JOB_CD_CAPTURE,
+            jobCd: Util.JobCd.Capture,
             amount: changeAmount
         });
 
@@ -224,7 +224,7 @@ describe('カード決済 金額変更', () => {
             orderId: orderId
         });
 
-        assert.equal(searchTradeResult.status, Util.JOB_CD_CAPTURE);
+        assert.equal(searchTradeResult.status, Util.JobCd.Capture);
         assert.equal(searchTradeResult.orderId, orderId);
         assert.equal(searchTradeResult.amount, changeAmount);
     });
@@ -253,7 +253,7 @@ describe('カード決済 決済実行', () => {
             memberId: TEST_MEMBER_ID,
             cardNo: '4111111111111111',
             expire: '2812',
-            seqMode: Util.SEQ_MODE_PHYSICS
+            seqMode: Util.SeqMode.Physics
         }).then((result) => result.cardSeq);
     });
 
@@ -273,7 +273,7 @@ describe('カード決済 決済実行', () => {
             shopId: process.env.TEST_GMO_SHOP_ID,
             shopPass: process.env.TEST_GMO_SHOP_PASS,
             orderId: orderId,
-            jobCd: Util.JOB_CD_AUTH,
+            jobCd: Util.JobCd.Auth,
             amount: 1234
         });
 
@@ -282,11 +282,11 @@ describe('カード決済 決済実行', () => {
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
             orderId: orderId,
-            method: '1',
+            method: Util.Method.Lump,
             siteId: TEST_SITE_ID,
             sitePass: TEST_SITE_PASS,
             memberId: TEST_MEMBER_ID,
-            seqMode: Util.SEQ_MODE_PHYSICS,
+            seqMode: Util.SeqMode.Physics,
             // tslint:disable-next-line:no-magic-numbers
             cardSeq: parseInt(TEST_CARD_SEQ, 10)
         });
@@ -299,7 +299,7 @@ describe('カード決済 決済実行', () => {
             shopId: process.env.TEST_GMO_SHOP_ID,
             shopPass: process.env.TEST_GMO_SHOP_PASS,
             orderId: orderId,
-            jobCd: Util.JOB_CD_AUTH,
+            jobCd: Util.JobCd.Auth,
             amount: 1234
         });
 
@@ -308,11 +308,11 @@ describe('カード決済 決済実行', () => {
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
             orderId: orderId,
-            method: '1',
+            method: Util.Method.Lump,
             siteId: TEST_SITE_ID,
             sitePass: TEST_SITE_PASS,
             memberId: TEST_MEMBER_ID,
-            seqMode: Util.SEQ_MODE_PHYSICS,
+            seqMode: Util.SeqMode.Physics,
             // tslint:disable-next-line:no-magic-numbers
             cardSeq: parseInt(TEST_CARD_SEQ, 10) + 1
         }).catch((error) => error);

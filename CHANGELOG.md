@@ -7,10 +7,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
+ - 定数をenumへ変更
 
 ### Deprecated
 
 ### Removed
+ - CardServiceネームスペース削除
+ - Utilネームスペース削除
 
 ### Fixed
 

@@ -10,14 +10,14 @@ GMO.services.credit.entryTran({
     shopId: 'your shopId',
     shopPass: 'sour shopPass',
     orderId: orderId,
-    jobCd: GMO.Util.JOB_CD_AUTH,
+    jobCd: GMO.utils.util.JobCd.Auth,
     amount: amount
 }).then((entryTranResult) => {
     GMO.services.credit.execTran({
         accessId: entryTranResult.accessId,
         accessPass: entryTranResult.accessPass,
         orderId: orderId,
-        method: '1',
+        method: GMO.utils.util.Method.Lump,
         cardNo: '4111111111111111',
         expire: '2012',
         securityCode: '123'
@@ -29,7 +29,7 @@ GMO.services.credit.entryTran({
             shopPass: 'sour shopPass',
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
-            jobCd: GMO.Util.JOB_CD_SALES,
+            jobCd: GMO.utils.util.JobCd.Sales,
             amount: amount
         }).then((result) => {
             // tslint:disable-next-line:no-console
