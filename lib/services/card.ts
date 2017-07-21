@@ -7,6 +7,7 @@ import * as createDebug from 'debug';
 import * as querystring from 'querystring';
 import * as request from 'request-promise-native';
 import { BadRequestError } from '../error/badRequest';
+import * as util from '../utils/util';
 
 const debug = createDebug('gmo-service:services:card');
 
@@ -308,7 +309,7 @@ export interface ISaveCardArgs {
     /**
      * カード登録連番モード（0:論理モード(デフォルト)1:物理モード）
      */
-    seqMode?: string;
+    seqMode?: util.SeqMode;
     /**
      * カード登録連番（登録時は、入力不可です。更新時は、更新する値を設定します。）
      */
@@ -394,7 +395,7 @@ export interface ISaveCardResult {
  * @param {string} args.siteId サイトID
  * @param {string} args.sitePass サイトパスワード
  * @param {string} args.memberId 会員ID
- * @param {string} args.seqMode カード登録連番モード（0:論理モード(デフォルト)1:物理モード）
+ * @param {util.SeqMode} args.seqMode カード登録連番モード（0:論理モード(デフォルト)1:物理モード）
  * @param {number} args.cardSeq カード登録連番（登録時は、入力不可です。更新時は、更新する値を設定します。）
  * @param {string} args.defaultFlag 洗替・継続課金フラグ（0:継続課金対象としない(デフォルト)1:継続課金対象とする）
  * @param {string} args.cardName カード会社略称
@@ -465,7 +466,7 @@ export interface IDeleteCardArgs {
     /**
      * カード登録連番モード
      */
-    seqMode?: string;
+    seqMode?: util.SeqMode;
     /**
      * カード登録連番
      */
@@ -491,7 +492,7 @@ export interface IDeleteCardResult {
  * @param {string} args.siteId サイトID
  * @param {string} args.sitePass サイトパスワード
  * @param {string} args.memberId 会員ID
- * @param {string} args.seqMode カード登録連番モード（0:論理モード(デフォルト)1:物理モード）
+ * @param {util.SeqMode} args.seqMode カード登録連番モード（0:論理モード(デフォルト)1:物理モード）
  * @param {string} args.cardSeq カード登録連番
  * @returns {Promise<IDeleteCardResult>} カード削除out
  */
@@ -540,7 +541,7 @@ export interface ISearchCardArgs {
     /**
      * カード登録連番モード（0:論理モード1:物理モード）
      */
-    seqMode: string;
+    seqMode: util.SeqMode;
     /**
      * カード登録連番
      */
@@ -614,7 +615,7 @@ export interface ISearchCardResult {
  * @param {string} args.siteId サイトID
  * @param {string} args.sitePass サイトパスワード
  * @param {string} args.memberId 会員ID
- * @param {string} args.seqMode カード登録連番モード（0:論理モード1:物理モード）
+ * @param {util.SeqMode} args.seqMode カード登録連番モード（0:論理モード1:物理モード）
  * @param {string} args.cardSeq カード登録連番
  * @returns {Promise<ISearchCardResult[]>} カード参照out
  */

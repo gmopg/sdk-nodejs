@@ -1,3 +1,4 @@
+import * as util from '../utils/util';
 /**
  * 取引登録in
  * @memberOf services/credit
@@ -7,7 +8,7 @@ export interface IEntryTranArgs {
     shopId: string;
     shopPass: string;
     orderId: string;
-    jobCd: string;
+    jobCd: util.JobCd;
     amount: number;
 }
 /**
@@ -27,7 +28,7 @@ export interface IEntryTranResult {
  * @param {string} args.shopId
  * @param {string} args.shopPass
  * @param {string} args.orderId
- * @param {string} args.jobCd
+ * @param {util.JobCd} args.jobCd
  * @param {string} args.amount
  * @returns {Promise<IEntryTranResult>} 取引登録out
  */
@@ -41,7 +42,7 @@ export interface IExecTranArgs {
     accessId: string;
     accessPass: string;
     orderId: string;
-    method?: string;
+    method?: util.Method;
     payTimes?: number;
     cardNo?: string;
     expire?: string;
@@ -51,7 +52,7 @@ export interface IExecTranArgs {
     siteId?: string;
     sitePass?: string;
     memberId?: string;
-    seqMode?: string;
+    seqMode?: util.SeqMode;
     cardSeq?: number;
     cardPass?: string;
     clientField1?: string;
@@ -81,7 +82,7 @@ export interface IExecTranResult {
      * 支払方法
      * お客様が入力もしくは選択した支払方法を返却します。
      */
-    method: string;
+    method: util.Method;
     /**
      * 支払回数
      * お客様が入力もしくは選択した支払回数を返却します。
@@ -128,7 +129,7 @@ export interface IExecTranResult {
  * @param {string} args.accessId 取引ID
  * @param {string} args.accessPass 取引パスワード
  * @param {string} args.orderId オーダーID
- * @param {string} args.method 支払方法
+ * @param {util.Method} args.method 支払方法
  * @param {number} args.payTimes 支払回数
  * @param {string} args.cardNo カード番号
  * @param {string} args.expire 有効期限
@@ -138,7 +139,7 @@ export interface IExecTranResult {
  * @param {string} args.siteId サイトID
  * @param {string} args.sitePass サイトパスワード
  * @param {string} args.memberId 会員ID
- * @param {string} args.seqMode カード登録連番モード
+ * @param {util.SeqMode} args.seqMode カード登録連番モード
  * @param {number} args.cardSeq カード登録連番
  * @param {string} args.cardPass カードパスワード
  * @param {string} args.clientField1 加盟店自由項目1
@@ -157,9 +158,9 @@ export interface IAlterTranArgs {
     shopPass: string;
     accessId: string;
     accessPass: string;
-    jobCd: string;
+    jobCd: util.JobCd;
     amount?: number;
-    method?: string;
+    method?: util.Method;
 }
 /**
  * 決済変更out
@@ -183,9 +184,9 @@ export interface IAlterTranResult {
  * @param {string} args.shopPass
  * @param {string} args.accessId
  * @param {string} args.accessPass
- * @param {string} args.jobCd
+ * @param {util.JobCd} args.jobCd
  * @param {number} args.amount
- * @param {string} args.method
+ * @param {util.Method} args.method
  * @returns {Promise<IAlterTranResult>} 決済変更out
  */
 export declare function alterTran(args: IAlterTranArgs): Promise<IAlterTranResult>;
@@ -229,7 +230,7 @@ export interface ISearchTradeResult {
     /**
      * 処理区分
      */
-    jobCd: string;
+    jobCd: util.JobCd;
     /**
      * 取引ID
      */
@@ -269,7 +270,7 @@ export interface ISearchTradeResult {
     /**
      * 支払方法
      */
-    method: string;
+    method: util.Method;
     /**
      * 支払回数
      */
@@ -328,7 +329,7 @@ export interface IChangeTranArgs {
     shopPass: string;
     accessId: string;
     accessPass: string;
-    jobCd: string;
+    jobCd: util.JobCd;
     amount: number;
     tax?: string;
 }
@@ -354,7 +355,7 @@ export interface IChangeTranResult {
  * @param {string} args.shopPass ショップパスワード
  * @param {string} args.accessId 取引ID
  * @param {string} args.accessPass 取引パスワード
- * @param {string} args.jobCd 処理区分
+ * @param {util.JobCd} args.jobCd 処理区分
  * @param {number} args.amount 利用金額
  * @param {string} args.tax 税送料
  * @returns {Promise<IChangeTranResult>} 金額変更out

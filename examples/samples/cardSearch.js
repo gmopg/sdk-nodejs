@@ -40,7 +40,7 @@ function main() {
             siteId: siteId,
             sitePass: sitePass,
             memberId: saveMemberResult.memberId,
-            seqMode: GMO.Util.SEQ_MODE_LOGIC
+            seqMode: GMO.utils.util.SeqMode.Logic
         });
         // tslint:disable-next-line:no-console
         console.log(searchCardResults);
