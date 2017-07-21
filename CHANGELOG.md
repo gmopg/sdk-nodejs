@@ -7,15 +7,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
- - 定数をenumへ変更
 
 ### Deprecated
 
 ### Removed
- - CardServiceネームスペース削除
- - Utilネームスペース削除
 
 ### Fixed
+
+### Security
+
+## v4.0.0 - 2017-07-21
+### Changed
+ - 定数をenumへ変更
+
+### Removed
+ - CardServiceネームスペース削除
+ - Utilネームスペース削除
 
 ### Security
 - 依存パッケージを最新に更新。
