@@ -5,8 +5,8 @@
  */
 
 import * as assert from 'assert';
-import { BadRequestError } from '../../lib/error/badRequest';
-import { errors, notApplicable } from '../../lib/error/errors';
+import { BadRequestError } from './badRequest';
+import { errors, notApplicable } from './errors';
 
 describe('BadRequestエラー', () => {
     it('メッセージがundefinedの場合エラーリストは空配列', async () => {
