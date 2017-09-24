@@ -5,7 +5,7 @@
 
 import * as assert from 'assert';
 
-import * as Util from '../../lib/utils/util';
+import * as Util from './util';
 
 const TEST_CREATE_SHOP_PASS_STRING_ARGS = {
     shopId: 'xxx',
