@@ -106,12 +106,12 @@ workflows:
       - doc:
           requires:
             - test
-      # - prerelease:
-      #     requires:
-      #       - doc
-      #     filters:
-      #       branches:
-      #         only: /release\/.*/
+      - prerelease:
+          requires:
+            - doc
+          filters:
+            branches:
+              only: /feature\/.+-alpha.+/
       - deploy:
           requires:
             - doc
