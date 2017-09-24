@@ -1,0 +1,120 @@
+version: 2
+jobs:
+  build:
+    # The primary container is an instance of the first list image listed. Your build commands run in this container.
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run:
+          name: node version
+          command: node -v
+      - run:
+          name: npm version
+          command: npm -v
+      # - run:
+      #     name: Update npm
+      #     command: 'sudo npm install -g npm@latest'
+      - run:
+          name: configure npm for private modules
+          command: |
+            npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+            npm whoami
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install npm packages
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: compile typescript
+          command: npm run build
+  test:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: run npm test
+          command: npm test
+      # - run:
+      #     name: Generate code coverage
+      #     command: './node_modules/.bin/nyc report --reporter=text-lcov'
+      # - store_artifacts:
+      #     path: test-results.xml
+      #     prefix: tests
+      # - store_artifacts:
+      #     path: coverage
+      #     prefix: coverage
+  doc:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Generate docs
+          command: |
+            npm run build
+            npm run doc
+  prerelease:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: configure npm for private modules
+          command: |
+            npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+            npm whoami
+    #   - run:
+    #       command: npm version 1.0.0-alpha.$CIRCLE_BUILD_NUM
+      - run:
+          command: npm publish --tag next --access public
+  deploy:
+    docker:
+      - image: circleci/node:8.4
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: configure npm for private modules
+          command: |
+            npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+            npm whoami
+      - run:
+          command: npm publish --access public
+# Used for orchestrating all jobs.
+workflows:
+  version: 2
+
+  build-test-doc-and-deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - doc:
+          requires:
+            - test
+      - prerelease:
+          requires:
+            - doc
+          filters:
+            branches:
+              only: /feature\/.+-alpha.+/
+      - deploy:
+          requires:
+            - doc
+          filters:
+            branches:
+              only: master

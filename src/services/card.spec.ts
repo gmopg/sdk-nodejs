@@ -5,9 +5,9 @@
  */
 
 import * as assert from 'assert';
-import { BadRequestError } from '../../lib/error/badRequest';
-import * as CardService from '../../lib/services/card';
-import * as Util from '../../lib/utils/util';
+import { BadRequestError } from '../error/badRequest';
+import * as Util from '../utils/util';
+import * as CardService from './card';
 
 const TEST_INVALID_SITE_ID = '********';
 const TEST_INVALID_SITE_PASS = '********';

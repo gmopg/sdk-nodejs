@@ -5,10 +5,10 @@
  */
 
 import * as assert from 'assert';
-import { BadRequestError } from '../../lib/error/badRequest';
-import * as CardService from '../../lib/services/card';
-import * as CreditService from '../../lib/services/credit';
-import * as Util from '../../lib/utils/util';
+import { BadRequestError } from '../error/badRequest';
+import * as CardService from '../services/card';
+import * as Util from '../utils/util';
+import * as CreditService from './credit';
 
 const TEST_SITE_ID = process.env.TEST_GMO_SITE_ID;
 const TEST_SITE_PASS = process.env.TEST_GMO_SITE_PASS;

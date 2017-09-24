@@ -16,6 +16,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+
+## v4.0.1 - 2017-09-24
+### Added
+- circleci設定追加。
+- READMEにバッジを追加。
+
 ## v4.0.0 - 2017-07-21
 ### Changed
  - 定数をenumへ変更

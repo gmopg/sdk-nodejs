@@ -4,11 +4,10 @@
         "allowUnusedLabels": false,
         "charset": "utf8",
         "declaration": true,
-        "declarationDir": "./types",
         "diagnostics": false,
         "disableSizeLimit": false,
         "emitDecoratorMetadata": true,
-        "experimentalDecorators":true,
+        "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
         "inlineSourceMap": false,
         "inlineSources": false,
@@ -17,7 +16,7 @@
         "listFiles": false,
         "locale": "en-us",
         "module": "commonjs",
-        "newLine": "CRLF",
+        "newLine": "LF",
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
@@ -26,6 +25,7 @@
         "noResolve": false,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
+        "outDir": "./lib",
         "preserveConstEnums": false,
         "pretty": false,
         "removeComments": false,
@@ -37,9 +37,10 @@
         "target": "es6",
         "watch": false
     },
+    "include": [
+        "./src/**/*"
+    ],
     "exclude": [
-        "docs",
-        "node_modules",
-        "types"
+        "**/*.spec.ts"
     ]
 }
