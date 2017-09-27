@@ -10,8 +10,8 @@ import * as CardService from '../services/card';
 import * as Util from '../utils/util';
 import * as CreditService from './credit';
 
-const TEST_SITE_ID = process.env.TEST_GMO_SITE_ID;
-const TEST_SITE_PASS = process.env.TEST_GMO_SITE_PASS;
+const TEST_SITE_ID = <string>process.env.TEST_GMO_SITE_ID;
+const TEST_SITE_PASS = <string>process.env.TEST_GMO_SITE_PASS;
 
 describe('カード決済 取引登録', () => {
     it('失敗', async () => {
@@ -38,8 +38,8 @@ describe('カード決済 取引登録', () => {
 describe('カード決済 取引状態参照', () => {
     it('オーダーIDが不適切なので参照できないはず', async () => {
         const orderId = '********';
-        const shopId = process.env.TEST_GMO_SHOP_ID;
-        const shopPass = process.env.TEST_GMO_SHOP_PASS;
+        const shopId = <string>process.env.TEST_GMO_SHOP_ID;
+        const shopPass = <string>process.env.TEST_GMO_SHOP_PASS;
 
         let searchTradeError: any;
         try {
@@ -57,8 +57,8 @@ describe('カード決済 取引状態参照', () => {
 
     it('オーソリ後に参照できるはず', async () => {
         const orderId = Date.now().toString();
-        const shopId = process.env.TEST_GMO_SHOP_ID;
-        const shopPass = process.env.TEST_GMO_SHOP_PASS;
+        const shopId = <string>process.env.TEST_GMO_SHOP_ID;
+        const shopPass = <string>process.env.TEST_GMO_SHOP_PASS;
         const jobCd = Util.JobCd.Auth;
         const amount = 1234;
 
@@ -114,8 +114,8 @@ describe('カード決済 金額変更', () => {
 
     it('正常 仮-実-仮-実', async () => {
         const orderId = Date.now().toString();
-        const shopId = process.env.TEST_GMO_SHOP_ID;
-        const shopPass = process.env.TEST_GMO_SHOP_PASS;
+        const shopId = <string>process.env.TEST_GMO_SHOP_ID;
+        const shopPass = <string>process.env.TEST_GMO_SHOP_PASS;
         const amount = 1800;
         const changeAmount = 300;
         // 取引作成
@@ -177,8 +177,8 @@ describe('カード決済 金額変更', () => {
 
     it('正常 仮-実-即', async () => {
         const orderId = Date.now().toString();
-        const shopId = process.env.TEST_GMO_SHOP_ID;
-        const shopPass = process.env.TEST_GMO_SHOP_PASS;
+        const shopId = <string>process.env.TEST_GMO_SHOP_ID;
+        const shopPass = <string>process.env.TEST_GMO_SHOP_PASS;
         const amount = 1800;
         const changeAmount = 300;
         // 取引作成
@@ -270,8 +270,8 @@ describe('カード決済 決済実行', () => {
         // 取引作成
         const orderId = Date.now().toString();
         const entryTranResult = await CreditService.entryTran({
-            shopId: process.env.TEST_GMO_SHOP_ID,
-            shopPass: process.env.TEST_GMO_SHOP_PASS,
+            shopId: <string>process.env.TEST_GMO_SHOP_ID,
+            shopPass: <string>process.env.TEST_GMO_SHOP_PASS,
             orderId: orderId,
             jobCd: Util.JobCd.Auth,
             amount: 1234
@@ -296,8 +296,8 @@ describe('カード決済 決済実行', () => {
         // 取引作成
         const orderId = Date.now().toString();
         const entryTranResult = await CreditService.entryTran({
-            shopId: process.env.TEST_GMO_SHOP_ID,
-            shopPass: process.env.TEST_GMO_SHOP_PASS,
+            shopId: <string>process.env.TEST_GMO_SHOP_ID,
+            shopPass: <string>process.env.TEST_GMO_SHOP_PASS,
             orderId: orderId,
             jobCd: Util.JobCd.Auth,
             amount: 1234

@@ -1,7 +1,7 @@
-import * as GMO from '../../lib/index';
+const GMO = require('../');
 
 /**
- * カード登録・削除サンプル
+ * 会員照会サンプル
  */
 const siteId = 'your siteId';
 const sitePass = 'sour sitePass';
@@ -18,19 +18,11 @@ async function main() {
         memberId: memberId,
         memberName: 'test'
     });
-    // カード登録
-    const saveCardResult = await GMO.services.card.saveCard({
+    // 会員照会
+    const result = await GMO.services.card.searchMember({
         siteId: siteId,
         sitePass: sitePass,
-        memberId: saveMemberResult.memberId,
-        cardNo: '4111111111111111',
-        expire: '2012'
+        memberId: saveMemberResult.memberId
     });
-    // カード削除
-    await GMO.services.card.deleteCard({
-        siteId: siteId,
-        sitePass: sitePass,
-        memberId: saveMemberResult.memberId,
-        cardSeq: saveCardResult.cardSeq
-    });
+    console.log(result);
 }

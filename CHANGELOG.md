@@ -17,6 +17,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Security
 
 
+## v4.0.2 - 2017-09-27
+### Changed
+- transfer repository to organization.
+- exampleを整理。
+
+### Security
+- update dependencies.
+
 ## v4.0.1 - 2017-09-24
 ### Added
 - circleci設定追加。
