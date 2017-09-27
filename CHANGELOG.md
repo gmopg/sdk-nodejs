@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
+- transfer repository to organization.
+- exampleを整理。
 
 ### Deprecated
 
@@ -15,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+- update dependencies.
 
 
 ## v4.0.1 - 2017-09-24

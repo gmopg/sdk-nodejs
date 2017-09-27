@@ -1,4 +1,4 @@
-import * as GMO from '../../lib/index';
+const GMO = require('../');
 
 /**
  * creditサンプル
@@ -24,7 +24,6 @@ GMO.services.credit.entryTran({
             securityCode: '123'
         }).then(
             (execTranResult) => {
-                // tslint:disable-next-line:no-console
                 console.log(execTranResult);
                 GMO.services.credit.alterTran({
                     shopId: 'your shopId',
@@ -35,20 +34,19 @@ GMO.services.credit.entryTran({
                     amount: amount
                 }).then(
                     (result) => {
-                        // tslint:disable-next-line:no-console
                         console.log(result);
                     },
-                    (err: any) => {
+                    (err) => {
                         console.error(err);
                     }
                     );
             },
-            (err: any) => {
+            (err) => {
                 console.error(err);
             }
             );
     },
-    (err: any) => {
+    (err) => {
         console.error(err);
     }
     );

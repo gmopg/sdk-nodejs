@@ -1,4 +1,4 @@
-import * as GMO from '../../lib/index';
+const GMO = require('../');
 
 /**
  * 金額変更サンプル（仮売上 -> 実売上 -> 即時売上）
