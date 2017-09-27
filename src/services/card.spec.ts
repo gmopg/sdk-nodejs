@@ -11,8 +11,8 @@ import * as CardService from './card';
 
 const TEST_INVALID_SITE_ID = '********';
 const TEST_INVALID_SITE_PASS = '********';
-const TEST_SITE_ID = process.env.TEST_GMO_SITE_ID;
-const TEST_SITE_PASS = process.env.TEST_GMO_SITE_PASS;
+const TEST_SITE_ID = <string>process.env.TEST_GMO_SITE_ID;
+const TEST_SITE_PASS = <string>process.env.TEST_GMO_SITE_PASS;
 
 describe('会員登録', () => {
     let TEST_MEMBER_ID: string;
@@ -51,8 +51,8 @@ describe('会員登録', () => {
 
     it('正常', async () => {
         const memberId = `gmo-service.test.services.card-test.${Date.now().toString()}`;
-        const siteId = process.env.TEST_GMO_SITE_ID;
-        const sitePass = process.env.TEST_GMO_SITE_PASS;
+        const siteId = <string>process.env.TEST_GMO_SITE_ID;
+        const sitePass = <string>process.env.TEST_GMO_SITE_PASS;
 
         await CardService.saveMember({
             siteId: siteId,
@@ -164,8 +164,8 @@ describe('会員削除', () => {
 
     it('正常', async () => {
         const memberId = `gmo-service.test.services.card-test.${Date.now().toString()}`;
-        const siteId = process.env.TEST_GMO_SITE_ID;
-        const sitePass = process.env.TEST_GMO_SITE_PASS;
+        const siteId = <string>process.env.TEST_GMO_SITE_ID;
+        const sitePass = <string>process.env.TEST_GMO_SITE_PASS;
 
         await CardService.saveMember({
             siteId: siteId,
