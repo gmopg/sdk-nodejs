@@ -51,6 +51,44 @@ DEBUG環境変数をセットすることでリクエストのIN,OUTをデバッ
 set DEBUG=gmo-service:*
 ```
 
+### クレジットカード決済(即売上)の例
+
+``` js
+const GMO = require('@motionpicture/gmo-service');
+
+const orderId ='orderId';
+GMO.services.credit.entryTran({
+    shopId: 'your shopId',
+    shopPass: 'sour shopPass',
+    orderId: orderId,
+    jobCd: GMO.utils.util.JobCd.Auth,
+    amount: 1234
+}).then((entryTranResult) => {
+    GMO.services.credit.execTran({
+        accessId: entryTranResult.accessId,
+        accessPass: entryTranResult.accessPass,
+        orderId: orderId,
+        method: GMO.utils.util.Method.Lump,
+        cardNo: '1234123412341234',
+        expire: '2024',
+        securityCode: '123'
+    }).then((execTranResult) => {
+        console.log(execTranResult);
+
+        GMO.services.credit.alterTran({
+            shopId: 'your shopId',
+            shopPass: 'sour shopPass',
+            accessId: entryTranResult.accessId,
+            accessPass: entryTranResult.accessPass,
+            jobCd: GMO.utils.util.JobCd.Sales,
+            amount: amount
+        }).then((result) => {
+            console.log(result);
+        });
+    });
+});
+```
+
 ## Code Samples
 
 コードサンプルは [example](https://github.com/motionpicture/gmo-service/tree/master/example) にあります。
