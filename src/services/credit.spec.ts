@@ -1,14 +1,21 @@
 /**
  * クレジットサービステスト
- *
  * @ignore
  */
 
 import * as assert from 'assert';
+import { OK } from 'http-status';
+import * as nock from 'nock';
+import * as querystring from 'querystring';
+import * as sinon from 'sinon';
+
 import { BadRequestError } from '../error/badRequest';
 import * as CardService from '../services/card';
 import * as Util from '../utils/util';
 import * as CreditService from './credit';
+
+let scope: nock.Scope;
+let sandbox: sinon.SinonSandbox;
 
 const TEST_SITE_ID = <string>process.env.TEST_GMO_SITE_ID;
 const TEST_SITE_PASS = <string>process.env.TEST_GMO_SITE_PASS;
@@ -318,5 +325,47 @@ describe('カード決済 決済実行', () => {
         }).catch((error) => error);
 
         assert(execTranError instanceof BadRequestError);
+    });
+});
+
+describe('カード決済変更', () => {
+    beforeEach(() => {
+        nock.disableNetConnect();
+        sandbox = sinon.sandbox.create();
+    });
+
+    afterEach(() => {
+        nock.cleanAll();
+        nock.enableNetConnect();
+        sandbox.restore();
+    });
+
+    it('GMOが正常であれば、オブジェクトを取得できるはず', async () => {
+        const params = {};
+        const body = {};
+
+        scope = nock(<string>process.env.GMO_ENDPOINT).post('/payment/AlterTran.idPass')
+            .reply(OK, querystring.stringify(body));
+
+        const result = await CreditService.alterTran(<any>params);
+        assert.equal(typeof result, 'object');
+        assert(scope.isDone());
+        sandbox.verify();
+    });
+
+    it('レスポンスにエラーコードがあれば、BadRequestErrorになるはず', async () => {
+        const params = {};
+        const body = {
+            ErrCode: 'E01|E01',
+            ErrInfo: 'E01010001|E01020001'
+        };
+
+        scope = nock(<string>process.env.GMO_ENDPOINT).post('/payment/AlterTran.idPass')
+            .reply(OK, querystring.stringify(body));
+
+        const result = await CreditService.alterTran(<any>params).catch((err) => err);
+        assert(result instanceof BadRequestError);
+        assert(scope.isDone());
+        sandbox.verify();
     });
 });

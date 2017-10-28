@@ -75,7 +75,7 @@ export async function saveMember(args: ISaveMemberArgs): Promise<ISaveMemberResu
     }
 
     return {
-        memberId: result.MemberID
+        memberId: <string>result.MemberID
     };
 }
 
@@ -143,7 +143,7 @@ export async function updateMember(args: IUpdateMemberArgs): Promise<IUpdateMemb
     }
 
     return {
-        memberId: result.MemberID
+        memberId: <string>result.MemberID
     };
 }
 
@@ -205,7 +205,7 @@ export async function deleteMember(args: IDeleteMemberArgs): Promise<IDeleteMemb
     }
 
     return {
-        memberId: result.MemberID
+        memberId: <string>result.MemberID
     };
 }
 
@@ -282,9 +282,9 @@ export async function searchMember(args: ISearchMemberArgs): Promise<ISearchMemb
     }
 
     return {
-        memberId: result.MemberID,
-        memberName: result.MemberName,
-        deleteFlag: result.DeleteFlag
+        memberId: <string>result.MemberID,
+        memberName: <string>result.MemberName,
+        deleteFlag: <string>result.DeleteFlag
     };
 }
 
@@ -433,9 +433,9 @@ export async function saveCard(args: ISaveCardArgs): Promise<ISaveCardResult> {
     }
 
     return {
-        cardSeq: result.CardSeq,
-        cardNo: result.CardNo,
-        forward: result.Forward
+        cardSeq: <string>result.CardSeq,
+        cardNo: <string>result.CardNo,
+        forward: <string>result.Forward
         // brand: result.Brand,
         // domesticFlag: result.DomesticFlag,
         // issuerCode: result.IssuerCode,
@@ -516,7 +516,7 @@ export async function deleteCard(args: IDeleteCardArgs): Promise<IDeleteCardResu
     }
 
     return {
-        cardSeq: result.CardSeq
+        cardSeq: <string>result.CardSeq
     };
 }
 
@@ -645,13 +645,13 @@ export async function searchCard(args: ISearchCardArgs): Promise<ISearchCardResu
         throw error;
     }
 
-    const cardSeqArry: string[] = result.CardSeq.split('|');
-    const defaultFlagArry: string[] = result.DefaultFlag.split('|');
-    const cardNameArry: string[] = result.CardName.split('|');
-    const cardNoArry: string[] = result.CardNo.split('|');
-    const expireArry: string[] = result.Expire.split('|');
-    const holderNameArry: string[] = result.HolderName.split('|');
-    const deleteFlagArry: string[] = result.DeleteFlag.split('|');
+    const cardSeqArry: string[] = (<string>result.CardSeq).split('|');
+    const defaultFlagArry: string[] = (<string>result.DefaultFlag).split('|');
+    const cardNameArry: string[] = (<string>result.CardName).split('|');
+    const cardNoArry: string[] = (<string>result.CardNo).split('|');
+    const expireArry: string[] = (<string>result.Expire).split('|');
+    const holderNameArry: string[] = (<string>result.HolderName).split('|');
+    const deleteFlagArry: string[] = (<string>result.DeleteFlag).split('|');
 
     return cardSeqArry.map((cardSeq, index) => {
         return {

@@ -30,8 +30,8 @@ export class BadRequestError extends Error {
             return [];
         }
         const errorMessage = querystring.parse(this.message);
-        const codeArray: string[] = errorMessage.ErrCode.split('|');
-        const infoArray: string[] = errorMessage.ErrInfo.split('|');
+        const codeArray: string[] = (<string>errorMessage.ErrCode).split('|');
+        const infoArray: string[] = (<string>errorMessage.ErrInfo).split('|');
 
         return codeArray.map((value, index) => {
             const code = value;

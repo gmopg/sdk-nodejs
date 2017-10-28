@@ -1,7 +1,7 @@
 # GMO Client Library for Node.js
 
 [![npm (scoped)](https://img.shields.io/npm/v/@motionpicture/gmo-service.svg)](https://www.npmjs.com/package/@motionpicture/gmo-service)
-[![Build status](https://circleci.com/gh/motionpicture/gmo-service.png?style=shield)](https://circleci.com/gh/motionpicture/gmo-service)
+[![CircleCI](https://circleci.com/gh/motionpicture/gmo-service.svg?style=shield)](https://circleci.com/gh/motionpicture/gmo-service)
 [![Coverage Status](https://coveralls.io/repos/github/motionpicture/gmo-service/badge.svg)](https://coveralls.io/github/motionpicture/gmo-service)
 [![Dependency Status](https://img.shields.io/david/motionpicture/gmo-service.svg)](https://david-dm.org/motionpicture/gmo-service)
 [![Known Vulnerabilities](https://snyk.io/test/github/motionpicture/gmo-service/badge.svg)](https://snyk.io/test/github/motionpicture/gmo-service)
@@ -20,23 +20,23 @@ node.jsでGMOサービスを使うためのパッケージです。
 
 ## Usage
 
-``` sh
+```sh
 npm install @motionpicture/gmo-service
 ```
 
-``` js
+```js
 var GMO = require('@motionpicture/gmo-service');
 ```
 
 When using the GMO Service SDK, you must provide connection information. This can be provided using:
 
 ### set environment variables - For example,
-``` shell
+```shell
 set GMO_ENDPOINT=*****
 ```
 
 for test
-``` shell
+```shell
 set TEST_GMO_SHOP_ID=*****
 set TEST_GMO_SHOP_PASS=*****
 set TEST_GMO_SITE_ID=*****
@@ -47,13 +47,13 @@ set TEST_GMO_SITE_PASS=*****
 
 DEBUG環境変数をセットすることでリクエストのIN,OUTをデバッグできます。
 
-``` shell
+```shell
 set DEBUG=gmo-service:*
 ```
 
-### クレジットカード決済(即売上)の例
+### クレジットカード決済(即時売上)の例
 
-``` js
+```js
 const GMO = require('@motionpicture/gmo-service');
 
 const orderId ='orderId';
