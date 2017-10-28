@@ -1,4 +1,4 @@
 --no-timeouts
 --recursive
 --reporter spec
---compilers ts:ts-node/register
+--require ts-node/register

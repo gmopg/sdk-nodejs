@@ -63,8 +63,8 @@ export async function entryTran(args: IEntryTranArgs): Promise<IEntryTranResult>
     }
 
     return {
-        accessId: result.AccessID,
-        accessPass: result.AccessPass
+        accessId: <string>result.AccessID,
+        accessPass: <string>result.AccessPass
     };
 }
 
@@ -218,18 +218,18 @@ export async function execTran(args: IExecTranArgs): Promise<IExecTranResult> {
     }
 
     return {
-        acs: result.ACS,
-        orderId: result.OrderID,
-        forward: result.Forward,
-        method: result.Method,
-        payTimes: result.PayTimes,
-        approve: result.Approve,
-        tranId: result.TranID,
-        tranDate: result.TranDate,
-        checkString: result.CheckString,
-        clientField1: result.ClientField1,
-        clientField2: result.ClientField2,
-        clientField3: result.ClientField3
+        acs: <string>result.ACS,
+        orderId: <string>result.OrderID,
+        forward: <string>result.Forward,
+        method: <util.Method>result.Method,
+        payTimes: <string>result.PayTimes,
+        approve: <string>result.Approve,
+        tranId: <string>result.TranID,
+        tranDate: <string>result.TranDate,
+        checkString: <string>result.CheckString,
+        clientField1: <string>result.ClientField1,
+        clientField2: <string>result.ClientField2,
+        clientField3: <string>result.ClientField3
     };
 }
 
@@ -297,12 +297,12 @@ export async function alterTran(args: IAlterTranArgs): Promise<IAlterTranResult>
     }
 
     return {
-        accessId: result.AccessID,
-        accessPass: result.AccessPass,
-        forward: result.Forward,
-        approve: result.Approve,
-        tranId: result.TranID,
-        tranDate: result.TranDate
+        accessId: <string>result.AccessID,
+        accessPass: <string>result.AccessPass,
+        forward: <string>result.Forward,
+        approve: <string>result.Approve,
+        tranId: <string>result.TranID,
+        tranDate: <string>result.TranDate
     };
 }
 
@@ -454,29 +454,29 @@ export async function searchTrade(args: ISearchTradeArgs): Promise<ISearchTradeR
     }
 
     return {
-        orderId: result.OrderID,
-        status: result.Status,
-        processDate: result.ProcessDate,
-        jobCd: result.JobCd,
-        accessId: result.AccessID,
-        accessPass: result.AccessPass,
-        itemCode: result.ItemCode,
-        amount: result.Amount,
-        tax: result.Tax,
-        siteId: result.SiteID,
-        memberId: result.MemberID,
-        cardNo: result.CardNo,
-        expire: result.Expire,
-        method: result.Method,
-        payTimes: result.PayTimes,
-        forward: result.Forward,
-        tranId: result.TranID,
-        approve: result.Approve,
-        clientField1: result.ClientField1,
-        clientField2: result.ClientField2,
-        clientField3: result.ClientField3,
-        errCode: result.ErrCode,
-        errInfo: result.ErrInfo
+        orderId: <string>result.OrderID,
+        status: <string>result.Status,
+        processDate: <string>result.ProcessDate,
+        jobCd: <util.JobCd>result.JobCd,
+        accessId: <string>result.AccessID,
+        accessPass: <string>result.AccessPass,
+        itemCode: <string>result.ItemCode,
+        amount: <string>result.Amount,
+        tax: <string>result.Tax,
+        siteId: <string>result.SiteID,
+        memberId: <string>result.MemberID,
+        cardNo: <string>result.CardNo,
+        expire: <string>result.Expire,
+        method: <util.Method>result.Method,
+        payTimes: <string>result.PayTimes,
+        forward: <string>result.Forward,
+        tranId: <string>result.TranID,
+        approve: <string>result.Approve,
+        clientField1: <string>result.ClientField1,
+        clientField2: <string>result.ClientField2,
+        clientField3: <string>result.ClientField3,
+        errCode: <string>result.ErrCode,
+        errInfo: <string>result.ErrInfo
     };
 }
 
@@ -544,11 +544,11 @@ export async function changeTran(args: IChangeTranArgs): Promise<IChangeTranResu
     }
 
     return {
-        accessId: result.AccessID,
-        accessPass: result.AccessPass,
-        forward: result.Forward,
-        approve: result.Approve,
-        tranId: result.TranID,
-        tranDate: result.TranDate
+        accessId: <string>result.AccessID,
+        accessPass: <string>result.AccessPass,
+        forward: <string>result.Forward,
+        approve: <string>result.Approve,
+        tranId: <string>result.TranID,
+        tranDate: <string>result.TranDate
     };
 }
