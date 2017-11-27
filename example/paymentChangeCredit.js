@@ -3,10 +3,8 @@ const GMO = require('../');
 /**
  * 金額変更サンプル（仮売上 -> 実売上 -> 即時売上）
  */
-const shopId = 'your shopId';
-const shopPass = 'sour shopPass';
-// const shopId = process.env.TEST_GMO_SHOP_ID;
-// const shopPass = process.env.TEST_GMO_SHOP_PASS;
+const shopId = process.env.TEST_GMO_SHOP_ID;
+const shopPass = process.env.TEST_GMO_SHOP_PASS;
 main();
 
 async function main() {

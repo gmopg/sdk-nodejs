@@ -3,10 +3,8 @@ const GMO = require('../');
 /**
  * カード登録・削除サンプル
  */
-const siteId = 'your siteId';
-const sitePass = 'sour sitePass';
-// const siteId = process.env.TEST_GMO_SITE_ID;
-// const sitePass = process.env.TEST_GMO_SITE_PASS;
+const siteId = process.env.TEST_GMO_SITE_ID;
+const sitePass = process.env.TEST_GMO_SITE_PASS;
 main();
 
 async function main() {
@@ -26,11 +24,14 @@ async function main() {
         cardNo: '4111111111111111',
         expire: '2012'
     });
+    console.log('saveCardResult:', saveCardResult);
+
     // カード削除
-    await GMO.services.card.deleteCard({
+    const deleteCardResult = await GMO.services.card.deleteCard({
         siteId: siteId,
         sitePass: sitePass,
         memberId: saveMemberResult.memberId,
         cardSeq: saveCardResult.cardSeq
     });
+    console.log('deleteCardResult:', deleteCardResult);
 }

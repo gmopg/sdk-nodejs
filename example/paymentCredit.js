@@ -7,8 +7,8 @@ const GMO = require('../');
 const orderId = Date.now().toString();
 const amount = 1800;
 GMO.services.credit.entryTran({
-    shopId: 'your shopId',
-    shopPass: 'sour shopPass',
+    shopId: process.env.TEST_GMO_SHOP_ID,
+    shopPass: process.env.TEST_GMO_SHOP_PASS,
     orderId: orderId,
     jobCd: GMO.utils.util.JobCd.Auth,
     amount: amount
@@ -20,14 +20,14 @@ GMO.services.credit.entryTran({
             orderId: orderId,
             method: GMO.utils.util.Method.Lump,
             cardNo: '4111111111111111',
-            expire: '2012',
+            expire: '2025',
             securityCode: '123'
         }).then(
             (execTranResult) => {
                 console.log(execTranResult);
                 GMO.services.credit.alterTran({
-                    shopId: 'your shopId',
-                    shopPass: 'sour shopPass',
+                    shopId: process.env.TEST_GMO_SHOP_ID,
+                    shopPass: process.env.TEST_GMO_SHOP_PASS,
                     accessId: entryTranResult.accessId,
                     accessPass: entryTranResult.accessPass,
                     jobCd: GMO.utils.util.JobCd.Sales,

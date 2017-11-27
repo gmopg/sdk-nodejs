@@ -3,10 +3,8 @@ const GMO = require('../');
 /**
  * 会員照会サンプル
  */
-const siteId = 'your siteId';
-const sitePass = 'sour sitePass';
-// const siteId = process.env.TEST_GMO_SITE_ID;
-// const sitePass = process.env.TEST_GMO_SITE_PASS;
+const siteId = process.env.TEST_GMO_SITE_ID;
+const sitePass = process.env.TEST_GMO_SITE_PASS;
 main();
 
 async function main() {
