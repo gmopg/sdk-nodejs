@@ -1,4 +1,4 @@
-const GMO = require('../');
+const GMO = require('../../');
 
 /**
  * 会員登録・更新・削除サンプル
@@ -9,8 +9,11 @@ main();
 
 async function main() {
     const memberId = Date.now().toString();
+    const cardService = new GMO.service.Card({
+        endpoint: process.env.GMO_ENDPOINT
+    });
     // 会員登録
-    const saveMemberResult = await GMO.services.card.saveMember({
+    const saveMemberResult = await cardService.saveMember({
         siteId: siteId,
         sitePass: sitePass,
         memberId: memberId,
@@ -19,7 +22,7 @@ async function main() {
     console.log('saveMemberResult:', saveMemberResult);
 
     // 会員更新
-    const updateMemberResult = await GMO.services.card.updateMember({
+    const updateMemberResult = await cardService.updateMember({
         siteId: siteId,
         sitePass: sitePass,
         memberId: saveMemberResult.memberId,
@@ -28,7 +31,7 @@ async function main() {
     console.log('updateMemberResult:', updateMemberResult);
 
     // 会員削除
-    const deleteMemberResult = await GMO.services.card.deleteMember({
+    const deleteMemberResult = await cardService.deleteMember({
         siteId: siteId,
         sitePass: sitePass,
         memberId: updateMemberResult.memberId

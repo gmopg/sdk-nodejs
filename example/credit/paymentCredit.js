@@ -1,4 +1,4 @@
-const GMO = require('../');
+const GMO = require('../../');
 
 /**
  * creditサンプル
@@ -6,7 +6,10 @@ const GMO = require('../');
 
 const orderId = Date.now().toString();
 const amount = 1800;
-GMO.services.credit.entryTran({
+const creditService = new GMO.service.Credit({
+    endpoint: process.env.GMO_ENDPOINT
+});
+creditService.entryTran({
     shopId: process.env.TEST_GMO_SHOP_ID,
     shopPass: process.env.TEST_GMO_SHOP_PASS,
     orderId: orderId,
@@ -14,7 +17,7 @@ GMO.services.credit.entryTran({
     amount: amount
 }).then(
     (entryTranResult) => {
-        GMO.services.credit.execTran({
+        creditService.execTran({
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
             orderId: orderId,
@@ -25,28 +28,14 @@ GMO.services.credit.entryTran({
         }).then(
             (execTranResult) => {
                 console.log(execTranResult);
-                GMO.services.credit.alterTran({
+                creditService.alterTran({
                     shopId: process.env.TEST_GMO_SHOP_ID,
                     shopPass: process.env.TEST_GMO_SHOP_PASS,
                     accessId: entryTranResult.accessId,
                     accessPass: entryTranResult.accessPass,
                     jobCd: GMO.utils.util.JobCd.Sales,
                     amount: amount
-                }).then(
-                    (result) => {
-                        console.log(result);
-                    },
-                    (err) => {
-                        console.error(err);
-                    }
-                    );
-            },
-            (err) => {
-                console.error(err);
-            }
-            );
-    },
-    (err) => {
-        console.error(err);
-    }
-    );
+                }).then(console.log)
+                    .catch((err) => console.error);
+            }).catch((err) => console.error);
+    }).catch((err) => console.error);
