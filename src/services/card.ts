@@ -1,6 +1,5 @@
 /**
  * カード決済インターフェース
- * @alias
  * @namespace services/card
  */
 

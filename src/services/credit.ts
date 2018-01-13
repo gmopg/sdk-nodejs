@@ -1,6 +1,5 @@
 /**
  * GMO　クレジット
- * @alias
  * @namespace services/credit
  */
 
