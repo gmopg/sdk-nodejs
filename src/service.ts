@@ -27,22 +27,27 @@ export interface IOptions {
  */
 export class Service {
     public options: IOptions;
+    public requestOptions: request.RequestPromiseOptions;
 
-    constructor(options: IOptions) {
+    constructor(options: IOptions, requestOptions?: request.RequestPromiseOptions) {
         this.options = options;
+
+        this.requestOptions = {
+            headers: {},
+            method: 'GET',
+            resolveWithFullResponse: true,
+            forever: true
+        };
+        if (requestOptions !== undefined) {
+            this.requestOptions = { ...this.requestOptions, ...requestOptions };
+        }
     }
 
     /**
      * Create and send request to API
      */
     public async request(options: request.OptionsWithUri) {
-        const defaultOptions = {
-            headers: {},
-            method: 'GET',
-            resolveWithFullResponse: true,
-            forever: true
-        };
-        options = { ...defaultOptions, ...options };
+        options = { ...this.requestOptions, ...options };
 
         const baseUrl = this.options.endpoint;
         const url = `${baseUrl}${options.uri}`;

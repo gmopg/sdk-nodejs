@@ -6,9 +6,10 @@ const GMO = require('../../');
 
 const orderId = Date.now().toString();
 const amount = 1800;
-const creditService = new GMO.service.Credit({
-    endpoint: process.env.GMO_ENDPOINT
-});
+const creditService = new GMO.service.Credit(
+    { endpoint: process.env.GMO_ENDPOINT },
+    { pool: {} }
+);
 creditService.entryTran({
     shopId: process.env.TEST_GMO_SHOP_ID,
     shopPass: process.env.TEST_GMO_SHOP_PASS,
