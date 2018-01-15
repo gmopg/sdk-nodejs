@@ -1,4 +1,5 @@
 import * as createDebug from 'debug';
+import { OK } from 'http-status';
 
 import * as CreditFactory from '../factory/credit';
 import { Service } from '../service';
@@ -26,6 +27,7 @@ export class CreditService extends Service {
     public async entryTran(args: CreditFactory.IEntryTranArgs): Promise<CreditFactory.IEntryTranResult> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/EntryTran.idPass',
             method: 'POST',
             form: {
@@ -72,6 +74,7 @@ export class CreditService extends Service {
     public async execTran(args: CreditFactory.IExecTranArgs): Promise<CreditFactory.IExecTranResult> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/ExecTran.idPass',
             method: 'POST',
             form: {
@@ -130,6 +133,7 @@ export class CreditService extends Service {
     public async alterTran(args: CreditFactory.IAlterTranArgs): Promise<CreditFactory.IAlterTranResult> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/AlterTran.idPass',
             method: 'POST',
             form: {
@@ -166,6 +170,7 @@ export class CreditService extends Service {
     public async searchTrade(args: CreditFactory.ISearchTradeArgs): Promise<CreditFactory.ISearchTradeResult> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/SearchTrade.idPass',
             method: 'POST',
             form: {
@@ -219,6 +224,7 @@ export class CreditService extends Service {
     public async changeTran(args: CreditFactory.IChangeTranArgs): Promise<CreditFactory.IChangeTranResult> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/ChangeTran.idPass',
             method: 'POST',
             form: {

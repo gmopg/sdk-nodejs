@@ -170,8 +170,11 @@ export class DefaultTransporter implements Transporter {
      */
     public static readonly USER_AGENT: string = `gmo-service-nodejs-client/${pkg.version}`;
 
-    // constructor() {
-    // }
+    public expectedStatusCodes: number[];
+
+    constructor(expectedStatusCodes: number[]) {
+        this.expectedStatusCodes = expectedStatusCodes;
+    }
 
     /**
      * Configures request options before making a request.
@@ -184,6 +187,9 @@ export class DefaultTransporter implements Transporter {
         } else if (options.headers['User-Agent'].indexOf(DefaultTransporter.USER_AGENT) === -1) {
             options.headers['User-Agent'] = `${options.headers['User-Agent']} ${DefaultTransporter.USER_AGENT}`;
         }
+
+        options.resolveWithFullResponse = true;
+        options.simple = false;
 
         return options;
     }
@@ -207,12 +213,19 @@ export class DefaultTransporter implements Transporter {
         let err: any = new RequestError('An unexpected error occurred');
 
         if (res.statusCode !== undefined) {
-            const result = querystring.parse(res.body);
-            if (result.ErrCode !== undefined) {
-                err = new BadRequestError(res.body);
+            if (this.expectedStatusCodes.indexOf(res.statusCode) < 0) {
+                err = new RequestError(res.body);
+                err.code = res.statusCode;
+                err.errors = [];
             } else {
-                // 結果をオブジェクトとして返却
-                return result;
+                const result = querystring.parse(res.body);
+                if (result.ErrCode !== undefined) {
+                    // GMOのエラー結果
+                    err = new BadRequestError(res.body);
+                } else {
+                    // 結果をオブジェクトとして返却
+                    return result;
+                }
             }
         }
 

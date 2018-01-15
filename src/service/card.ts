@@ -1,4 +1,5 @@
 import * as createDebug from 'debug';
+import { OK } from 'http-status';
 
 import * as CardFactory from '../factory/card';
 import { Service } from '../service';
@@ -25,6 +26,7 @@ export class CardService extends Service {
     public async saveMember(args: CardFactory.ISaveMemberArgs): Promise<CardFactory.ISaveMemberResult> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/SaveMember.idPass',
             method: 'POST',
             form: {
@@ -54,6 +56,7 @@ export class CardService extends Service {
     public async updateMember(args: CardFactory.IUpdateMemberArgs): Promise<CardFactory.IUpdateMemberResult> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/UpdateMember.idPass',
             method: 'POST',
             form: {
@@ -82,6 +85,7 @@ export class CardService extends Service {
     public async deleteMember(args: CardFactory.IDeleteMemberArgs): Promise<CardFactory.IDeleteMemberResult> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/DeleteMember.idPass',
             method: 'POST',
             form: {
@@ -110,6 +114,7 @@ export class CardService extends Service {
     public async searchMember(args: CardFactory.ISearchMemberArgs): Promise<CardFactory.ISearchMemberResult> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/SearchMember.idPass',
             method: 'POST',
             form: {
@@ -148,6 +153,7 @@ export class CardService extends Service {
     public async saveCard(args: CardFactory.ISaveCardArgs): Promise<CardFactory.ISaveCardResult> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/SaveCard.idPass',
             method: 'POST',
             form: {
@@ -194,6 +200,7 @@ export class CardService extends Service {
     public async deleteCard(args: CardFactory.IDeleteCardArgs): Promise<CardFactory.IDeleteCardResult> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/DeleteCard.idPass',
             method: 'POST',
             form: {
@@ -226,6 +233,7 @@ export class CardService extends Service {
     public async searchCard(args: CardFactory.ISearchCardArgs): Promise<CardFactory.ISearchCardResult[]> {
         debug('requesting...', args);
         const result = await this.request({
+            expectedStatusCodes: [OK],
             uri: '/payment/SearchCard.idPass',
             method: 'POST',
             form: {

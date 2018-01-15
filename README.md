@@ -25,31 +25,17 @@ npm install @motionpicture/gmo-service
 ```
 
 ```js
-var GMO = require('@motionpicture/gmo-service');
+const GMO = require('@motionpicture/gmo-service');
 ```
 
 When using the GMO Service SDK, you must provide connection information. This can be provided using:
 
-### set environment variables - For example,
-```shell
-set GMO_ENDPOINT=*****
-```
+### Environment variables
 
-for test
-```shell
-set TEST_GMO_SHOP_ID=*****
-set TEST_GMO_SHOP_PASS=*****
-set TEST_GMO_SITE_ID=*****
-set TEST_GMO_SITE_PASS=*****
-```
-
-### Debug
-
-DEBUG環境変数をセットすることでリクエストのIN,OUTをデバッグできます。
-
-```shell
-set DEBUG=gmo-service:*
-```
+| Name           | Required | Value         | Purpose          |
+| -------------- | -------- | ------------- | ---------------- |
+| `DEBUG`        | false    | gmo-service:* | Debug            |
+| `GMO_ENDPOINT` | false    |               | GMO API endpoint |
 
 ### クレジットカード決済(即時売上)の例
 
@@ -57,14 +43,17 @@ set DEBUG=gmo-service:*
 const GMO = require('@motionpicture/gmo-service');
 
 const orderId ='orderId';
-GMO.services.credit.entryTran({
+const creditService = new GMO.service.Credit(
+    { endpoint: process.env.GMO_ENDPOINT }
+);
+creditService.entryTran({
     shopId: 'your shopId',
     shopPass: 'sour shopPass',
     orderId: orderId,
     jobCd: GMO.utils.util.JobCd.Auth,
     amount: 1234
 }).then((entryTranResult) => {
-    GMO.services.credit.execTran({
+    creditService.execTran({
         accessId: entryTranResult.accessId,
         accessPass: entryTranResult.accessPass,
         orderId: orderId,
@@ -75,7 +64,7 @@ GMO.services.credit.entryTran({
     }).then((execTranResult) => {
         console.log(execTranResult);
 
-        GMO.services.credit.alterTran({
+        creditService.alterTran({
             shopId: 'your shopId',
             shopPass: 'sour shopPass',
             accessId: entryTranResult.accessId,

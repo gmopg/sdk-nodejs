@@ -21,16 +21,20 @@ export interface IOptions {
     transporter?: Transporter;
 }
 
-export interface IFetchOptions {
-    uri: string;
-    form?: any;
-    qs?: any;
-    method: string;
-    headers?: {
-        [key: string]: any;
-    };
-    body?: any;
-}
+// export interface IFetchOptions {
+//     uri: string;
+//     form?: any;
+//     qs?: any;
+//     method: string;
+//     headers?: {
+//         [key: string]: any;
+//     };
+//     body?: any;
+//     expectedStatusCodes: number[];
+// }
+export type IRequestOptions = request.OptionsWithUri & {
+    expectedStatusCodes: number[];
+};
 
 /**
  * base service class
@@ -98,8 +102,7 @@ export class Service {
 
         this.requestOptions = {
             headers: {},
-            method: 'GET',
-            resolveWithFullResponse: true
+            method: 'GET'
         };
         if (requestOptions !== undefined) {
             this.requestOptions = { ...this.requestOptions, ...requestOptions };
@@ -109,7 +112,7 @@ export class Service {
     /**
      * Create and send request to API
      */
-    public async request(options: request.OptionsWithUri) {
+    public async request(options: IRequestOptions) {
         options = { ...this.requestOptions, ...options };
 
         const baseUrl = this.options.endpoint;
@@ -127,7 +130,7 @@ export class Service {
 
         // create request (using authClient or otherwise and return request obj)
         const transporter =
-            (this.options.transporter !== undefined) ? this.options.transporter : new DefaultTransporter();
+            (this.options.transporter !== undefined) ? this.options.transporter : new DefaultTransporter(options.expectedStatusCodes);
 
         return transporter.request(requestOptions);
     }
