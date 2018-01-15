@@ -1,4 +1,5 @@
 const GMO = require('../../');
+const https = require('https');
 
 /**
  * 会員登録・更新・削除サンプル
@@ -9,9 +10,14 @@ main();
 
 async function main() {
     const memberId = Date.now().toString();
-    const cardService = new GMO.service.Card({
-        endpoint: process.env.GMO_ENDPOINT
-    });
+    const cardService = new GMO.service.Card(
+        {
+            endpoint: process.env.GMO_ENDPOINT
+        },
+        {
+            agent: https.Agent({ keepAlive: true })
+        }
+    );
     // 会員登録
     const saveMemberResult = await cardService.saveMember({
         siteId: siteId,

@@ -110,7 +110,7 @@ export type ISearchMemberResult = CardFactory.ISearchMemberResult;
  * @param {string} args.memberId 会員ID
  * @returns {Promise<ISearchMemberResult>} 会員参照out
  */
-export async function searchMember(args: ISearchMemberArgs): Promise<ISearchMemberResult | null> {
+export async function searchMember(args: ISearchMemberArgs): Promise<ISearchMemberResult> {
     return service.searchMember(args);
 }
 

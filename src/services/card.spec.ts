@@ -61,7 +61,7 @@ describe('会員登録', () => {
         });
 
         // 会員検索して正常に存在していることを確認
-        const searchMemberResult = <CardService.ISearchMemberResult>await CardService.searchMember({
+        const searchMemberResult = await CardService.searchMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: memberId
@@ -190,12 +190,14 @@ describe('会員削除', () => {
         });
 
         // 会員検索でエラーになることを確認
-        const searchMemberResultAfter = await CardService.searchMember({
+        const searchMemberError = await CardService.searchMember({
             siteId: siteId,
             sitePass: sitePass,
             memberId: memberId
-        });
-        assert.equal(searchMemberResultAfter, null);
+        }).catch((err) => err);
+
+        assert(searchMemberError instanceof BadRequestError);
+        assert(searchMemberError.errors.length === 1 && searchMemberError.errors[0].info === 'E01390002');
     });
 });
 
@@ -237,13 +239,14 @@ describe('会員参照', () => {
     it('会員が存在しなければ結果はnull', async () => {
         const memberId = `invalidMemberId-${Date.now().toString()}`;
 
-        const searchMemberResult = await CardService.searchMember({
+        const searchMemberError = await CardService.searchMember({
             siteId: TEST_SITE_ID,
             sitePass: TEST_SITE_PASS,
             memberId: memberId
-        });
+        }).catch((err) => err);
 
-        assert.equal(searchMemberResult, null);
+        assert(searchMemberError instanceof BadRequestError);
+        assert(searchMemberError.errors.length === 1 && searchMemberError.errors[0].info === 'E01390002');
     });
 
     it('会員が存在する', async () => {
@@ -436,14 +439,14 @@ describe('カード参照', () => {
     });
 
     it('会員は存在するがカードがない場合、空配列を返す', async () => {
-        const searchCardResults = await CardService.searchCard({
+        const searchCardError = await CardService.searchCard({
             siteId: TEST_SITE_ID,
             sitePass: TEST_SITE_PASS,
             memberId: TEST_MEMBER_ID,
             seqMode: Util.SeqMode.Physics
-        });
+        }).catch((err) => err);
 
-        assert(Array.isArray(searchCardResults));
-        assert.equal(searchCardResults.length, 0);
+        assert(searchCardError instanceof BadRequestError);
+        assert(searchCardError.errors.length === 1 && searchCardError.errors[0].info === 'E01240002');
     });
 });

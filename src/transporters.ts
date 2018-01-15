@@ -6,8 +6,11 @@
  */
 
 import * as createDebug from 'debug';
+import * as querystring from 'querystring';
 import * as request from 'request-promise-native';
 // import * as fetch from 'isomorphic-fetch';
+
+import { BadRequestError } from './error/badRequest';
 
 const debug = createDebug('gmo-service:transporters');
 // tslint:disable-next-line
@@ -190,6 +193,7 @@ export class DefaultTransporter implements Transporter {
      */
     public async request(options: request.OptionsWithUrl) {
         const requestOptions = DefaultTransporter.CONFIGURE(options);
+        debug('requesting...', requestOptions);
 
         return request(requestOptions).then((res) => this.wrapCallback(res));
     }
@@ -199,34 +203,17 @@ export class DefaultTransporter implements Transporter {
      */
     // tslint:disable-next-line:prefer-function-over-method
     private wrapCallback(res: request.FullResponse): any {
-        const err: RequestError = new RequestError('An unexpected error occurred');
+        debug('request processed.', res.statusCode, res.body);
+        let err: any = new RequestError('An unexpected error occurred');
 
-        debug('request processed', res.statusCode, res.body);
         if (res.statusCode !== undefined) {
-            return res.body;
-
-            // if (this.expectedStatusCodes.indexOf(res.statusCode) < 0) {
-            //     if (typeof res.body === 'string') {
-            //         // Consider all 4xx and 5xx responses errors.
-            //         err = new RequestError(res.body);
-            //         err.code = res.statusCode;
-            //     }
-
-            //     if (typeof res.body === 'object' && res.body.errors !== undefined) {
-            //         // consider 400
-            //         err = new RequestError((<any[]>res.body.errors).map((error) => `${error.title}:${error.detail}`).join('\n'));
-            //         err.code = res.statusCode;
-            //         err.errors = res.body.errors;
-            //     }
-            // } else {
-            //     if (res.body !== undefined) {
-            //         // consider 200,201,404
-            //         return res.body;
-            //     } else {
-            //         // consider 204
-            //         return;
-            //     }
-            // }
+            const result = querystring.parse(res.body);
+            if (result.ErrCode !== undefined) {
+                err = new BadRequestError(res.body);
+            } else {
+                // 結果をオブジェクトとして返却
+                return result;
+            }
         }
 
         throw err;

@@ -1,6 +1,4 @@
 import * as createDebug from 'debug';
-import * as querystring from 'querystring';
-import { BadRequestError } from '../error/badRequest';
 
 import * as CardFactory from '../factory/card';
 import { Service } from '../service';
@@ -26,7 +24,7 @@ export class CardService extends Service {
      */
     public async saveMember(args: CardFactory.ISaveMemberArgs): Promise<CardFactory.ISaveMemberResult> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/SaveMember.idPass',
             method: 'POST',
             form: {
@@ -36,12 +34,6 @@ export class CardService extends Service {
                 MemberName: args.memberName
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            throw new BadRequestError(body);
-        }
 
         return {
             memberId: <string>result.MemberID
@@ -61,7 +53,7 @@ export class CardService extends Service {
      */
     public async updateMember(args: CardFactory.IUpdateMemberArgs): Promise<CardFactory.IUpdateMemberResult> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/UpdateMember.idPass',
             method: 'POST',
             form: {
@@ -71,12 +63,6 @@ export class CardService extends Service {
                 MemberName: args.memberName
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            throw new BadRequestError(body);
-        }
 
         return {
             memberId: <string>result.MemberID
@@ -95,7 +81,7 @@ export class CardService extends Service {
      */
     public async deleteMember(args: CardFactory.IDeleteMemberArgs): Promise<CardFactory.IDeleteMemberResult> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/DeleteMember.idPass',
             method: 'POST',
             form: {
@@ -104,12 +90,6 @@ export class CardService extends Service {
                 MemberID: args.memberId
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            throw new BadRequestError(body);
-        }
 
         return {
             memberId: <string>result.MemberID
@@ -118,6 +98,7 @@ export class CardService extends Service {
 
     /**
      * 会員参照
+     * 指定されたサイトIDと会員IDの会員が存在しない場合、E01390002エラーが返却されるので注意
      * @memberof services/member
      * @function searchMember
      * @param {ISearchMemberArgs} args 会員参照in
@@ -126,9 +107,9 @@ export class CardService extends Service {
      * @param {string} args.memberId 会員ID
      * @returns {Promise<ISearchMemberResult>} 会員参照out
      */
-    public async searchMember(args: CardFactory.ISearchMemberArgs): Promise<CardFactory.ISearchMemberResult | null> {
+    public async searchMember(args: CardFactory.ISearchMemberArgs): Promise<CardFactory.ISearchMemberResult> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/SearchMember.idPass',
             method: 'POST',
             form: {
@@ -137,19 +118,6 @@ export class CardService extends Service {
                 MemberID: args.memberId
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            const error = new BadRequestError(body);
-
-            // 指定されたサイトIDと会員IDの会員が存在しない場合、nullを返すように、特別扱い
-            if (error.errors.length === 1 && error.errors[0].info === 'E01390002') {
-                return null;
-            }
-
-            throw error;
-        }
 
         return {
             memberId: <string>result.MemberID,
@@ -179,7 +147,7 @@ export class CardService extends Service {
      */
     public async saveCard(args: CardFactory.ISaveCardArgs): Promise<CardFactory.ISaveCardResult> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/SaveCard.idPass',
             method: 'POST',
             form: {
@@ -197,12 +165,6 @@ export class CardService extends Service {
                 Token: args.token
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            throw new BadRequestError(body);
-        }
 
         return {
             cardSeq: <string>result.CardSeq,
@@ -231,7 +193,7 @@ export class CardService extends Service {
      */
     public async deleteCard(args: CardFactory.IDeleteCardArgs): Promise<CardFactory.IDeleteCardResult> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/DeleteCard.idPass',
             method: 'POST',
             form: {
@@ -242,12 +204,6 @@ export class CardService extends Service {
                 CardSeq: args.cardSeq
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            throw new BadRequestError(body);
-        }
 
         return {
             cardSeq: <string>result.CardSeq
@@ -256,6 +212,7 @@ export class CardService extends Service {
 
     /**
      * カード参照
+     * 会員は存在してカードが存在しない場合、E01240002エラーが返却されるので注意
      * @memberof services/card
      * @function searchCard
      * @param {ISearchCardArgs} args カード参照in
@@ -268,7 +225,7 @@ export class CardService extends Service {
      */
     public async searchCard(args: CardFactory.ISearchCardArgs): Promise<CardFactory.ISearchCardResult[]> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/SearchCard.idPass',
             method: 'POST',
             form: {
@@ -279,19 +236,6 @@ export class CardService extends Service {
                 CardSeq: args.cardSeq
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            const error = new BadRequestError(body);
-
-            // 会員は存在してカードが存在しない場合、空配列を返すように、特別扱い
-            if (error.errors.length === 1 && error.errors[0].info === 'E01240002') {
-                return [];
-            }
-
-            throw error;
-        }
 
         const cardSeqArry: string[] = (<string>result.CardSeq).split('|');
         const defaultFlagArry: string[] = (<string>result.DefaultFlag).split('|');

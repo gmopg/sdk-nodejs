@@ -1,6 +1,4 @@
 import * as createDebug from 'debug';
-import * as querystring from 'querystring';
-import { BadRequestError } from '../error/badRequest';
 
 import * as CreditFactory from '../factory/credit';
 import { Service } from '../service';
@@ -27,7 +25,7 @@ export class CreditService extends Service {
      */
     public async entryTran(args: CreditFactory.IEntryTranArgs): Promise<CreditFactory.IEntryTranResult> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/EntryTran.idPass',
             method: 'POST',
             form: {
@@ -38,12 +36,6 @@ export class CreditService extends Service {
                 Amount: args.amount
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            throw new BadRequestError(body);
-        }
 
         return {
             accessId: <string>result.AccessID,
@@ -79,7 +71,7 @@ export class CreditService extends Service {
      */
     public async execTran(args: CreditFactory.IExecTranArgs): Promise<CreditFactory.IExecTranResult> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/ExecTran.idPass',
             method: 'POST',
             form: {
@@ -104,12 +96,6 @@ export class CreditService extends Service {
                 ClientField3: args.clientField3
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            throw new BadRequestError(body);
-        }
 
         return {
             acs: <string>result.ACS,
@@ -143,7 +129,7 @@ export class CreditService extends Service {
      */
     public async alterTran(args: CreditFactory.IAlterTranArgs): Promise<CreditFactory.IAlterTranResult> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/AlterTran.idPass',
             method: 'POST',
             form: {
@@ -156,12 +142,6 @@ export class CreditService extends Service {
                 Method: args.method
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            throw new BadRequestError(body);
-        }
 
         return {
             accessId: <string>result.AccessID,
@@ -185,7 +165,7 @@ export class CreditService extends Service {
      */
     public async searchTrade(args: CreditFactory.ISearchTradeArgs): Promise<CreditFactory.ISearchTradeResult> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/SearchTrade.idPass',
             method: 'POST',
             form: {
@@ -194,12 +174,6 @@ export class CreditService extends Service {
                 OrderID: args.orderId
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            throw new BadRequestError(body);
-        }
 
         return {
             orderId: <string>result.OrderID,
@@ -244,7 +218,7 @@ export class CreditService extends Service {
      */
     public async changeTran(args: CreditFactory.IChangeTranArgs): Promise<CreditFactory.IChangeTranResult> {
         debug('requesting...', args);
-        const body = await this.request({
+        const result = await this.request({
             uri: '/payment/ChangeTran.idPass',
             method: 'POST',
             form: {
@@ -257,12 +231,6 @@ export class CreditService extends Service {
                 Tax: args.tax
             }
         });
-        debug('request processed.', body);
-
-        const result = querystring.parse(body);
-        if (result.ErrCode !== undefined) {
-            throw new BadRequestError(body);
-        }
 
         return {
             accessId: <string>result.AccessID,
