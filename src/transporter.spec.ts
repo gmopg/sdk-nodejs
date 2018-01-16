@@ -68,13 +68,7 @@ describe('transporter.request()', () => {
         UNAUTHORIZED
     ].forEach((statusCode) => {
         it(`次のステータスコードが返却されれば、リクエストエラーが投げられるはず ${statusCode}`, async () => {
-            const body = {
-                error: {
-                    errors: [],
-                    code: statusCode,
-                    message: 'message'
-                }
-            };
+            const body = 'body text';
 
             const transporter = new DefaultTransporter([OK]);
 
@@ -83,33 +77,29 @@ describe('transporter.request()', () => {
             const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' }).catch((err) => err);
 
             assert(result instanceof Error);
-            // assert.equal((<RequestError>result).code, statusCode);
-            // assert.equal((<RequestError>result).message, body.error.message);
-            // sandbox.verify();
+            assert.equal((<RequestError>result).code, statusCode);
+            assert.equal((<RequestError>result).message, body);
+            sandbox.verify();
             assert(scope.isDone());
         });
     });
 
-    it('レスポンスボディがjsonでなければ、適切なエラーが投げられるはず', async () => {
+    it('レスポンスにステータスコードがなければ、RequestErrorとなるはず', async () => {
         const body = 'body text';
-        const statusCode = INTERNAL_SERVER_ERROR;
 
         const transporter = new DefaultTransporter([OK]);
 
-        scope = nock(API_ENDPOINT)
-            .get('/uri')
-            .reply(statusCode, body);
+        scope = nock(API_ENDPOINT).get('/uri').replyWithError(body);
 
         const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' }).catch((err) => err);
         assert(result instanceof Error);
-        assert.equal((<RequestError>result).code, statusCode);
-        assert.equal((<RequestError>result).message, body);
+        console.error(result);
         sandbox.verify();
         assert(scope.isDone());
     });
 });
 
-describe('CONFIGURE()', () => {
+describe('DefaultTransporter.CONFIGURE()', () => {
     let sandbox: sinon.SinonSandbox;
 
     beforeEach(() => {

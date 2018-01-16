@@ -1,5 +1,5 @@
 /**
- * GMO　ユーティリティー
+ * GMOユーティリティー
  * @namespace utils/util
  */
 

@@ -207,11 +207,12 @@ export class DefaultTransporter implements Transporter {
     /**
      * Wraps the response callback.
      */
-    // tslint:disable-next-line:prefer-function-over-method
     private wrapCallback(res: request.FullResponse): any {
         debug('request processed.', res.statusCode, res.body);
         let err: any = new RequestError('An unexpected error occurred');
 
+        // tslint:disable-next-line:no-single-line-block-comment
+        /* istanbul ignore else */
         if (res.statusCode !== undefined) {
             if (this.expectedStatusCodes.indexOf(res.statusCode) < 0) {
                 err = new RequestError(res.body);

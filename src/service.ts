@@ -113,22 +113,15 @@ export class Service {
      * Create and send request to API
      */
     public async request(options: IRequestOptions) {
-        options = { ...this.requestOptions, ...options };
-
-        const baseUrl = this.options.endpoint;
-        const url = `${baseUrl}${options.uri}`;
-
-        delete options.uri;
-
-        // const querystrings = qs.stringify(options.qs);
-        // url += (querystrings.length > 0) ? `?${querystrings}` : '';
-
         const requestOptions = {
-            url: url,
+            url: `${this.options.endpoint}${options.uri}`,
+            ...this.requestOptions,
             ...options
         };
 
-        // create request (using authClient or otherwise and return request obj)
+        delete requestOptions.uri;
+
+        // create request
         const transporter =
             (this.options.transporter !== undefined) ? this.options.transporter : new DefaultTransporter(options.expectedStatusCodes);
 

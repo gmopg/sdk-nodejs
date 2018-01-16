@@ -25,6 +25,7 @@
     "no-internal-module": true,
     "no-magic-numbers": true,
     "no-misused-new": true,
+    "no-redundant-jsdoc": false,
     "no-relative-imports": false,
     "no-unnecessary-initializer": true,
     "no-unsafe-any": false,

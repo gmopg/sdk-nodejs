@@ -1,5 +1,5 @@
 /**
- * GMO　クレジット
+ * GMOクレジット
  * @namespace services/credit
  */
 
