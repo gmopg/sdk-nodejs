@@ -1,4 +1,4 @@
-const GMO = require('../');
+const GMO = require('../../');
 
 /**
  * creditサンプル
@@ -6,47 +6,37 @@ const GMO = require('../');
 
 const orderId = Date.now().toString();
 const amount = 1800;
-GMO.services.credit.entryTran({
-    shopId: 'your shopId',
-    shopPass: 'sour shopPass',
+const creditService = new GMO.service.Credit(
+    { endpoint: process.env.GMO_ENDPOINT },
+    { pool: {} }
+);
+creditService.entryTran({
+    shopId: process.env.TEST_GMO_SHOP_ID,
+    shopPass: process.env.TEST_GMO_SHOP_PASS,
     orderId: orderId,
     jobCd: GMO.utils.util.JobCd.Auth,
     amount: amount
 }).then(
     (entryTranResult) => {
-        GMO.services.credit.execTran({
+        creditService.execTran({
             accessId: entryTranResult.accessId,
             accessPass: entryTranResult.accessPass,
             orderId: orderId,
             method: GMO.utils.util.Method.Lump,
             cardNo: '4111111111111111',
-            expire: '2012',
+            expire: '2025',
             securityCode: '123'
         }).then(
             (execTranResult) => {
                 console.log(execTranResult);
-                GMO.services.credit.alterTran({
-                    shopId: 'your shopId',
-                    shopPass: 'sour shopPass',
+                creditService.alterTran({
+                    shopId: process.env.TEST_GMO_SHOP_ID,
+                    shopPass: process.env.TEST_GMO_SHOP_PASS,
                     accessId: entryTranResult.accessId,
                     accessPass: entryTranResult.accessPass,
                     jobCd: GMO.utils.util.JobCd.Sales,
                     amount: amount
-                }).then(
-                    (result) => {
-                        console.log(result);
-                    },
-                    (err) => {
-                        console.error(err);
-                    }
-                    );
-            },
-            (err) => {
-                console.error(err);
-            }
-            );
-    },
-    (err) => {
-        console.error(err);
-    }
-    );
+                }).then(console.log)
+                    .catch((err) => console.error);
+            }).catch((err) => console.error);
+    }).catch((err) => console.error);

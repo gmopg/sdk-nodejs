@@ -1,3 +1,5 @@
+// tslint:disable:no-irregular-whitespace
+
 /**
  * @desc エラー定義
  * @namespace error/errors

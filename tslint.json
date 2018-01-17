@@ -16,14 +16,16 @@
     "import-name": false,
     "interface-over-type-literal": true,
     "linebreak-style": [
-      "LF",
-      true
+      true,
+      "LF"
     ],
     "no-any": false,
+    "no-backbone-get-set-outside-model": false,
     "no-default-export": false,
     "no-internal-module": true,
     "no-magic-numbers": true,
     "no-misused-new": true,
+    "no-redundant-jsdoc": false,
     "no-relative-imports": false,
     "no-unnecessary-initializer": true,
     "no-unsafe-any": false,

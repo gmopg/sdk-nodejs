@@ -1,3 +1,5 @@
+// tslint:disable:no-implicit-dependencies
+
 /**
  * クレジットサービステスト
  * @ignore

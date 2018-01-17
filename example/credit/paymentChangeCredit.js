@@ -1,19 +1,20 @@
-const GMO = require('../');
+const GMO = require('../../');
 
 /**
  * 金額変更サンプル（仮売上 -> 実売上 -> 即時売上）
  */
-const shopId = 'your shopId';
-const shopPass = 'sour shopPass';
-// const shopId = process.env.TEST_GMO_SHOP_ID;
-// const shopPass = process.env.TEST_GMO_SHOP_PASS;
+const shopId = process.env.TEST_GMO_SHOP_ID;
+const shopPass = process.env.TEST_GMO_SHOP_PASS;
 main();
 
 async function main() {
     const orderId = Date.now().toString();
     const amount = 1800;
+    const creditService = new GMO.service.Credit({
+        endpoint: process.env.GMO_ENDPOINT
+    });
     // 取引作成
-    const entryTranResult = await GMO.services.credit.entryTran({
+    const entryTranResult = await creditService.entryTran({
         shopId: shopId,
         shopPass: shopPass,
         orderId: orderId,
@@ -21,7 +22,7 @@ async function main() {
         amount: amount
     });
     // 決済実行
-    await GMO.services.credit.execTran({
+    await creditService.execTran({
         accessId: entryTranResult.accessId,
         accessPass: entryTranResult.accessPass,
         orderId: orderId,
@@ -31,7 +32,7 @@ async function main() {
         securityCode: '123'
     });
     // 決済変更
-    await GMO.services.credit.alterTran({
+    await creditService.alterTran({
         shopId: shopId,
         shopPass: shopPass,
         accessId: entryTranResult.accessId,
@@ -40,7 +41,7 @@ async function main() {
         amount: amount
     });
     // 金額変更
-    await GMO.services.credit.changeTran({
+    await creditService.changeTran({
         shopId: shopId,
         shopPass: shopPass,
         accessId: entryTranResult.accessId,

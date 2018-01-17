@@ -1,25 +1,26 @@
-const GMO = require('../');
+const GMO = require('../../');
 
 /**
  * カード参照サンプル
  */
-const siteId = 'your siteId';
-const sitePass = 'sour sitePass';
-// const siteId = process.env.TEST_GMO_SITE_ID;
-// const sitePass = process.env.TEST_GMO_SITE_PASS;
+const siteId = process.env.TEST_GMO_SITE_ID;
+const sitePass = process.env.TEST_GMO_SITE_PASS;
 main();
 
 async function main() {
     const memberId = Date.now().toString();
+    const cardService = new GMO.service.Card({
+        endpoint: process.env.GMO_ENDPOINT
+    });
     // 会員登録
-    const saveMemberResult = await GMO.services.card.saveMember({
+    const saveMemberResult = await cardService.saveMember({
         siteId: siteId,
         sitePass: sitePass,
         memberId: memberId,
         memberName: 'test'
     });
     // カード登録
-    await GMO.services.card.saveCard({
+    await cardService.saveCard({
         siteId: siteId,
         sitePass: sitePass,
         memberId: saveMemberResult.memberId,
@@ -28,7 +29,7 @@ async function main() {
     });
 
     // カード参照
-    const searchCardResults = await GMO.services.card.searchCard({
+    const searchCardResults = await cardService.searchCard({
         siteId: siteId,
         sitePass: sitePass,
         memberId: saveMemberResult.memberId,
