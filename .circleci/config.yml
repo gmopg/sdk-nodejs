@@ -7,11 +7,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: node version
-          command: node -v
-      - run:
-          name: npm version
-          command: npm -v
+          name: Check versions
+          command: |
+            node -v
+            npm -v
       # - run:
       #     name: Update npm
       #     command: 'sudo npm install -g npm@latest'
@@ -81,7 +80,7 @@ jobs:
           command: npm publish --tag next --access public
   deploy:
     docker:
-      - image: circleci/node:8.4
+      - image: circleci/node:latest
     steps:
       - checkout
       - restore_cache:

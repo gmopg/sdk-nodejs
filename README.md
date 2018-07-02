@@ -7,8 +7,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/motionpicture/gmo-service/badge.svg)](https://snyk.io/test/github/motionpicture/gmo-service)
 [![npm](https://img.shields.io/npm/dm/@motionpicture/gmo-service.svg)](https://nodei.co/npm/@motionpicture/gmo-service/)
 
-node.jsでGMOサービスを使うためのパッケージです。
-
+Node.jsでGMOサービスを使うためのパッケージです。
 
 ## Table of contents
 
@@ -16,7 +15,6 @@ node.jsでGMOサービスを使うためのパッケージです。
 * [Example](#code-samples)
 * [Jsdoc](#jsdoc)
 * [License](#license)
-
 
 ## Usage
 
@@ -33,7 +31,7 @@ When using the GMO Service SDK, you must provide connection information. This ca
 ### Environment variables
 
 | Name           | Required | Value         | Purpose          |
-| -------------- | -------- | ------------- | ---------------- |
+|----------------|----------|---------------|------------------|
 | `DEBUG`        | false    | gmo-service:* | Debug            |
 | `GMO_ENDPOINT` | false    |               | GMO API endpoint |
 
@@ -53,6 +51,8 @@ creditService.entryTran({
     jobCd: GMO.utils.util.JobCd.Auth,
     amount: 1234
 }).then((entryTranResult) => {
+    console.log('entryTranResult:', entryTranResult);
+
     creditService.execTran({
         accessId: entryTranResult.accessId,
         accessPass: entryTranResult.accessPass,
@@ -62,7 +62,7 @@ creditService.entryTran({
         expire: '2024',
         securityCode: '123'
     }).then((execTranResult) => {
-        console.log(execTranResult);
+        console.log('execTranResult:', execTranResult);
 
         creditService.alterTran({
             shopId: 'your shopId',
@@ -71,8 +71,8 @@ creditService.entryTran({
             accessPass: entryTranResult.accessPass,
             jobCd: GMO.utils.util.JobCd.Sales,
             amount: amount
-        }).then((result) => {
-            console.log(result);
+        }).then((alterTranResult) => {
+            console.log('alterTranResult:', alterTranResult);
         });
     });
 });
@@ -81,7 +81,6 @@ creditService.entryTran({
 ## Code Samples
 
 コードサンプルは [example](https://github.com/motionpicture/gmo-service/tree/master/example) にあります。
-
 
 ## Jsdoc
 

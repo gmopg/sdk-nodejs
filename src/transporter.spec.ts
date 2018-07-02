@@ -93,7 +93,6 @@ describe('transporter.request()', () => {
 
         const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' }).catch((err) => err);
         assert(result instanceof Error);
-        console.error(result);
         sandbox.verify();
         assert(scope.isDone());
     });
