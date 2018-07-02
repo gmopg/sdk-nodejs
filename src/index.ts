@@ -18,10 +18,16 @@ import { CreditService } from './service/credit';
 export import factory = factory;
 
 /**
- * @deprecated
+ * @deprecated since version 5.0.0. Use service.
  */
 export namespace services {
+    /**
+     * @deprecated since version 5.0.0. Use new service.Card()
+     */
     export import card = cardService;
+    /**
+     * @deprecated since version 5.0.0. Use new service.Credit()
+     */
     export import credit = creditService;
 }
 
@@ -30,7 +36,7 @@ export namespace services {
  */
 export namespace service {
     /**
-     * クレジットカード決済サービス
+     * クレジットカード会員サービス
      * @class
      */
     export class Card extends CardService { }
