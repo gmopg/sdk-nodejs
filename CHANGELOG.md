@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 
+- カード属性照会インターフェース追加。
+
 ### Changed
 
 - update dependencies.

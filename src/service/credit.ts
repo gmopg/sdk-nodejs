@@ -247,4 +247,45 @@ export class CreditService extends Service {
             tranDate: <string>result.TranDate
         };
     }
+
+    /**
+     * カード属性照会
+     * @memberof services/credit
+     */
+    public async searchCardDetail(args: CreditFactory.ISearchCardDetailArgs): Promise<CreditFactory.ISearchCardDetailResult> {
+        debug('requesting...', args);
+        const result = await this.request({
+            expectedStatusCodes: [OK],
+            uri: '/payment/SearchCardDetail.idPass',
+            method: 'POST',
+            form: {
+                ShopID: args.shopId,
+                ShopPass: args.shopPass,
+                Token: (<CreditFactory.ISearchCardDetailByTokenArgs>args).token,
+                SearchType: args.searchType,
+                CardNo: (<CreditFactory.ISearchCardDetailByCardNoArgs>args).cardNo,
+                OrderID: (<CreditFactory.ISearchCardDetailByOrderIdArgs>args).orderId,
+                SiteID: (<CreditFactory.ISearchCardDetailByMemberIdArgs>args).siteId,
+                SitePass: (<CreditFactory.ISearchCardDetailByMemberIdArgs>args).sitePass,
+                MemberID: (<CreditFactory.ISearchCardDetailByMemberIdArgs>args).memberId,
+                SeqMode: (<CreditFactory.ISearchCardDetailByMemberIdArgs>args).seqMode,
+                CardSeq: (<CreditFactory.ISearchCardDetailByMemberIdArgs>args).cardSeq
+            }
+        });
+
+        return {
+            cardNo: result.CardNo,
+            brand: result.Brand,
+            domesticFlag: result.DomesticFlag,
+            issuerCode: result.IssuerCode,
+            debitPrepaidFlag: result.DebitPrepaidFlag,
+            debitPrepaidIssuerName: result.DebitPrepaidIssuerName,
+            forwardFinal: result.ForwardFinal,
+            info1: result.Info1,
+            info2: result.Info2,
+            info3: result.Info3,
+            info4: result.Info4,
+            info5: result.Info5
+        };
+    }
 }
