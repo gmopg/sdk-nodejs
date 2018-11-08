@@ -290,3 +290,216 @@ export interface IChangeTranResult {
     tranId: string;
     tranDate: string;
 }
+
+/**
+ * カード属性照会検索タイプ
+ */
+export type ISearchCardDetailType = '1';
+/**
+ * カード属性照会in
+ * トークンを指定して呼び出す場合
+ */
+export interface ISearchCardDetailByTokenArgs {
+    /**
+     * ショップID
+     */
+    shopId: string;
+    /**
+     * ショップパスワード
+     */
+    shopPass: string;
+    /**
+     * カード情報トークン
+     * 半角英数 64 文字。
+     * (※セキュリティ強度の見直しにより変更される可能性があります）
+     * カード情報トークン化サービスをご利用の場合、取得したトークンを設定します。
+     */
+    token: string;
+    /**
+     * 検索タイプ
+     * 1：独自BINに設定された情報を返却します。※独自BINはショップ管理画面にて設定します。
+     */
+    searchType?: ISearchCardDetailType;
+}
+/**
+ * カード属性照会in
+ * カード番号を指定して呼び出す場合
+ * ※カード番号の取扱いが許可された加盟店様のみ利用可能です。
+ */
+export interface ISearchCardDetailByCardNoArgs {
+    /**
+     * ショップID
+     */
+    shopId: string;
+    /**
+     * ショップパスワード
+     */
+    shopPass: string;
+    /**
+     * カード番号
+     * 属性情報を取得する対象となるカード番号を設定します。
+     */
+    cardNo: string;
+    /**
+     * 検索タイプ
+     * 1：独自BINに設定された情報を返却します。※独自BINはショップ管理画面にて設定します。
+     */
+    searchType?: ISearchCardDetailType;
+}
+/**
+ * カード属性照会in
+ * ショップ ID＋オーダーID を指定して呼び出す場合
+ */
+export interface ISearchCardDetailByOrderIdArgs {
+    /**
+     * ショップID
+     */
+    shopId: string;
+    /**
+     * ショップパスワード
+     */
+    shopPass: string;
+    /**
+     * オーダーID
+     * 属性情報を取得する対象となる取引のオーダーIDを設定します。
+     */
+    orderId: string;
+    /**
+     * 検索タイプ
+     * 1：独自BINに設定された情報を返却します。※独自BINはショップ管理画面にて設定します。
+     */
+    searchType?: ISearchCardDetailType;
+}
+/**
+ * カード属性照会in
+ * サイト ID＋会員 ID（＋カード登録連番モード・カード登録連番）を指定して呼び出す場合
+ */
+export interface ISearchCardDetailByMemberIdArgs {
+    /**
+     * サイトID
+     */
+    siteId: string;
+    /**
+     * サイトパスワード
+     */
+    sitePass: string;
+    /**
+     * 会員ID
+     * カードを参照する対象の会員IDを設定します。
+     */
+    memberId: string;
+    /**
+     * カード登録連番モード
+     * 以下のいずれかを設定します。
+     * 0：論理モード
+     * 1：物理モード
+     */
+    seqMode: util.SeqMode;
+    /**
+     * カード登録連番
+     * 参照するカードの登録連番を設定します。
+     */
+    cardSeq?: number;
+    /**
+     * 検索タイプ
+     * 1：独自BINに設定された情報を返却します。※独自BINはショップ管理画面にて設定します。
+     */
+    searchType?: ISearchCardDetailType;
+    /**
+     * ショップID
+     * 「検索タイプ」に 1 を指定した場合に必須です。
+     */
+    shopId?: string;
+    /**
+     * ショップパスワード
+     * 「検索タイプ」に 1 を指定した場合に必須です。
+     */
+    shopPass?: string;
+}
+
+/**
+ * カード属性照会in
+ * @memberof services/credit
+ * @interface
+ */
+export type ISearchCardDetailArgs =
+    ISearchCardDetailByTokenArgs | ISearchCardDetailByCardNoArgs | ISearchCardDetailByOrderIdArgs | ISearchCardDetailByMemberIdArgs;
+
+/**
+ * カード属性照会out
+ * @memberof services/credit
+ * @interface
+ */
+export interface ISearchCardDetailResult {
+    /**
+     * カード番号
+     * マスクされたカード番号を返却します。カード番号のマスクはサイトに設定された値を使用して行います。
+     * ※カード番号の取扱いが許可されていない加盟店様の場合は、マスク形式が制限されます。
+     */
+    cardNo: string;
+    /**
+     * 国際ブランド
+     * 国際ブランド名(VISA, MASTER, JCB, AMEX,DINERS)を返します。※判別不能時は空文字を返します。
+     */
+    brand: string;
+    /**
+     * 国内発行フラグ
+     * 1：国内発行カード
+     * 0：海外発行カード
+     * 2：不明（上記以外）
+     */
+    domesticFlag: string;
+    /**
+     * イシュアコード イシュアコードを返します。
+     * ※イシュアを特定できた場合のみ返却。
+     */
+    issuerCode?: string;
+    /**
+     * デビット／プリペイドフラグ
+     * 2：プリペイドカード
+     * 1：デビットカード
+     * 0：上記以外
+     */
+    debitPrepaidFlag: string;
+    /**
+     * デビット／プリペイドカード発行会社名
+     * デビットプリペイドカード発行会社名
+     * ※デビット(DebitPrepaidFlag =1)もしくはプリペイド(DebitPrepaidFlag =2)の場合のみ返却。
+     */
+    debitPrepaidIssuerName?: string;
+    /**
+     * 最終仕向先のカード会社コード
+     * 最終仕向先のカード会社のコードを返します。
+     */
+    forwardFinal: string;
+    /**
+     * 加盟店設定情報1
+     * この項目は入力パラメータ「検索タイプ」に 1を指定した場合に返却されます。
+     * 独自BINに設定された情報を返却します。
+     */
+    info1?: string;
+    /**
+     * 加盟店設定情報2
+     * この項目は入力パラメータ「検索タイプ」に 1を指定した場合に返却されます。
+     * 独自BINに設定された情報を返却します。
+     */
+    info2?: string;
+    /**
+     * 加盟店設定情報3
+     * この項目は入力パラメータ「検索タイプ」に 1を指定した場合に返却されます。
+     * 独自BINに設定された情報を返却します。
+     */
+    info3?: string;
+    /**
+     * 加盟店設定情報4
+     * この項目は入力パラメータ「検索タイプ」に 1を指定した場合に返却されます。
+     * 独自BINに設定された情報を返却します。
+     */
+    info4?: string;
+    /**
+     * 加盟店設定情報5
+     * この項目は入力パラメータ「検索タイプ」に 1を指定した場合に返却されます。
+     * 独自BINに設定された情報を返却します。
+     */
+    info5?: string;
+}
