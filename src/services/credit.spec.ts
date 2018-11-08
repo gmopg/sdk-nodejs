@@ -371,3 +371,29 @@ describe('カード決済変更', () => {
         sandbox.verify();
     });
 });
+
+describe('カード属性照会', () => {
+    beforeEach(() => {
+        nock.disableNetConnect();
+        sandbox = sinon.sandbox.create();
+    });
+
+    afterEach(() => {
+        nock.cleanAll();
+        nock.enableNetConnect();
+        sandbox.restore();
+    });
+
+    it('GMOが正常であれば、オブジェクトを取得できるはず', async () => {
+        const params = {};
+        const body = {};
+
+        scope = nock(<string>process.env.GMO_ENDPOINT).post('/payment/SearchCardDetail.idPass')
+            .reply(OK, querystring.stringify(body));
+
+        const result = await CreditService.searchCardDetail(<any>params);
+        assert.equal(typeof result, 'object');
+        assert(scope.isDone());
+        sandbox.verify();
+    });
+});

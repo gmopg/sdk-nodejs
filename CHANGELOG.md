@@ -10,8 +10,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
-- update dependencies.
-
 ### Deprecated
 
 ### Removed
@@ -19,6 +17,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v4.3.0 - 2018-11-08
+
+### Added
+
+- カード属性照会インターフェース追加。
+
+### Changed
+
+- update dependencies.
 
 ## v4.2.0 - 2018-01-17
 ### Added

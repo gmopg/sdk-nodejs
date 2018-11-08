@@ -169,3 +169,18 @@ export type IChangeTranResult = CreditFactory.IChangeTranResult;
 export async function changeTran(args: IChangeTranArgs): Promise<IChangeTranResult> {
     return service.changeTran(args);
 }
+
+/**
+ * カード属性照会in
+ */
+export type ISearchCardDetailArgs = CreditFactory.ISearchCardDetailArgs;
+/**
+ * カード属性照会out
+ */
+export type ISearchCardDetailResult = CreditFactory.ISearchCardDetailResult;
+/**
+ * カード属性照会
+ */
+export async function searchCardDetail(args: ISearchCardDetailArgs): Promise<ISearchCardDetailResult> {
+    return service.searchCardDetail(args);
+}
