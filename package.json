@@ -18,7 +18,8 @@
     "debug": "^3.2.6",
     "http-status": "^1.2.0",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.5"
+    "request-promise-native": "^1.0.5",
+    "snyk": "^1.316.1"
   },
   "description": "GMO Client Library for Node.js",
   "devDependencies": {
@@ -38,7 +39,6 @@
     "power-assert": "^1.6.1",
     "rimraf": "^2.6.2",
     "sinon": "^6.3.5",
-    "snyk": "^1.108.0",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "tslint-microsoft-contrib": "^5.2.1",
@@ -78,11 +78,14 @@
     "preversion": "npm run clean && npm run build && npm test && npm run doc",
     "version": "git add -A",
     "postversion": "git push origin --tags",
-    "prepublishOnly": "npm run clean && npm run build && npm test && npm run doc"
+    "prepublishOnly": "npm run clean && npm run build && npm test && npm run doc",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "version": "4.3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/gmopg/sdk-nodejs.git"
-  }
+  },
+  "snyk": true
 }
