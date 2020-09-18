@@ -2,8 +2,6 @@ import * as util from '../utils/util';
 
 /**
  * 取引登録in
- * @memberOf services/credit
- * @interface EntryTranArgs
  */
 export interface IEntryTranArgs {
     shopId: string;
@@ -15,8 +13,6 @@ export interface IEntryTranArgs {
 
 /**
  * 取引登録out
- * @memberOf services/credit
- * @interface EntryTranResult
  */
 export interface IEntryTranResult {
     accessId: string;
@@ -25,8 +21,6 @@ export interface IEntryTranResult {
 
 /**
  * 決済実行in
- * @memberOf services/credit
- * @interface
  */
 export interface IExecTranArgs {
     accessId: string;
@@ -52,8 +46,6 @@ export interface IExecTranArgs {
 
 /**
  * 決済実行out
- * @memberOf services/credit
- * @interface
  */
 export interface IExecTranResult {
     /**
@@ -115,8 +107,6 @@ export interface IExecTranResult {
 
 /**
  * 決済変更in
- * @memberOf services/credit
- * @interface
  */
 export interface IAlterTranArgs {
     shopId: string;
@@ -130,8 +120,6 @@ export interface IAlterTranArgs {
 
 /**
  * 決済変更out
- * @memberOf services/credit
- * @interface
  */
 export interface IAlterTranResult {
     accessId: string;
@@ -144,8 +132,6 @@ export interface IAlterTranResult {
 
 /**
  * 取引状態参照in
- * @memberOf services/credit
- * @interface
  */
 export interface ISearchTradeArgs {
     /**
@@ -164,8 +150,6 @@ export interface ISearchTradeArgs {
 
 /**
  * 取引状態参照out
- * @memberOf services/credit
- * @interface
  */
 export interface ISearchTradeResult {
     /**
@@ -264,8 +248,6 @@ export interface ISearchTradeResult {
 
 /**
  * 金額変更in
- * @memberof services/credit
- * @interface
  */
 export interface IChangeTranArgs {
     shopId: string;
@@ -279,8 +261,6 @@ export interface IChangeTranArgs {
 
 /**
  * 金額変更out
- * @memberof services/credit
- * @interface
  */
 export interface IChangeTranResult {
     accessId: string;
@@ -419,16 +399,12 @@ export interface ISearchCardDetailByMemberIdArgs {
 
 /**
  * カード属性照会in
- * @memberof services/credit
- * @interface
  */
 export type ISearchCardDetailArgs =
     ISearchCardDetailByTokenArgs | ISearchCardDetailByCardNoArgs | ISearchCardDetailByOrderIdArgs | ISearchCardDetailByMemberIdArgs;
 
 /**
  * カード属性照会out
- * @memberof services/credit
- * @interface
  */
 export interface ISearchCardDetailResult {
     /**

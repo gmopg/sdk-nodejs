@@ -8,20 +8,11 @@ const debug = createDebug('gmo-service:service:card');
 
 /**
  * 会員クレジットカードサービス
- * @class
  */
 export class CardService extends Service {
 
     /**
      * 会員登録
-     * @memberof services/member
-     * @function saveMember
-     * @param {ISaveMemberArgs} args 会員登録in
-     * @param {string} args.siteId サイトID
-     * @param {string} args.sitePass サイトパスワード
-     * @param {string} args.memberId 会員ID
-     * @param {string | undefined} args.memberName 会員名
-     * @returns {Promise<ISaveMemberResult>} 会員登録out
      */
     public async saveMember(args: CardFactory.ISaveMemberArgs): Promise<CardFactory.ISaveMemberResult> {
         debug('requesting...', args);
@@ -44,14 +35,6 @@ export class CardService extends Service {
 
     /**
      * 会員更新
-     * @memberof services/member
-     * @function updateMember
-     * @param {IUpdateMemberArgs} args 会員更新in
-     * @param {string} args.siteId サイトID
-     * @param {string} args.sitePass サイトパスワード
-     * @param {string} args.memberId 会員ID
-     * @param {string | undefined} args.memberName 会員名
-     * @returns {Promise<IUpdateMemberResult>} 会員更新out
      */
     public async updateMember(args: CardFactory.IUpdateMemberArgs): Promise<CardFactory.IUpdateMemberResult> {
         debug('requesting...', args);
@@ -74,13 +57,6 @@ export class CardService extends Service {
 
     /**
      * 会員削除
-     * @memberof services/member
-     * @function deleteMember
-     * @param {ISaveMemberArgs} args 会員削除in
-     * @param {string} args.siteId サイトID
-     * @param {string} args.sitePass サイトパスワード
-     * @param {string} args.memberId 会員ID
-     * @returns {Promise<ISaveMemberResult>} 会員削除out
      */
     public async deleteMember(args: CardFactory.IDeleteMemberArgs): Promise<CardFactory.IDeleteMemberResult> {
         debug('requesting...', args);
@@ -103,13 +79,6 @@ export class CardService extends Service {
     /**
      * 会員参照
      * 指定されたサイトIDと会員IDの会員が存在しない場合、E01390002エラーが返却されるので注意
-     * @memberof services/member
-     * @function searchMember
-     * @param {ISearchMemberArgs} args 会員参照in
-     * @param {string} args.siteId サイトID
-     * @param {string} args.sitePass サイトパスワード
-     * @param {string} args.memberId 会員ID
-     * @returns {Promise<ISearchMemberResult>} 会員参照out
      */
     public async searchMember(args: CardFactory.ISearchMemberArgs): Promise<CardFactory.ISearchMemberResult> {
         debug('requesting...', args);
@@ -133,22 +102,6 @@ export class CardService extends Service {
 
     /**
      * カード登録・更新
-     * @memberof services/card
-     * @function saveCard
-     * @param {ISaveCardArgs} args カード登録・更新in
-     * @param {string} args.siteId サイトID
-     * @param {string} args.sitePass サイトパスワード
-     * @param {string} args.memberId 会員ID
-     * @param {util.SeqMode} args.seqMode カード登録連番モード（0:論理モード(デフォルト)1:物理モード）
-     * @param {number} args.cardSeq カード登録連番（登録時は、入力不可です。更新時は、更新する値を設定します。）
-     * @param {string} args.defaultFlag 洗替・継続課金フラグ（0:継続課金対象としない(デフォルト)1:継続課金対象とする）
-     * @param {string} args.cardName カード会社略称
-     * @param {string} args.cardNo カード番号
-     * @param {string} args.cardPass カードパスワード
-     * @param {string} args.expire 有効期限
-     * @param {string} args.holderName 名義人
-     * @param {string} args.token トークン
-     * @returns {Promise<ISaveCardResult>} カード登録・更新out
      */
     public async saveCard(args: CardFactory.ISaveCardArgs): Promise<CardFactory.ISaveCardResult> {
         debug('requesting...', args);
@@ -187,15 +140,6 @@ export class CardService extends Service {
 
     /**
      * カード削除
-     * @memberof services/card
-     * @function deleteCard
-     * @param {IDeleteCardArgs} args カード削除in
-     * @param {string} args.siteId サイトID
-     * @param {string} args.sitePass サイトパスワード
-     * @param {string} args.memberId 会員ID
-     * @param {util.SeqMode} args.seqMode カード登録連番モード（0:論理モード(デフォルト)1:物理モード）
-     * @param {string} args.cardSeq カード登録連番
-     * @returns {Promise<IDeleteCardResult>} カード削除out
      */
     public async deleteCard(args: CardFactory.IDeleteCardArgs): Promise<CardFactory.IDeleteCardResult> {
         debug('requesting...', args);
@@ -220,15 +164,6 @@ export class CardService extends Service {
     /**
      * カード参照
      * 会員は存在してカードが存在しない場合、E01240002エラーが返却されるので注意
-     * @memberof services/card
-     * @function searchCard
-     * @param {ISearchCardArgs} args カード参照in
-     * @param {string} args.siteId サイトID
-     * @param {string} args.sitePass サイトパスワード
-     * @param {string} args.memberId 会員ID
-     * @param {util.SeqMode} args.seqMode カード登録連番モード（0:論理モード1:物理モード）
-     * @param {string} args.cardSeq カード登録連番
-     * @returns {Promise<ISearchCardResult[]>} カード参照out
      */
     public async searchCard(args: CardFactory.ISearchCardArgs): Promise<CardFactory.ISearchCardResult[]> {
         debug('requesting...', args);

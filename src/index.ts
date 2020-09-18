@@ -15,12 +15,10 @@ export import factory = factory;
 export namespace service {
     /**
      * クレジットカード会員サービス
-     * @class
      */
     export class Card extends CardService { }
     /**
      * クレジットカード決済サービス
-     * @class
      */
     export class Credit extends CreditService { }
 }

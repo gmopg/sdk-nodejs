@@ -9,20 +9,10 @@ const debug = createDebug('gmo-service:service:credit');
 
 /**
  * クレジットカード決済サービス
- * @class
  */
 export class CreditService extends Service {
     /**
      * 取引登録
-     * @memberOf services/credit
-     * @function entryTran
-     * @param {IEntryTranArgs} args 取引登録in
-     * @param {string} args.shopId
-     * @param {string} args.shopPass
-     * @param {string} args.orderId
-     * @param {util.JobCd} args.jobCd
-     * @param {string} args.amount
-     * @returns {Promise<IEntryTranResult>} 取引登録out
      */
     public async entryTran(args: CreditFactory.IEntryTranArgs): Promise<CreditFactory.IEntryTranResult> {
         debug('requesting...', args);
@@ -47,29 +37,6 @@ export class CreditService extends Service {
 
     /**
      * 決済実行
-     * @memberOf services/credit
-     * @function execTran
-     * @param {IExecTranArgs} args 決済実行in
-     * @param {string} args.accessId 取引ID
-     * @param {string} args.accessPass 取引パスワード
-     * @param {string} args.orderId オーダーID
-     * @param {util.Method} args.method 支払方法
-     * @param {number} args.payTimes 支払回数
-     * @param {string} args.cardNo カード番号
-     * @param {string} args.expire 有効期限
-     * @param {string} args.securityCode セキュリティーコード
-     * @param {string} args.token カード情報トークン
-     * @param {string} args.pin 暗証番号
-     * @param {string} args.siteId サイトID
-     * @param {string} args.sitePass サイトパスワード
-     * @param {string} args.memberId 会員ID
-     * @param {util.SeqMode} args.seqMode カード登録連番モード
-     * @param {number} args.cardSeq カード登録連番
-     * @param {string} args.cardPass カードパスワード
-     * @param {string} args.clientField1 加盟店自由項目1
-     * @param {string} args.clientField2 加盟店自由項目2
-     * @param {string} args.clientField3 加盟店自由項目3
-     * @returns {Promise<IExecTranResult>} 決済実行out
      */
     public async execTran(args: CreditFactory.IExecTranArgs): Promise<CreditFactory.IExecTranResult> {
         debug('requesting...', args);
@@ -118,17 +85,6 @@ export class CreditService extends Service {
 
     /**
      * 決済変更
-     * @memberOf services/credit
-     * @function alterTran
-     * @param {IAlterTranArgs} args 決済変更in
-     * @param {string} args.shopId
-     * @param {string} args.shopPass
-     * @param {string} args.accessId
-     * @param {string} args.accessPass
-     * @param {util.JobCd} args.jobCd
-     * @param {number} args.amount
-     * @param {util.Method} args.method
-     * @returns {Promise<IAlterTranResult>} 決済変更out
      */
     public async alterTran(args: CreditFactory.IAlterTranArgs): Promise<CreditFactory.IAlterTranResult> {
         debug('requesting...', args);
@@ -159,13 +115,6 @@ export class CreditService extends Service {
 
     /**
      * 取引状態参照
-     * @memberOf services/credit
-     * @function searchTrade
-     * @param {ISearchTradeArgs} args 取引状態参照in
-     * @param {string} args.shopId
-     * @param {string} args.shopPass
-     * @param {string} args.orderID
-     * @returns {Promise<ISearchTradeResult>} 取引状態参照out
      */
     public async searchTrade(args: CreditFactory.ISearchTradeArgs): Promise<CreditFactory.ISearchTradeResult> {
         debug('requesting...', args);
@@ -209,17 +158,6 @@ export class CreditService extends Service {
 
     /**
      * 金額変更
-     * @memberof services/credit
-     * @function changeTran
-     * @param {IChangeTranArgs} args 決済変更in
-     * @param {string} args.shopId ショップID
-     * @param {string} args.shopPass ショップパスワード
-     * @param {string} args.accessId 取引ID
-     * @param {string} args.accessPass 取引パスワード
-     * @param {util.JobCd} args.jobCd 処理区分
-     * @param {number} args.amount 利用金額
-     * @param {string} args.tax 税送料
-     * @returns {Promise<IChangeTranResult>} 金額変更out
      */
     public async changeTran(args: CreditFactory.IChangeTranArgs): Promise<CreditFactory.IChangeTranResult> {
         debug('requesting...', args);
@@ -250,7 +188,6 @@ export class CreditService extends Service {
 
     /**
      * カード属性照会
-     * @memberof services/credit
      */
     public async searchCardDetail(args: CreditFactory.ISearchCardDetailArgs): Promise<CreditFactory.ISearchCardDetailResult> {
         debug('requesting...', args);

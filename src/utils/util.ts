@@ -1,14 +1,7 @@
-/**
- * GMOユーティリティー
- * @namespace utils/util
- */
-
 import * as crypto from 'crypto';
 
 /**
  * 決済方法
- * @memberof utils/util
- * @enum PayType
  */
 export enum PayType {
     /**
@@ -51,8 +44,6 @@ export enum PayType {
 
 /**
  * 支払い方法
- * @memberof utils/util
- * @enum Method
  */
 export enum Method {
     /**
@@ -79,8 +70,6 @@ export enum Method {
 
 /**
  * 現状態
- * @memberof utils/util
- * @enum Status
  */
 export enum Status {
     /**
@@ -147,8 +136,6 @@ export enum Status {
 
 /**
  * 処理区分
- * @memberof utils/util
- * @enum JobCd
  */
 export enum JobCd {
     /**
@@ -187,8 +174,6 @@ export enum JobCd {
 
 /**
  * カード登録連番モード
- * @memberof utils/util
- * @enum SeqMode
  */
 export enum SeqMode {
     /**
@@ -203,8 +188,6 @@ export enum SeqMode {
 
 /**
  * 洗替・継続課金対象
- * @memberof utils/util
- * @enum DefaultFlag
  */
 export enum DefaultFlag {
     /**
@@ -219,8 +202,6 @@ export enum DefaultFlag {
 
 /**
  * ショップ情報確認文字列を作成するin
- * @memberof utils/util
- * @interface CreateShopPassStringArgs
  */
 export interface ICreateShopPassStringArgs {
     shopId: string;
@@ -232,15 +213,6 @@ export interface ICreateShopPassStringArgs {
 
 /**
  * ショップ情報確認文字列を作成する
- * @memberof utils/util
- * @function createShopPassString
- * @param {ICreateShopPassStringArgs} args
- * @param {string} args.shopId
- * @param {string} args.shopPass
- * @param {string} args.orderId
- * @param {string} args.amount
- * @param {string} args.dateTime
- * @returns {string}
  */
 export function createShopPassString(args: ICreateShopPassStringArgs) {
     // 「ショップ ID + オーダーID + 利用金額＋税送料＋ショップパスワード + 日時情報」を MD5 でハッシュした文字列。

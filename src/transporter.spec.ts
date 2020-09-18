@@ -1,10 +1,8 @@
 // tslint:disable:no-implicit-dependencies
-
 /**
  * transporter test
  * @ignore
  */
-
 import {
     BAD_REQUEST,
     CREATED,

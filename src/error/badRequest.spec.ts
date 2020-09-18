@@ -1,9 +1,7 @@
 /**
  * BadRequestErrorテスト
- *
  * @ignore
  */
-
 import * as assert from 'assert';
 import { BadRequestError } from './badRequest';
 import { errors, notApplicable } from './errors';

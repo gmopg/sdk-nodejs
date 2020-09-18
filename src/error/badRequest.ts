@@ -1,15 +1,8 @@
-/**
- * @namespace error/badRequestError
- * @desc エラー
- */
 import * as querystring from 'querystring';
 import { errors, notApplicable } from './errors';
 
 /**
  * エラー
- * @memberof error/badRequestError
- * @class BadRequestError
- * @extends Error
  */
 export class BadRequestError extends Error {
     public errors: IError[];
@@ -21,8 +14,6 @@ export class BadRequestError extends Error {
     }
     /**
      * エラーメッセージパース
-     * @method parseErrorMessage
-     * @returns {IError[]}
      */
     private parseErrorMessage(): IError[] {
         // 継承元のErrorでmessageはstringに変換される
@@ -58,7 +49,6 @@ export class BadRequestError extends Error {
 
 /**
  * エラー詳細
- * @interface IError
  */
 export interface IError {
     /**
