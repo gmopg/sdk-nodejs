@@ -21,6 +21,8 @@ import * as assert from 'power-assert';
 import * as qs from 'querystring';
 import * as sinon from 'sinon';
 
+import { BadRequestError } from './error/badRequest';
+
 import { DefaultTransporter, RequestError } from './transporters';
 
 const API_ENDPOINT = 'https://example.com';
@@ -93,6 +95,18 @@ describe('transporter.request()', () => {
 
         const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' }).catch((err) => err);
         assert(result instanceof Error);
+        sandbox.verify();
+        assert(scope.isDone());
+    });
+
+    it('GMOエラーレスポンスを受け取れば、BadRequestErrorとなるはず', async () => {
+        const body: any = { ErrCode: '12345', ErrInfo: 'xxxxx' };
+        const transporter = new DefaultTransporter([OK]);
+
+        scope = nock(API_ENDPOINT).get('/uri').reply(OK, qs.stringify(body));
+
+        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' }).catch((err) => err);
+        assert(result instanceof BadRequestError);
         sandbox.verify();
         assert(scope.isDone());
     });

@@ -184,7 +184,7 @@ export class DefaultTransporter implements Transporter {
         options.headers = (options.headers !== undefined) ? options.headers : {};
         if (!options.headers['User-Agent']) {
             options.headers['User-Agent'] = DefaultTransporter.USER_AGENT;
-        } else if (options.headers['User-Agent'].indexOf(DefaultTransporter.USER_AGENT) === -1) {
+        } else /* istanbul ignore next */ if (options.headers['User-Agent'].indexOf(DefaultTransporter.USER_AGENT) === -1) {
             options.headers['User-Agent'] = `${options.headers['User-Agent']} ${DefaultTransporter.USER_AGENT}`;
         }
 
