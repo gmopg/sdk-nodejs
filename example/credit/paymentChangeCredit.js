@@ -5,7 +5,8 @@ const GMO = require('../../');
  */
 const shopId = process.env.TEST_GMO_SHOP_ID;
 const shopPass = process.env.TEST_GMO_SHOP_PASS;
-main();
+main()
+    .catch(console.error);
 
 async function main() {
     const orderId = Date.now().toString();

@@ -1,6 +1,7 @@
 const GMO = require('../../');
 
-main();
+main()
+    .catch(console.error);
 
 async function main() {
     const orderId = 'SAMPLE-1541576721-005';
