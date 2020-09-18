@@ -2,8 +2,6 @@ import * as util from '../utils/util';
 
 /**
  * 会員登録in
- * @memberof services/member
- * @interface ISaveMemberArgs
  */
 export interface ISaveMemberArgs {
     /**
@@ -26,8 +24,6 @@ export interface ISaveMemberArgs {
 
 /**
  * 会員登録out
- * @memberof services/member
- * @interface ISaveMemberResult
  */
 export interface ISaveMemberResult {
     /**
@@ -38,8 +34,6 @@ export interface ISaveMemberResult {
 
 /**
  * 会員更新in
- * @memberof services/member
- * @interface IUpdateMemberArgs
  */
 export interface IUpdateMemberArgs {
     /**
@@ -62,8 +56,6 @@ export interface IUpdateMemberArgs {
 
 /**
  * 会員更新out
- * @memberof services/member
- * @interface IUpdateMemberResult
  */
 export interface IUpdateMemberResult {
     /**
@@ -74,8 +66,6 @@ export interface IUpdateMemberResult {
 
 /**
  * 会員削除in
- * @memberof services/member
- * @interface IDeleteMemberArgs
  */
 export interface IDeleteMemberArgs {
     /**
@@ -94,8 +84,6 @@ export interface IDeleteMemberArgs {
 
 /**
  * 会員削除out
- * @memberof services/member
- * @interface IDeleteMemberResult
  */
 export interface IDeleteMemberResult {
     /**
@@ -106,8 +94,6 @@ export interface IDeleteMemberResult {
 
 /**
  * 会員参照in
- * @memberof services/member
- * @interface ISearchMemberArgs
  */
 export interface ISearchMemberArgs {
     /**
@@ -126,8 +112,6 @@ export interface ISearchMemberArgs {
 
 /**
  * 会員参照out
- * @memberof services/member
- * @interface ISearchMemberResult
  */
 export interface ISearchMemberResult {
     /**
@@ -146,8 +130,6 @@ export interface ISearchMemberResult {
 
 /**
  * カード登録・更新in
- * @memberof services/card
- * @interface ISaveCardArgs
  */
 export interface ISaveCardArgs {
     /**
@@ -202,8 +184,6 @@ export interface ISaveCardArgs {
 
 /**
  * カード登録・更新out
- * @memberof services/card
- * @interface ISaveCardResult
  */
 export interface ISaveCardResult {
     /**
@@ -246,8 +226,6 @@ export interface ISaveCardResult {
 
 /**
  * カード削除in
- * @memberof services/card
- * @interface IDeleteCardArgs
  */
 export interface IDeleteCardArgs {
     /**
@@ -274,8 +252,6 @@ export interface IDeleteCardArgs {
 
 /**
  * カード削除out
- * @memberof services/card
- * @interface IDeleteCardResult
  */
 export interface IDeleteCardResult {
     /**
@@ -286,8 +262,6 @@ export interface IDeleteCardResult {
 
 /**
  * カード参照in
- * @memberof services/card
- * @interface ISearchCardArgs
  */
 export interface ISearchCardArgs {
     /**
@@ -314,8 +288,6 @@ export interface ISearchCardArgs {
 
 /**
  * カード参照out
- * @memberof services/card
- * @interface ISearchCardResult
  */
 export interface ISearchCardResult {
     /**

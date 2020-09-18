@@ -1,13 +1,5 @@
 /**
- * カード決済結果通知ファクトリー
- * @namespace factory.resultNotification.creditCard
- */
-
-/**
  * カード決済結果通知インターフェース
- * @export
- * @interface
- * @memberof factory.resultNotification.creditCard
  */
 export interface IResultNotification {
     /**
@@ -105,10 +97,6 @@ export interface IResultNotification {
 
 /**
  * 結果通知本文をパースする
- * @export
- * @function
- * @memberof factory.resultNotification.creditCard
- * @param body 結果通知本文
  */
 export function createFromRequestBody(body: any): IResultNotification {
     return {

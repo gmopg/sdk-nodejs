@@ -2,7 +2,6 @@
  * ユーティリティテスト
  * @ignore
  */
-
 import * as assert from 'assert';
 
 import * as Util from './util';

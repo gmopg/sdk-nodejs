@@ -5,8 +5,6 @@ import { DefaultTransporter, Transporter } from './transporters';
 
 /**
  * service constructor options
- * @export
- * @interface
  */
 export interface IOptions {
     /**
@@ -38,8 +36,6 @@ export type IRequestOptions = request.OptionsWithUri & {
 
 /**
  * base service class
- * @export
- * @class Service
  */
 // export class Service {
 //     public options: IOptions;
@@ -90,8 +86,6 @@ export type IRequestOptions = request.OptionsWithUri & {
 
 /**
  * base service class
- * @export
- * @class Service
  */
 export class Service {
     public options: IOptions;
@@ -119,7 +113,7 @@ export class Service {
             ...options
         };
 
-        delete requestOptions.uri;
+        delete (<any>requestOptions).uri;
 
         // create request
         const transporter =

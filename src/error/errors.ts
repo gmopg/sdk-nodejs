@@ -1,14 +1,6 @@
 // tslint:disable:no-irregular-whitespace
-
-/**
- * @desc エラー定義
- * @namespace error/errors
- */
-
 /**
  * 該当なし
- * @memberof error/errors
- * @const notApplicableContent
  */
 export const notApplicable = {
     /**
@@ -23,8 +15,6 @@ export const notApplicable = {
 
 /**
  * エラー一覧
- * @memberof error/errors
- * @const errors
  */
 export const errors = {
     version: '1.72',
