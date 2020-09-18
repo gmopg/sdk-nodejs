@@ -119,7 +119,7 @@ export class Service {
             ...options
         };
 
-        delete requestOptions.uri;
+        delete (<any>requestOptions).uri;
 
         // create request
         const transporter =
