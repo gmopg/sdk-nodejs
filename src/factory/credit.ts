@@ -1,6 +1,15 @@
 import * as util from '../utils/util';
 
 /**
+ * 追加サイト情報
+ * 他決済代行に対応するため
+ */
+export interface IOptionalSiteArgs {
+    siteId?: string;
+    sitePass?: string;
+}
+
+/**
  * 取引登録in
  */
 export interface IEntryTranArgs {

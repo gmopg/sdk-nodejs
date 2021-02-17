@@ -8,22 +8,13 @@ import * as util from '../utils/util';
 const debug = createDebug('gmo-service:service:credit');
 
 /**
- * 追加サイト情報
- * 他決済代行に対応するため
- */
-export interface IOptionalSiteArgs {
-    siteId?: string;
-    sitePass?: string;
-}
-
-/**
  * クレジットカード決済サービス
  */
 export class CreditService extends Service {
     /**
      * 取引登録
      */
-    public async entryTran(args: CreditFactory.IEntryTranArgs & IOptionalSiteArgs): Promise<CreditFactory.IEntryTranResult> {
+    public async entryTran(args: CreditFactory.IEntryTranArgs & CreditFactory.IOptionalSiteArgs): Promise<CreditFactory.IEntryTranResult> {
         debug('requesting...', args);
         const result = await this.request({
             expectedStatusCodes: [OK],
@@ -97,7 +88,7 @@ export class CreditService extends Service {
     /**
      * 決済変更
      */
-    public async alterTran(args: CreditFactory.IAlterTranArgs & IOptionalSiteArgs): Promise<CreditFactory.IAlterTranResult> {
+    public async alterTran(args: CreditFactory.IAlterTranArgs & CreditFactory.IOptionalSiteArgs): Promise<CreditFactory.IAlterTranResult> {
         debug('requesting...', args);
         const result = await this.request({
             expectedStatusCodes: [OK],
@@ -129,7 +120,9 @@ export class CreditService extends Service {
     /**
      * 取引状態参照
      */
-    public async searchTrade(args: CreditFactory.ISearchTradeArgs & IOptionalSiteArgs): Promise<CreditFactory.ISearchTradeResult> {
+    public async searchTrade(
+        args: CreditFactory.ISearchTradeArgs & CreditFactory.IOptionalSiteArgs
+    ): Promise<CreditFactory.ISearchTradeResult> {
         debug('requesting...', args);
         const result = await this.request({
             expectedStatusCodes: [OK],
@@ -174,7 +167,9 @@ export class CreditService extends Service {
     /**
      * 金額変更
      */
-    public async changeTran(args: CreditFactory.IChangeTranArgs & IOptionalSiteArgs): Promise<CreditFactory.IChangeTranResult> {
+    public async changeTran(
+        args: CreditFactory.IChangeTranArgs & CreditFactory.IOptionalSiteArgs
+    ): Promise<CreditFactory.IChangeTranResult> {
         debug('requesting...', args);
         const result = await this.request({
             expectedStatusCodes: [OK],
