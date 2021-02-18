@@ -14,7 +14,7 @@ export class CreditService extends Service {
     /**
      * 取引登録
      */
-    public async entryTran(args: CreditFactory.IEntryTranArgs): Promise<CreditFactory.IEntryTranResult> {
+    public async entryTran(args: CreditFactory.IEntryTranArgs & CreditFactory.IOptionalSiteArgs): Promise<CreditFactory.IEntryTranResult> {
         debug('requesting...', args);
         const result = await this.request({
             expectedStatusCodes: [OK],
@@ -25,7 +25,9 @@ export class CreditService extends Service {
                 ShopPass: args.shopPass,
                 OrderID: args.orderId,
                 JobCd: args.jobCd,
-                Amount: args.amount
+                Amount: args.amount,
+                ... (typeof args.siteId === 'string') ? { SiteID: args.siteId } : undefined,
+                ... (typeof args.sitePass === 'string') ? { SitePass: args.sitePass } : undefined
             }
         });
 
@@ -86,7 +88,7 @@ export class CreditService extends Service {
     /**
      * 決済変更
      */
-    public async alterTran(args: CreditFactory.IAlterTranArgs): Promise<CreditFactory.IAlterTranResult> {
+    public async alterTran(args: CreditFactory.IAlterTranArgs & CreditFactory.IOptionalSiteArgs): Promise<CreditFactory.IAlterTranResult> {
         debug('requesting...', args);
         const result = await this.request({
             expectedStatusCodes: [OK],
@@ -99,7 +101,9 @@ export class CreditService extends Service {
                 AccessPass: args.accessPass,
                 JobCd: args.jobCd,
                 Amount: args.amount,
-                Method: args.method
+                Method: args.method,
+                ... (typeof args.siteId === 'string') ? { SiteID: args.siteId } : undefined,
+                ... (typeof args.sitePass === 'string') ? { SitePass: args.sitePass } : undefined
             }
         });
 
@@ -116,7 +120,9 @@ export class CreditService extends Service {
     /**
      * 取引状態参照
      */
-    public async searchTrade(args: CreditFactory.ISearchTradeArgs): Promise<CreditFactory.ISearchTradeResult> {
+    public async searchTrade(
+        args: CreditFactory.ISearchTradeArgs & CreditFactory.IOptionalSiteArgs
+    ): Promise<CreditFactory.ISearchTradeResult> {
         debug('requesting...', args);
         const result = await this.request({
             expectedStatusCodes: [OK],
@@ -125,7 +131,9 @@ export class CreditService extends Service {
             form: {
                 ShopID: args.shopId,
                 ShopPass: args.shopPass,
-                OrderID: args.orderId
+                OrderID: args.orderId,
+                ... (typeof args.siteId === 'string') ? { SiteID: args.siteId } : undefined,
+                ... (typeof args.sitePass === 'string') ? { SitePass: args.sitePass } : undefined
             }
         });
 
@@ -159,7 +167,9 @@ export class CreditService extends Service {
     /**
      * 金額変更
      */
-    public async changeTran(args: CreditFactory.IChangeTranArgs): Promise<CreditFactory.IChangeTranResult> {
+    public async changeTran(
+        args: CreditFactory.IChangeTranArgs & CreditFactory.IOptionalSiteArgs
+    ): Promise<CreditFactory.IChangeTranResult> {
         debug('requesting...', args);
         const result = await this.request({
             expectedStatusCodes: [OK],
@@ -172,7 +182,9 @@ export class CreditService extends Service {
                 AccessPass: args.accessPass,
                 JobCd: args.jobCd,
                 Amount: args.amount,
-                Tax: args.tax
+                Tax: args.tax,
+                ... (typeof args.siteId === 'string') ? { SiteID: args.siteId } : undefined,
+                ... (typeof args.sitePass === 'string') ? { SitePass: args.sitePass } : undefined
             }
         });
 
