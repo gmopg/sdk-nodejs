@@ -81,7 +81,8 @@ export class CreditService extends Service {
             checkString: <string>result.CheckString,
             clientField1: <string>result.ClientField1,
             clientField2: <string>result.ClientField2,
-            clientField3: <string>result.ClientField3
+            clientField3: <string>result.ClientField3,
+            ...(typeof result.ACSUrl === 'string') ? { acsUrl: result.ACSUrl } : undefined
         };
     }
 

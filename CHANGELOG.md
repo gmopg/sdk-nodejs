@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+- execTran出力パラメータにacsUrlを追加
+
 ### Deprecated
 
 ### Removed

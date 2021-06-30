@@ -112,6 +112,10 @@ export interface IExecTranResult {
      * 加盟店自由項目3
      */
     clientField3: string;
+    /**
+     * 3DS認証ページURL
+     */
+    acsUrl?: string;
 }
 
 /**
