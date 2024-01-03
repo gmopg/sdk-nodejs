@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 
+- クレジットカード決済3DS2.0に対応
+
 ### Changed
 
 ### Deprecated

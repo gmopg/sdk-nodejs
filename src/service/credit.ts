@@ -27,7 +27,10 @@ export class CreditService extends Service {
                 JobCd: args.jobCd,
                 Amount: args.amount,
                 ... (typeof args.siteId === 'string') ? { SiteID: args.siteId } : undefined,
-                ... (typeof args.sitePass === 'string') ? { SitePass: args.sitePass } : undefined
+                ... (typeof args.sitePass === 'string') ? { SitePass: args.sitePass } : undefined,
+                ... (typeof args.tdFlag === 'string') ? { TdFlag: args.tdFlag } : undefined,
+                ... (typeof args.tdTenantName === 'string') ? { TdTenantName: args.tdTenantName } : undefined,
+                ... (typeof args.tds2Type === 'string') ? { Tds2Type: args.tds2Type } : undefined
             }
         });
 
@@ -83,6 +86,47 @@ export class CreditService extends Service {
             clientField2: <string>result.ClientField2,
             clientField3: <string>result.ClientField3,
             ...(typeof result.ACSUrl === 'string') ? { acsUrl: result.ACSUrl } : undefined
+        };
+    }
+
+    /**
+     * 決済実行(3DS2.0)
+     */
+    public async execTran3ds(args: CreditFactory.IExecTran3dsArgs): Promise<CreditFactory.IExecTran3dsResult> {
+        debug('requesting...', args);
+        const result = await this.request({
+            expectedStatusCodes: [OK],
+            expectedResponseParams: ['ACS', 'RedirectUrl'],
+            uri: '/payment/ExecTran.idPass',
+            method: 'POST',
+            form: {
+                AccessID: args.accessId,
+                AccessPass: args.accessPass,
+                OrderID: args.orderId,
+                Method: args.method,
+                PayTimes: args.payTimes,
+                CardNo: args.cardNo,
+                Expire: args.expire,
+                SecurityCode: args.securityCode,
+                Token: args.token,
+                PIN: args.pin,
+                SiteID: args.siteId,
+                SitePass: args.sitePass,
+                MemberID: args.memberId,
+                SeqMode: args.seqMode,
+                CardSeq: args.cardSeq,
+                CardPass: args.cardPass,
+                ClientField1: args.clientField1,
+                ClientField2: args.clientField2,
+                ClientField3: args.clientField3,
+                ...(typeof args.retUrl === 'string') ? { RetUrl: args.retUrl } : undefined,
+                ...(typeof args.callbackType === 'string') ? { CallbackType: args.callbackType } : undefined
+            }
+        });
+
+        return {
+            acs: result.ACS,
+            ...(typeof result.RedirectUrl === 'string') ? { redirectUrl: result.RedirectUrl } : undefined
         };
     }
 
@@ -236,6 +280,37 @@ export class CreditService extends Service {
             info3: result.Info3,
             info4: result.Info4,
             info5: result.Info5
+        };
+    }
+
+    /**
+     * 3DS2.0認証後決済実行
+     */
+    public async secureTran2(args: CreditFactory.ISecureTran2Args): Promise<CreditFactory.ISecureTran2Result> {
+        debug('requesting...', args);
+        const { accessId, accessPass } = args;
+        const result = await this.request({
+            expectedStatusCodes: [OK],
+            uri: '/payment/SecureTran2.idPass',
+            method: 'POST',
+            form: {
+                AccessID: accessId,
+                AccessPass: accessPass
+            }
+        });
+
+        return {
+            orderID: result.OrderID,
+            forward: result.Forward,
+            method: result.Method,
+            payTimes: result.PayTimes,
+            approve: result.Approve,
+            tranID: result.TranID,
+            tranDate: result.TranDate,
+            checkString: result.CheckString,
+            ...(typeof result.ClientField1 === 'string') ? { clientField1: result.ClientField1 } : undefined,
+            ...(typeof result.ClientField2 === 'string') ? { clientField2: result.ClientField2 } : undefined,
+            ...(typeof result.ClientField3 === 'string') ? { clientField3: result.ClientField3 } : undefined
         };
     }
 }

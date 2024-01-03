@@ -32,6 +32,7 @@ export interface IOptions {
 // }
 export type IRequestOptions = request.OptionsWithUri & {
     expectedStatusCodes: number[];
+    expectedResponseParams?: string[];
 };
 
 /**
@@ -116,8 +117,9 @@ export class Service {
         delete (<any>requestOptions).uri;
 
         // create request
-        const transporter =
-            (this.options.transporter !== undefined) ? this.options.transporter : new DefaultTransporter(options.expectedStatusCodes);
+        const transporter = (this.options.transporter !== undefined)
+            ? this.options.transporter
+            : new DefaultTransporter(options.expectedStatusCodes, options.expectedResponseParams);
 
         return transporter.request(requestOptions);
     }

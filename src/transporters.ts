@@ -21,10 +21,10 @@ const pkg = require('../package.json');
 //     public abstract async request(url: string, options: RequestInit): Promise<any>;
 // }
 export abstract class Transporter {
-    public abstract async request(options: request.OptionsWithUrl): Promise<any>;
+    public abstract request(options: request.OptionsWithUrl): Promise<any>;
 }
 
-export type IBodyResponseCallback = Promise<any>;
+type IParsedResponseBody = Record<string, any>;
 
 /**
  * RequestError
@@ -142,11 +142,14 @@ export class DefaultTransporter implements Transporter {
      * Default user agent.
      */
     public static readonly USER_AGENT: string = `gmo-service-nodejs-client/${pkg.version}`;
-
     public expectedStatusCodes: number[];
+    public expectedResponseParams: string[] | undefined;
 
-    constructor(expectedStatusCodes: number[]) {
+    constructor(expectedStatusCodes: number[], expectedResponseParams?: string[]) {
         this.expectedStatusCodes = expectedStatusCodes;
+        if (Array.isArray(expectedResponseParams)) {
+            this.expectedResponseParams = expectedResponseParams;
+        }
     }
 
     /**
@@ -170,7 +173,7 @@ export class DefaultTransporter implements Transporter {
     /**
      * Makes a request with given options and invokes callback.
      */
-    public async request(options: request.OptionsWithUrl) {
+    public async request(options: request.OptionsWithUrl): Promise<IParsedResponseBody> {
         const requestOptions = DefaultTransporter.CONFIGURE(options);
         debug('requesting...', requestOptions);
 
@@ -181,7 +184,7 @@ export class DefaultTransporter implements Transporter {
     /**
      * Wraps the response callback.
      */
-    private wrapCallback(res: request.FullResponse): any {
+    private wrapCallback(res: request.FullResponse): IParsedResponseBody {
         debug('request processed.', res.statusCode, res.body);
         let err: any = new RequestError('An unexpected error occurred');
 
@@ -193,7 +196,7 @@ export class DefaultTransporter implements Transporter {
                 err.code = res.statusCode;
                 err.errors = [];
             } else {
-                const result = querystring.parse(res.body);
+                const result = this.parseResponseBody(res.body);
                 if (result.ErrCode !== undefined) {
                     // GMOのエラー結果
                     err = new BadRequestError(res.body);
@@ -205,5 +208,37 @@ export class DefaultTransporter implements Transporter {
         }
 
         throw err;
+    }
+
+    private parseResponseBody(body: string): IParsedResponseBody {
+        let result: IParsedResponseBody | undefined;
+
+        // 期待属性に対応(2024-01-03~)
+        if (Array.isArray(this.expectedResponseParams) && this.expectedResponseParams.length > 0) {
+            const separatorPatter: string = `${this.expectedResponseParams.map((responseParam) => `${responseParam}=`)
+                .join('|')}`;
+            const splittedBody = body.split(new RegExp(separatorPatter));
+            debug('body splitted by', separatorPatter, '->', splittedBody);
+            this.expectedResponseParams.forEach((responseParam, index) => {
+                let valueOfResponseParam = splittedBody[index + 1]; // splittedBody[0]は''のはず
+                // tslint:disable-next-line:no-single-line-block-comment
+                /* istanbul ignore else */
+                if (typeof valueOfResponseParam === 'string') {
+                    if (result === undefined) {
+                        result = {};
+                    }
+                    if (valueOfResponseParam.slice(-1) === '&') {
+                        valueOfResponseParam = valueOfResponseParam.slice(0, -1);
+                    }
+                    result[responseParam] = valueOfResponseParam;
+                }
+            });
+        }
+
+        if (result === undefined) {
+            result = querystring.parse(body);
+        }
+
+        return result;
     }
 }

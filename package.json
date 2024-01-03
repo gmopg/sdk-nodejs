@@ -46,7 +46,7 @@
     "npm": ">=5.3.0"
   },
   "keywords": [],
-  "license": "ISC",
+  "license": "UNLICENSED",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [

@@ -48,7 +48,9 @@ describe('transporter.request()', () => {
 
             const transporter = new DefaultTransporter([statusCode]);
 
-            scope = nock(API_ENDPOINT).get('/uri').reply(statusCode, qs.stringify(body));
+            scope = nock(API_ENDPOINT)
+                .get('/uri')
+                .reply(statusCode, qs.stringify(body));
 
             const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' });
 
@@ -56,6 +58,22 @@ describe('transporter.request()', () => {
             sandbox.verify();
             assert(scope.isDone());
         });
+    });
+
+    it(`期待レスポンス属性を指定してもレスポンスを取得できるはず`, async () => {
+        const body: any = { ACS: 'xxx', RedirectUrl: 'xxx.com' };
+
+        const transporter = new DefaultTransporter([OK], ['ACS', 'RedirectUrl']);
+
+        scope = nock(API_ENDPOINT)
+            .get('/uri')
+            .reply(OK, qs.stringify(body));
+
+        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' });
+
+        assert.deepEqual(result, body);
+        sandbox.verify();
+        assert(scope.isDone());
     });
 
     // tslint:disable-next-line:mocha-no-side-effect-code
@@ -72,9 +90,12 @@ describe('transporter.request()', () => {
 
             const transporter = new DefaultTransporter([OK]);
 
-            scope = nock(API_ENDPOINT).get('/uri').reply(statusCode, body);
+            scope = nock(API_ENDPOINT)
+                .get('/uri')
+                .reply(statusCode, body);
 
-            const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' }).catch((err) => err);
+            const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' })
+                .catch((err) => err);
 
             assert(result instanceof Error);
             assert.equal((<RequestError>result).code, statusCode);
@@ -89,9 +110,12 @@ describe('transporter.request()', () => {
 
         const transporter = new DefaultTransporter([OK]);
 
-        scope = nock(API_ENDPOINT).get('/uri').replyWithError(body);
+        scope = nock(API_ENDPOINT)
+            .get('/uri')
+            .replyWithError(body);
 
-        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' }).catch((err) => err);
+        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' })
+            .catch((err) => err);
         assert(result instanceof Error);
         sandbox.verify();
         assert(scope.isDone());
@@ -101,9 +125,12 @@ describe('transporter.request()', () => {
         const body: any = { ErrCode: '12345', ErrInfo: 'xxxxx' };
         const transporter = new DefaultTransporter([OK]);
 
-        scope = nock(API_ENDPOINT).get('/uri').reply(OK, qs.stringify(body));
+        scope = nock(API_ENDPOINT)
+            .get('/uri')
+            .reply(OK, qs.stringify(body));
 
-        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' }).catch((err) => err);
+        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' })
+            .catch((err) => err);
         assert(result instanceof BadRequestError);
         sandbox.verify();
         assert(scope.isDone());
