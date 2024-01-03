@@ -3,7 +3,8 @@ jobs:
   build:
     # The primary container is an instance of the first list image listed. Your build commands run in this container.
     docker:
-      - image: circleci/node:latest
+      # - image: circleci/node:latest
+      - image: cimg/node:18.19.0
     steps:
       - checkout
       - run:
@@ -31,7 +32,8 @@ jobs:
           command: npm run build
   test:
     docker:
-      - image: circleci/node:latest
+      # - image: circleci/node:latest
+      - image: cimg/node:18.19.0
     steps:
       - checkout
       - restore_cache:
@@ -41,7 +43,8 @@ jobs:
           command: npm test
   doc:
     docker:
-      - image: circleci/node:latest
+      # - image: circleci/node:latest
+      - image: cimg/node:18.19.0
     steps:
       - checkout
       - restore_cache:
@@ -53,7 +56,8 @@ jobs:
             npm run doc
   prerelease:
     docker:
-      - image: circleci/node:latest
+      # - image: circleci/node:latest
+      - image: cimg/node:18.19.0
     steps:
       - checkout
       - restore_cache:
@@ -69,7 +73,8 @@ jobs:
           command: npm publish --tag next --access public
   deploy:
     docker:
-      - image: circleci/node:latest
+      # - image: circleci/node:latest
+      - image: cimg/node:18.19.0
     steps:
       - checkout
       - restore_cache:
