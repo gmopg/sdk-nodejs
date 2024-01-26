@@ -78,7 +78,7 @@
     "postversion": "git push origin --tags",
     "prepublishOnly": "npm run clean && npm run build && npm test && npm run doc"
   },
-  "version": "5.2.0",
+  "version": "5.3.0-alpha.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/gmopg/sdk-nodejs.git"
