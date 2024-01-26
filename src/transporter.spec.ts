@@ -1,7 +1,6 @@
 // tslint:disable:no-implicit-dependencies
 /**
  * transporter test
- * @ignore
  */
 import {
     BAD_REQUEST,
@@ -15,13 +14,14 @@ import {
 } from 'http-status';
 import { } from 'mocha';
 import * as nock from 'nock';
+import * as nodeFecth from 'node-fetch';
 import * as assert from 'power-assert';
 import * as qs from 'querystring';
 import * as sinon from 'sinon';
 
 import { BadRequestError } from './error/badRequest';
 
-import { DefaultTransporter, RequestError } from './transporters';
+import { DefaultTransporter, FetchTransporter, RequestError } from './transporters';
 
 const API_ENDPOINT = 'https://example.com';
 
@@ -30,7 +30,7 @@ describe('transporter.request()', () => {
     let sandbox: sinon.SinonSandbox;
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
         nock.cleanAll();
         nock.disableNetConnect();
     });
@@ -52,7 +52,7 @@ describe('transporter.request()', () => {
                 .get('/uri')
                 .reply(statusCode, qs.stringify(body));
 
-            const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' });
+            const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET', form: {} });
 
             assert.deepEqual(result, body);
             sandbox.verify();
@@ -69,7 +69,7 @@ describe('transporter.request()', () => {
             .get('/uri')
             .reply(OK, qs.stringify(body));
 
-        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' });
+        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET', form: {} });
 
         assert.deepEqual(result, body);
         sandbox.verify();
@@ -94,7 +94,7 @@ describe('transporter.request()', () => {
                 .get('/uri')
                 .reply(statusCode, body);
 
-            const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' })
+            const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET', form: {} })
                 .catch((err) => err);
 
             assert(result instanceof Error);
@@ -114,7 +114,7 @@ describe('transporter.request()', () => {
             .get('/uri')
             .replyWithError(body);
 
-        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' })
+        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET', form: {} })
             .catch((err) => err);
         assert(result instanceof Error);
         sandbox.verify();
@@ -129,7 +129,7 @@ describe('transporter.request()', () => {
             .get('/uri')
             .reply(OK, qs.stringify(body));
 
-        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET' })
+        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET', form: {} })
             .catch((err) => err);
         assert(result instanceof BadRequestError);
         sandbox.verify();
@@ -137,11 +137,114 @@ describe('transporter.request()', () => {
     });
 });
 
+describe('FetchTransporter.request()', () => {
+    let sandbox: sinon.SinonSandbox;
+
+    beforeEach(() => {
+        sandbox = sinon.createSandbox();
+    });
+
+    afterEach(() => {
+        sandbox.restore();
+    });
+
+    // tslint:disable-next-line:mocha-no-side-effect-code
+    [CREATED, OK].forEach((statusCode) => {
+        it(`次のステータスコードが返却されれば、レスポンスを取得できるはず ${statusCode}`, async () => {
+            const body: any = { key: 'value' };
+
+            const transporter = new FetchTransporter([statusCode]);
+            const response = new nodeFecth.Response(
+                qs.stringify(body),
+                { status: statusCode }
+            );
+            sandbox.mock(nodeFecth)
+                .expects('default')
+                .once()
+                .resolves(response);
+
+            const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET', form: {}, timeout: 1000 });
+
+            assert.deepEqual(result, body);
+            sandbox.verify();
+        });
+    });
+
+    it(`期待レスポンス属性を指定してもレスポンスを取得できるはず`, async () => {
+        const body: any = { ACS: 'xxx', RedirectUrl: 'xxx.com' };
+
+        const transporter = new FetchTransporter([OK], ['ACS', 'RedirectUrl']);
+        const response = new nodeFecth.Response(
+            qs.stringify(body),
+            { status: OK }
+        );
+        sandbox.mock(nodeFecth)
+            .expects('default')
+            .once()
+            .resolves(response);
+
+        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET', form: {} });
+
+        assert.deepEqual(result, body);
+        sandbox.verify();
+    });
+
+    // tslint:disable-next-line:mocha-no-side-effect-code
+    [
+        BAD_REQUEST,
+        FORBIDDEN,
+        INTERNAL_SERVER_ERROR,
+        NOT_FOUND,
+        NOT_IMPLEMENTED,
+        UNAUTHORIZED
+    ].forEach((statusCode) => {
+        it(`次のステータスコードが返却されれば、リクエストエラーが投げられるはず ${statusCode}`, async () => {
+            const body = 'body text';
+
+            const transporter = new FetchTransporter([OK]);
+            const response = new nodeFecth.Response(
+                body,
+                { status: statusCode }
+            );
+            sandbox.mock(nodeFecth)
+                .expects('default')
+                .once()
+                .resolves(response);
+
+            const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET', form: {} })
+                .catch((err) => err);
+
+            assert(result instanceof Error);
+            assert.equal((<RequestError>result).code, statusCode);
+            assert.equal((<RequestError>result).message, body);
+            sandbox.verify();
+        });
+    });
+
+    it('GMOエラーレスポンスを受け取れば、BadRequestErrorとなるはず', async () => {
+        const body: any = { ErrCode: '12345', ErrInfo: 'xxxxx' };
+        const transporter = new FetchTransporter([OK]);
+        const response = new nodeFecth.Response(
+            qs.stringify(body),
+            { status: OK }
+        );
+        sandbox.mock(nodeFecth)
+            .expects('default')
+            .once()
+            .resolves(response);
+
+        const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET', form: {} })
+            .catch((err) => err);
+        assert(result instanceof BadRequestError);
+        sandbox.verify();
+    });
+});
+
 describe('DefaultTransporter.CONFIGURE()', () => {
     let sandbox: sinon.SinonSandbox;
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
     });
 
     afterEach(() => {
@@ -153,10 +256,37 @@ describe('DefaultTransporter.CONFIGURE()', () => {
             url: '',
             headers: {
                 'User-Agent': 'useragent'
-            }
+            },
+            form: {}
         };
 
         const result = DefaultTransporter.CONFIGURE(options);
+        assert((<any>result.headers)['User-Agent'].indexOf(DefaultTransporter.USER_AGENT) > 0);
+        sandbox.verify();
+    });
+});
+
+describe('FetchTransporter.CONFIGURE()', () => {
+    let sandbox: sinon.SinonSandbox;
+
+    beforeEach(() => {
+        sandbox = sinon.createSandbox();
+    });
+
+    afterEach(() => {
+        sandbox.restore();
+    });
+
+    it('既存のUser-Agentヘッダーにパッケージ情報がなければ、ヘッダーに情報が追加されるはず', async () => {
+        const options = {
+            url: '',
+            headers: {
+                'User-Agent': 'useragent'
+            },
+            form: {}
+        };
+
+        const result = FetchTransporter.CONFIGURE(options);
         assert((<any>result.headers)['User-Agent'].indexOf(DefaultTransporter.USER_AGENT) > 0);
         sandbox.verify();
     });

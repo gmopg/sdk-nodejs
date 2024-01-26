@@ -9,8 +9,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 - クレジットカード決済3DS2.0に対応
+- FetchTransporterを追加
 
 ### Changed
+
+- update typescript@5.x.x
 
 ### Deprecated
 

@@ -7,8 +7,11 @@ async function main() {
     const orderId = Date.now().toString();
     const amount = 1800;
     const creditService = new GMO.service.Credit(
-        { endpoint: process.env.GMO_ENDPOINT },
-        { pool: {} }
+        {
+            endpoint: process.env.GMO_ENDPOINT,
+            useFetch: false
+        },
+        { timeout: 3000 }
     );
     const entryTranResult = await creditService.entryTran({
         shopId: process.env.TEST_GMO_SHOP_ID,

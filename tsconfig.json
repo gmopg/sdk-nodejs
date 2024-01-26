@@ -2,7 +2,6 @@
     "compilerOptions": {
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
-        "charset": "utf8",
         "declaration": true,
         "diagnostics": false,
         "disableSizeLimit": false,
