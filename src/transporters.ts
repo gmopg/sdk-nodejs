@@ -198,17 +198,29 @@ export class FetchTransporter implements Transporter {
     public async request(options: IRequestOptions): Promise<IParsedResponseBody> {
         const requestOptions = FetchTransporter.CONFIGURE(options);
         const input: string = `${requestOptions.url}?${querystring.stringify(requestOptions.form)}`;
-        debug('fetching...', input, requestOptions);
+        const params = new URLSearchParams();
+        Object.keys(requestOptions.form)
+            .forEach((key) => {
+                const value = requestOptions.form[key];
+                // tslint:disable-next-line:no-single-line-block-comment
+                /* istanbul ignore else */
+                if (value !== undefined) {
+                    params.append(key, value);
+                }
+            });
+        debug('fetching...', input, requestOptions, params.toString());
 
         return fetch(
             input,
             {
                 method: requestOptions.method,
                 headers: {
-                    ...requestOptions.headers,
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=windows-31j'
+                    ...requestOptions.headers
+                    // 'Content-Type': 'application/x-www-form-urlencoded;charset=windows-31j'
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
 
                 },
+                body: params,
                 ...(typeof requestOptions.timeout === 'number') ? { signal: AbortSignal.timeout(requestOptions.timeout) } : undefined
             }
         )

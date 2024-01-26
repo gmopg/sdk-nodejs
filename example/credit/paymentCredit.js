@@ -9,7 +9,7 @@ async function main() {
     const creditService = new GMO.service.Credit(
         {
             endpoint: process.env.GMO_ENDPOINT,
-            useFetch: false
+            useFetch: true
         },
         { timeout: 3000 }
     );
@@ -21,6 +21,7 @@ async function main() {
         amount: amount
     });
     console.log('entryTranResult:', entryTranResult);
+    // return;
     const execTranResult = await creditService.execTran({
         accessId: entryTranResult.accessId,
         accessPass: entryTranResult.accessPass,
@@ -29,6 +30,9 @@ async function main() {
         cardNo: '4111111111111111',
         expire: '2812',
         securityCode: '123'
+        // cardNo: '4012001037141112',
+        // expire: '2512',
+        // securityCode: '777'
     });
     console.log('execTranResult:', execTranResult);
 

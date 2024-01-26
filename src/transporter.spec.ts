@@ -163,7 +163,7 @@ describe('FetchTransporter.request()', () => {
                 .once()
                 .resolves(response);
 
-            const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET', form: {}, timeout: 1000 });
+            const result = await transporter.request({ url: `${API_ENDPOINT}/uri`, method: 'GET', form: { test: 'test' }, timeout: 1000 });
 
             assert.deepEqual(result, body);
             sandbox.verify();
