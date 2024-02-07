@@ -13,22 +13,22 @@ const debug = createDebug('gmo-service:transporters');
 // tslint:disable-next-line
 const pkg = require('../package.json');
 
+type IFormValue = string | number | undefined;
+interface IForm { [key: string]: IFormValue; }
 interface IOptionsWithUrl {
     headers?: {
         [key: string]: any;
-    } | undefined;
-    method?: string | undefined;
-    timeout?: number | undefined;
+    };
+    method?: string;
+    timeout?: number;
     url: string;
-    form?: { [key: string]: any } | string | undefined;
-    simple?: boolean | undefined;
-    resolveWithFullResponse?: boolean | undefined;
+    form?: IForm;
 }
 export type IRequestOptions = Pick<
     IOptionsWithUrl,
     'headers' | 'method' | 'timeout' | 'url'
 > & {
-    form: { [key: string]: any };
+    form: IForm;
 };
 
 /**
@@ -190,7 +190,7 @@ export class FetchTransporter implements Transporter {
         IOptionsWithUrl,
         'headers' | 'method' | 'timeout' | 'url'
     > & {
-        form: { [key: string]: any };
+        form: IForm;
     } {
         // set transporter user agent
         options.headers = (options.headers !== undefined) ? options.headers : {};
