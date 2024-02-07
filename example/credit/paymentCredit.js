@@ -29,10 +29,10 @@ async function main() {
         method: GMO.utils.util.Method.Lump,
         cardNo: '4111111111111111',
         expire: '2812',
-        securityCode: '123'
-        // cardNo: '4012001037141112',
-        // expire: '2512',
-        // securityCode: '777'
+        securityCode: '123',
+        // clientField1: 'sample1',
+        // clientField2: 'sample2',
+        // clientField3: 'sample3',
     });
     console.log('execTranResult:', execTranResult);
 
@@ -45,6 +45,13 @@ async function main() {
         amount: amount
     });
     console.log('alterTranResult:', alterTranResult);
+
+    const searchTradeResult = await creditService.searchTrade({
+        shopId: process.env.TEST_GMO_SHOP_ID,
+        shopPass: process.env.TEST_GMO_SHOP_PASS,
+        orderId
+    });
+    console.log('searchTradeResult:', searchTradeResult);
 }
 
 main()

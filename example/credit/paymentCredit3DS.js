@@ -32,9 +32,9 @@ async function main() {
         securityCode: '123',
         retUrl: String(process.env.SECURE_TRAN_RET_URL),
         callbackType: GMO.utils.util.CallbackType.Get,
-        clientField1: 'by samples 1',
-        clientField2: 'by samples 2',
-        clientField3: 'by samples 3',
+        // clientField1: 'by samples 1',
+        // clientField2: 'by samples 2',
+        // clientField3: 'by samples 3',
         // AppMode: '0',
         // Tds2ChallengeIndType: '2',
     });

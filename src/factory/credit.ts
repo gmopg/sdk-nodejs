@@ -138,15 +138,15 @@ export interface IExecTranResult {
     /**
      * 加盟店自由項目1
      */
-    clientField1: string;
+    clientField1?: string;
     /**
      * 加盟店自由項目2
      */
-    clientField2: string;
+    clientField2?: string;
     /**
      * 加盟店自由項目3
      */
-    clientField3: string;
+    clientField3?: string;
     /**
      * 3DS認証ページURL
      */
@@ -290,23 +290,23 @@ export interface ISearchTradeResult {
     /**
      * 加盟店自由項目1
      */
-    clientField1: string;
+    clientField1?: string;
     /**
      * 加盟店自由項目2
      */
-    clientField2: string;
+    clientField2?: string;
     /**
      * 加盟店自由項目3
      */
-    clientField3: string;
+    clientField3?: string;
     /**
      * エラーコード
      */
-    errCode: string;
+    errCode?: string;
     /**
      * エラー詳細コード
      */
-    errInfo: string;
+    errInfo?: string;
 }
 
 /**

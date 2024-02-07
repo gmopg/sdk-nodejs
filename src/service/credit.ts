@@ -43,6 +43,7 @@ export class CreditService extends Service {
     /**
      * 決済実行
      */
+    // tslint:disable-next-line:cyclomatic-complexity
     public async execTran(args: CreditFactory.IExecTranArgs): Promise<CreditFactory.IExecTranResult> {
         debug('requesting...', args);
         const result = await this.request({
@@ -53,22 +54,22 @@ export class CreditService extends Service {
                 AccessID: args.accessId,
                 AccessPass: args.accessPass,
                 OrderID: args.orderId,
-                Method: args.method,
-                PayTimes: args.payTimes,
-                CardNo: args.cardNo,
-                Expire: args.expire,
-                SecurityCode: args.securityCode,
-                Token: args.token,
-                PIN: args.pin,
-                SiteID: args.siteId,
-                SitePass: args.sitePass,
-                MemberID: args.memberId,
-                SeqMode: args.seqMode,
-                CardSeq: args.cardSeq,
-                CardPass: args.cardPass,
-                ClientField1: args.clientField1,
-                ClientField2: args.clientField2,
-                ClientField3: args.clientField3
+                ...(typeof args.payTimes === 'number') ? { PayTimes: args.payTimes } : undefined,
+                ...(typeof args.method === 'string') ? { Method: args.method } : undefined,
+                ...(typeof args.cardNo === 'string') ? { CardNo: args.cardNo } : undefined,
+                ...(typeof args.expire === 'string') ? { Expire: args.expire } : undefined,
+                ...(typeof args.securityCode === 'string') ? { SecurityCode: args.securityCode } : undefined,
+                ...(typeof args.token === 'string') ? { Token: args.token } : undefined,
+                ...(typeof args.pin === 'string') ? { PIN: args.pin } : undefined,
+                ...(typeof args.siteId === 'string') ? { SiteID: args.siteId } : undefined,
+                ...(typeof args.sitePass === 'string') ? { SitePass: args.sitePass } : undefined,
+                ...(typeof args.memberId === 'string') ? { MemberID: args.memberId } : undefined,
+                ...(typeof args.seqMode === 'string') ? { SeqMode: args.seqMode } : undefined,
+                ...(typeof args.cardSeq === 'number') ? { CardSeq: args.cardSeq } : undefined,
+                ...(typeof args.cardPass === 'string') ? { CardPass: args.cardPass } : undefined,
+                ...(typeof args.clientField1 === 'string') ? { ClientField1: args.clientField1 } : undefined,
+                ...(typeof args.clientField2 === 'string') ? { ClientField2: args.clientField2 } : undefined,
+                ...(typeof args.clientField3 === 'string') ? { ClientField3: args.clientField3 } : undefined
             }
         });
 
@@ -82,9 +83,9 @@ export class CreditService extends Service {
             tranId: <string>result.TranID,
             tranDate: <string>result.TranDate,
             checkString: <string>result.CheckString,
-            clientField1: <string>result.ClientField1,
-            clientField2: <string>result.ClientField2,
-            clientField3: <string>result.ClientField3,
+            ...(typeof result.ClientField1 === 'string') ? { clientField1: result.ClientField1 } : undefined,
+            ...(typeof result.ClientField2 === 'string') ? { clientField2: result.ClientField2 } : undefined,
+            ...(typeof result.ClientField3 === 'string') ? { clientField3: result.ClientField3 } : undefined,
             ...(typeof result.ACSUrl === 'string') ? { acsUrl: result.ACSUrl } : undefined
         };
     }
@@ -92,6 +93,7 @@ export class CreditService extends Service {
     /**
      * 決済実行(3DS2.0)
      */
+    // tslint:disable-next-line:cyclomatic-complexity
     public async execTran3ds(args: CreditFactory.IExecTran3dsArgs): Promise<CreditFactory.IExecTran3dsResult> {
         debug('requesting...', args);
         const result = await this.request({
@@ -103,22 +105,22 @@ export class CreditService extends Service {
                 AccessID: args.accessId,
                 AccessPass: args.accessPass,
                 OrderID: args.orderId,
-                Method: args.method,
-                PayTimes: args.payTimes,
-                CardNo: args.cardNo,
-                Expire: args.expire,
-                SecurityCode: args.securityCode,
-                Token: args.token,
-                PIN: args.pin,
-                SiteID: args.siteId,
-                SitePass: args.sitePass,
-                MemberID: args.memberId,
-                SeqMode: args.seqMode,
-                CardSeq: args.cardSeq,
-                CardPass: args.cardPass,
-                ClientField1: args.clientField1,
-                ClientField2: args.clientField2,
-                ClientField3: args.clientField3,
+                ...(typeof args.payTimes === 'number') ? { PayTimes: args.payTimes } : undefined,
+                ...(typeof args.method === 'string') ? { Method: args.method } : undefined,
+                ...(typeof args.cardNo === 'string') ? { CardNo: args.cardNo } : undefined,
+                ...(typeof args.expire === 'string') ? { Expire: args.expire } : undefined,
+                ...(typeof args.securityCode === 'string') ? { SecurityCode: args.securityCode } : undefined,
+                ...(typeof args.token === 'string') ? { Token: args.token } : undefined,
+                ...(typeof args.pin === 'string') ? { PIN: args.pin } : undefined,
+                ...(typeof args.siteId === 'string') ? { SiteID: args.siteId } : undefined,
+                ...(typeof args.sitePass === 'string') ? { SitePass: args.sitePass } : undefined,
+                ...(typeof args.memberId === 'string') ? { MemberID: args.memberId } : undefined,
+                ...(typeof args.seqMode === 'string') ? { SeqMode: args.seqMode } : undefined,
+                ...(typeof args.cardSeq === 'number') ? { CardSeq: args.cardSeq } : undefined,
+                ...(typeof args.cardPass === 'string') ? { CardPass: args.cardPass } : undefined,
+                ...(typeof args.clientField1 === 'string') ? { ClientField1: args.clientField1 } : undefined,
+                ...(typeof args.clientField2 === 'string') ? { ClientField2: args.clientField2 } : undefined,
+                ...(typeof args.clientField3 === 'string') ? { ClientField3: args.clientField3 } : undefined,
                 ...(typeof args.retUrl === 'string') ? { RetUrl: args.retUrl } : undefined,
                 ...(typeof args.callbackType === 'string') ? { CallbackType: args.callbackType } : undefined
             }
@@ -145,8 +147,8 @@ export class CreditService extends Service {
                 AccessID: args.accessId,
                 AccessPass: args.accessPass,
                 JobCd: args.jobCd,
-                Amount: args.amount,
-                Method: args.method,
+                ... (typeof args.amount === 'number') ? { Amount: args.amount } : undefined,
+                ... (typeof args.method === 'string') ? { Method: args.method } : undefined,
                 ... (typeof args.siteId === 'string') ? { SiteID: args.siteId } : undefined,
                 ... (typeof args.sitePass === 'string') ? { SitePass: args.sitePass } : undefined
             }
@@ -201,11 +203,11 @@ export class CreditService extends Service {
             forward: <string>result.Forward,
             tranId: <string>result.TranID,
             approve: <string>result.Approve,
-            clientField1: <string>result.ClientField1,
-            clientField2: <string>result.ClientField2,
-            clientField3: <string>result.ClientField3,
-            errCode: <string>result.ErrCode,
-            errInfo: <string>result.ErrInfo
+            ...(typeof result.ErrCode === 'string') ? { errCode: result.ErrCode } : undefined,
+            ...(typeof result.ErrInfo === 'string') ? { errInfo: result.ErrInfo } : undefined,
+            ...(typeof result.ClientField1 === 'string') ? { clientField1: result.ClientField1 } : undefined,
+            ...(typeof result.ClientField2 === 'string') ? { clientField2: result.ClientField2 } : undefined,
+            ...(typeof result.ClientField3 === 'string') ? { clientField3: result.ClientField3 } : undefined
         };
     }
 
@@ -227,7 +229,7 @@ export class CreditService extends Service {
                 AccessPass: args.accessPass,
                 JobCd: args.jobCd,
                 Amount: args.amount,
-                Tax: args.tax,
+                ... (typeof args.tax === 'string') ? { Tax: args.tax } : undefined,
                 ... (typeof args.siteId === 'string') ? { SiteID: args.siteId } : undefined,
                 ... (typeof args.sitePass === 'string') ? { SitePass: args.sitePass } : undefined
             }
@@ -248,6 +250,11 @@ export class CreditService extends Service {
      */
     public async searchCardDetail(args: CreditFactory.ISearchCardDetailArgs): Promise<CreditFactory.ISearchCardDetailResult> {
         debug('requesting...', args);
+        const { token } = <CreditFactory.ISearchCardDetailByTokenArgs>args;
+        const { orderId } = <CreditFactory.ISearchCardDetailByOrderIdArgs>args;
+        const { cardNo } = <CreditFactory.ISearchCardDetailByCardNoArgs>args;
+        const { siteId, sitePass, memberId, seqMode, cardSeq } = <CreditFactory.ISearchCardDetailByMemberIdArgs>args;
+
         const result = await this.request({
             expectedStatusCodes: [OK],
             uri: '/payment/SearchCardDetail.idPass',
@@ -255,15 +262,15 @@ export class CreditService extends Service {
             form: {
                 ShopID: args.shopId,
                 ShopPass: args.shopPass,
-                Token: (<CreditFactory.ISearchCardDetailByTokenArgs>args).token,
-                SearchType: args.searchType,
-                CardNo: (<CreditFactory.ISearchCardDetailByCardNoArgs>args).cardNo,
-                OrderID: (<CreditFactory.ISearchCardDetailByOrderIdArgs>args).orderId,
-                SiteID: (<CreditFactory.ISearchCardDetailByMemberIdArgs>args).siteId,
-                SitePass: (<CreditFactory.ISearchCardDetailByMemberIdArgs>args).sitePass,
-                MemberID: (<CreditFactory.ISearchCardDetailByMemberIdArgs>args).memberId,
-                SeqMode: (<CreditFactory.ISearchCardDetailByMemberIdArgs>args).seqMode,
-                CardSeq: (<CreditFactory.ISearchCardDetailByMemberIdArgs>args).cardSeq
+                ...(typeof args.searchType === 'string') ? { SearchType: args.searchType } : undefined,
+                ...(typeof token === 'string') ? { Token: token } : undefined,
+                ...(typeof orderId === 'string') ? { OrderID: orderId } : undefined,
+                ...(typeof cardNo === 'string') ? { CardNo: cardNo } : undefined,
+                ...(typeof siteId === 'string') ? { SiteID: siteId } : undefined,
+                ...(typeof sitePass === 'string') ? { SitePass: sitePass } : undefined,
+                ...(typeof memberId === 'string') ? { MemberID: memberId } : undefined,
+                ...(typeof seqMode === 'string') ? { SeqMode: seqMode } : undefined,
+                ...(typeof cardSeq === 'number') ? { CardSeq: cardSeq } : undefined
             }
         });
 

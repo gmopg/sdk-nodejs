@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - update typescript@5.x.x
 - node-fetchで再実装
+- CreditServiceにおけるリクエストパラメータの冗長性を排除
 
 ### Deprecated
 
