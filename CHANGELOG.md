@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Changed
 
 - update typescript@5.x.x
+- node-fetchで再実装
 
 ### Deprecated
 

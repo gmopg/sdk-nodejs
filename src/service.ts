@@ -1,4 +1,4 @@
-import { DefaultTransporter, FetchTransporter, IRequestOptions as ITransporterRequestOptions, Transporter } from './transporters';
+import { FetchTransporter, IRequestOptions as ITransporterRequestOptions, Transporter } from './transporters';
 
 /**
  * service constructor options
@@ -118,9 +118,10 @@ export class Service {
         const transporter = (this.options.transporter !== undefined)
             // tslint:disable-next-line:no-single-line-block-comment
             ? /* istanbul ignore next */ this.options.transporter
-            : (this.options.useFetch === true)
-                ? new FetchTransporter(options.expectedStatusCodes, options.expectedResponseParams)
-                : new DefaultTransporter(options.expectedStatusCodes, options.expectedResponseParams);
+            : new FetchTransporter(options.expectedStatusCodes, options.expectedResponseParams);
+        // : (this.options.useFetch === true)
+        //     ? new FetchTransporter(options.expectedStatusCodes, options.expectedResponseParams)
+        //     : new DefaultTransporter(options.expectedStatusCodes, options.expectedResponseParams);
 
         return transporter.request(requestOptions);
     }

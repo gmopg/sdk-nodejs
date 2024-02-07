@@ -8,7 +8,7 @@ import * as assert from 'power-assert';
 import * as sinon from 'sinon';
 
 import { Service } from './service';
-import { DefaultTransporter, FetchTransporter } from './transporters';
+import { FetchTransporter } from './transporters';
 
 const API_ENDPOINT = 'https://example.com';
 
@@ -31,7 +31,7 @@ describe('fetch()', () => {
             useFetch: false
         });
 
-        sandbox.mock(DefaultTransporter.prototype)
+        sandbox.mock(FetchTransporter.prototype)
             .expects('request')
             .once()
             .resolves(response);
@@ -82,14 +82,14 @@ describe('fetch()', () => {
         const service = new Service(
             {
                 endpoint: API_ENDPOINT,
-                useFetch: false
+                useFetch: true
             },
             {
                 timeout: 1000
             }
         );
 
-        sandbox.mock(DefaultTransporter.prototype)
+        sandbox.mock(FetchTransporter.prototype)
             .expects('request')
             .once()
             .withArgs(sinon.match({ timeout: 1000 }))
@@ -125,14 +125,14 @@ describe('fetch()', () => {
         sandbox.verify();
     });
 
-    it('authオプションもtransporterオプションも未定義であれば、内部的にDefaultTransporterインスタンスが生成されてfetchメソッドが呼ばれるはず', async () => {
+    it('authオプションもtransporterオプションも未定義であれば、内部的にFetchTransporterインスタンスが生成されてfetchメソッドが呼ばれるはず', async () => {
         const options = {};
         const service = new Service({
             endpoint: API_ENDPOINT,
-            useFetch: false
+            useFetch: true
         });
 
-        sandbox.mock(DefaultTransporter.prototype)
+        sandbox.mock(FetchTransporter.prototype)
             .expects('request')
             .once();
 
