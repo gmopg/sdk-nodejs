@@ -8,14 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 
-- クレジットカード決済3DS2.0に対応
-- FetchTransporterを追加
-
 ### Changed
-
-- update typescript@5.x.x
-- node-fetchで再実装
-- CreditServiceにおけるリクエストパラメータの冗長性を排除
 
 ### Deprecated
 
@@ -24,6 +17,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v5.3.0 - 2024-03-04
+
+### Added
+
+- クレジットカード決済3DS2.0に対応
+- FetchTransporterを追加
+
+### Changed
+
+- update typescript@5.x.x
+- node-fetchで再実装
+- CreditServiceにおけるリクエストパラメータの冗長性を排除
 
 ## v5.2.0 - 2021-06-30
 
