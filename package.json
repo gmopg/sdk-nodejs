@@ -14,39 +14,36 @@
   ],
   "dependencies": {
     "debug": "^3.2.6",
+    "form-data": "4.0.0",
     "http-status": "^1.4.2",
-    "request": "^2.88.2",
-    "request-promise-native": "^1.0.9"
+    "node-fetch": "2.7.0"
   },
   "description": "GMO Client Library for Node.js",
   "devDependencies": {
     "@types/debug": "0.0.30",
     "@types/http-status": "^0.2.30",
     "@types/mocha": "^5.2.7",
-    "@types/nock": "^9.3.1",
-    "@types/node": "^8.10.64",
+    "@types/node": "18.19.9",
+    "@types/node-fetch": "2.6.11",
     "@types/power-assert": "^1.5.3",
-    "@types/request": "^2.48.5",
-    "@types/request-promise-native": "^1.0.17",
     "@types/sinon": "^5.0.7",
     "coveralls": "^3.1.0",
     "mocha": "^5.2.0",
-    "nock": "^9.6.1",
-    "nyc": "^15.1.0",
+    "nyc": "15.1.0",
     "power-assert": "^1.6.1",
     "rimraf": "^2.7.1",
     "sinon": "^6.3.5",
-    "ts-node": "^8.10.2",
-    "tslint": "^6.1.3",
-    "tslint-microsoft-contrib": "^6.2.0",
-    "typescript": "^4.0.2"
+    "ts-node": "10.9.2",
+    "tslint": "6.1.3",
+    "tslint-microsoft-contrib": "6.2.0",
+    "typescript": "5.0.4"
   },
   "engines": {
-    "node": ">=8.0.0",
-    "npm": ">=5.3.0"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "keywords": [],
-  "license": "ISC",
+  "license": "UNLICENSED",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
@@ -76,7 +73,7 @@
     "postversion": "git push origin --tags",
     "prepublishOnly": "npm run clean && npm run build && npm test && npm run doc"
   },
-  "version": "5.2.0",
+  "version": "5.3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/gmopg/sdk-nodejs.git"

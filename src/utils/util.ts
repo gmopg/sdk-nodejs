@@ -1,4 +1,4 @@
-import * as crypto from 'crypto';
+// import * as crypto from 'crypto';
 
 /**
  * 決済方法
@@ -201,23 +201,75 @@ export enum DefaultFlag {
 }
 
 /**
+ * 3DS利用フラグ
+ * 決済時に利用する3DSのバージョンを指定するフラグです。
+ */
+export enum TdFlag {
+    Version2 = '2'
+}
+
+/**
+ * 3DS2.0未対応時取り扱い
+ * 仕向先カード会社が3DS2.0に未対応な場合の後続処理設定
+ */
+export enum Tds2Type {
+    /**
+     * 3DS1.0での認証を実施（デフォルト）
+     */
+    Version1 = '1',
+    /**
+     * エラーとして処理終了
+     */
+    Error = '2',
+    /**
+     * 通常オーソリを実施
+     */
+    Auth = '3'
+}
+
+/**
+ * コールバック方法
+ * 加盟店様が指定した戻りURLに当社から戻す方式を指定します。
+ * 通常は「1」(POST方式)または「3」(GET方式)を設定してください。モバイルアプリSDKを利用する場合は設定不要です。
+ * 「1」または「3」の場合、認証後のコールバック一回のみで済みます。
+ * 「2」を指定すると認証初期化後、チャレンジ後の最大二回のコールバックが発生し、加えて以下のAPIを呼び出す必要があります。
+ * こちらの方式では加盟店様側で認証結果を取得できるので認証エラーの場合はオーソリを行わないようにする等、決済フローの制御が可能になります。
+ * - 3DS2.0認証実行
+ * - 3DS2.0認証結果取得
+ */
+export enum CallbackType {
+    /**
+     * 通常（POST方式）（デフォルト）
+     */
+    Post = '1',
+    /**
+     * 直接受ける
+     */
+    Direct = '2',
+    /**
+     * 通常（GET方式）
+     */
+    Get = '3'
+}
+
+/**
  * ショップ情報確認文字列を作成するin
  */
-export interface ICreateShopPassStringArgs {
-    shopId: string;
-    shopPass: string;
-    orderId: string;
-    amount: number;
-    dateTime: string;
-}
+// export interface ICreateShopPassStringArgs {
+//     shopId: string;
+//     shopPass: string;
+//     orderId: string;
+//     amount: number;
+//     dateTime: string;
+// }
 
 /**
  * ショップ情報確認文字列を作成する
  */
-export function createShopPassString(args: ICreateShopPassStringArgs) {
-    // 「ショップ ID + オーダーID + 利用金額＋税送料＋ショップパスワード + 日時情報」を MD5 でハッシュした文字列。
-    const md5hash = crypto.createHash('md5');
-    md5hash.update(`${args.shopId}${args.orderId}${args.amount.toString()}${args.shopPass}${args.dateTime}`, 'utf8');
+// export function createShopPassString(args: ICreateShopPassStringArgs) {
+//     // 「ショップ ID + オーダーID + 利用金額＋税送料＋ショップパスワード + 日時情報」を MD5 でハッシュした文字列。
+//     const md5hash = crypto.createHash('md5');
+//     md5hash.update(`${args.shopId}${args.orderId}${args.amount.toString()}${args.shopPass}${args.dateTime}`, 'utf8');
 
-    return md5hash.digest('hex');
-}
+//     return md5hash.digest('hex');
+// }

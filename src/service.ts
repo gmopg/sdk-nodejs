@@ -1,7 +1,4 @@
-// import * as qs from 'qs';
-import * as request from 'request-promise-native';
-
-import { DefaultTransporter, Transporter } from './transporters';
+import { FetchTransporter, IRequestOptions as ITransporterRequestOptions, Transporter } from './transporters';
 
 /**
  * service constructor options
@@ -17,6 +14,7 @@ export interface IOptions {
      * transporter object
      */
     transporter?: Transporter;
+    useFetch: boolean;
 }
 
 // export interface IFetchOptions {
@@ -30,9 +28,12 @@ export interface IOptions {
 //     body?: any;
 //     expectedStatusCodes: number[];
 // }
-export type IRequestOptions = request.OptionsWithUri & {
+export type IRequestOptions = Pick<ITransporterRequestOptions, 'method' | 'form'> & {
+    uri: string;
     expectedStatusCodes: number[];
+    expectedResponseParams?: string[];
 };
+export type ICustomRequestOptions = Pick<ITransporterRequestOptions, 'timeout'>;
 
 /**
  * base service class
@@ -89,35 +90,38 @@ export type IRequestOptions = request.OptionsWithUri & {
  */
 export class Service {
     public options: IOptions;
-    public requestOptions: request.RequestPromiseOptions;
+    public requestOptions: ICustomRequestOptions;
 
-    constructor(options: IOptions, requestOptions?: request.RequestPromiseOptions) {
+    constructor(options: IOptions, requestOptions?: ICustomRequestOptions) {
         this.options = options;
-
         this.requestOptions = {
-            headers: {},
-            method: 'GET'
+            // headers: {},
+            // method: 'GET'
+            ...requestOptions
         };
-        if (requestOptions !== undefined) {
-            this.requestOptions = { ...this.requestOptions, ...requestOptions };
-        }
     }
 
     /**
      * Create and send request to API
      */
     public async request(options: IRequestOptions) {
-        const requestOptions = {
+        const requestOptions: ITransporterRequestOptions = {
             url: `${this.options.endpoint}${options.uri}`,
-            ...this.requestOptions,
-            ...options
+            method: (typeof options.method === 'string') ? options.method : 'GET',
+            form: options.form,
+            ...this.requestOptions
+            // ...(options.form !== undefined) ? { form: options.form } : undefined
         };
 
-        delete (<any>requestOptions).uri;
+        // delete (<any>requestOptions).uri;
 
-        // create request
-        const transporter =
-            (this.options.transporter !== undefined) ? this.options.transporter : new DefaultTransporter(options.expectedStatusCodes);
+        const transporter = (this.options.transporter !== undefined)
+            // tslint:disable-next-line:no-single-line-block-comment
+            ? /* istanbul ignore next */ this.options.transporter
+            : new FetchTransporter(options.expectedStatusCodes, options.expectedResponseParams);
+        // : (this.options.useFetch === true)
+        //     ? new FetchTransporter(options.expectedStatusCodes, options.expectedResponseParams)
+        //     : new DefaultTransporter(options.expectedStatusCodes, options.expectedResponseParams);
 
         return transporter.request(requestOptions);
     }

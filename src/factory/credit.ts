@@ -18,6 +18,22 @@ export interface IEntryTranArgs {
     orderId: string;
     jobCd: util.JobCd;
     amount: number;
+    /**
+     * 3DS利用フラグ
+     * 2：行う（3DS2.0を利用）
+     */
+    tdFlag?: util.TdFlag;
+    /**
+     * 3DS表示店舗名
+     * 表示店舗名をEUC-JPでBASE64エンコーディングした値を設定
+     * 25Byte以内である必要があります。
+     */
+    tdTenantName?: string;
+    /**
+     * 3DS2.0未対応時取り扱い
+     * 仕向先カード会社が3DS2.0に未対応な場合の後続処理設定
+     */
+    tds2Type?: util.Tds2Type;
 }
 
 /**
@@ -52,6 +68,25 @@ export interface IExecTranArgs {
     clientField2?: string;
     clientField3?: string;
 }
+
+/**
+ * 決済実行(3DS2.0)in
+ */
+export type IExecTran3dsArgs = IExecTranArgs & {
+    /**
+     * 加盟店戻りURL
+     * 3Dセキュア認証後にお戻しする加盟店様側のURLになります。
+     * 通常は必ず指定してください。モバイルアプリSDKを利用する場合は設定不要です。
+     * URLに遷移するHTTPメソッド(GET/POST)は、CallbackTypeパラメータで切り替えることができます。
+     */
+    retUrl: string;
+    /**
+     * コールバック方法
+     * 加盟店様が指定した戻りURLに当社から戻す方式を指定します。
+     * 通常は「1」(POST方式)または「3」(GET方式)を設定してください。モバイルアプリSDKを利用する場合は設定不要です。
+     */
+    callbackType?: util.CallbackType;
+};
 
 /**
  * 決済実行out
@@ -103,19 +138,34 @@ export interface IExecTranResult {
     /**
      * 加盟店自由項目1
      */
-    clientField1: string;
+    clientField1?: string;
     /**
      * 加盟店自由項目2
      */
-    clientField2: string;
+    clientField2?: string;
     /**
      * 加盟店自由項目3
      */
-    clientField3: string;
+    clientField3?: string;
     /**
      * 3DS認証ページURL
      */
     acsUrl?: string;
+}
+
+/**
+ * 決済実行(3DS2.0)out
+ */
+export interface IExecTran3dsResult {
+    /**
+     * ACS呼出判定
+     */
+    acs: string;
+    /**
+     * 3DSサーバーへのリダイレクトURL
+     * 3DS2.0認証初期化へのURL
+     */
+    redirectUrl?: string;
 }
 
 /**
@@ -240,23 +290,23 @@ export interface ISearchTradeResult {
     /**
      * 加盟店自由項目1
      */
-    clientField1: string;
+    clientField1?: string;
     /**
      * 加盟店自由項目2
      */
-    clientField2: string;
+    clientField2?: string;
     /**
      * 加盟店自由項目3
      */
-    clientField3: string;
+    clientField3?: string;
     /**
      * エラーコード
      */
-    errCode: string;
+    errCode?: string;
     /**
      * エラー詳細コード
      */
-    errInfo: string;
+    errInfo?: string;
 }
 
 /**
@@ -491,4 +541,63 @@ export interface ISearchCardDetailResult {
      * 独自BINに設定された情報を返却します。
      */
     info5?: string;
+}
+
+/**
+ * 3DS2.0認証後決済実行in
+ */
+export interface ISecureTran2Args {
+    accessId: string;
+    accessPass: string;
+}
+
+/**
+ * 3DS2.0認証後決済実行out
+ */
+export interface ISecureTran2Result {
+    /**
+     * オーダーID
+     */
+    orderID: string;
+    /**
+     * 仕向先コード
+     */
+    forward: string;
+    /**
+     * 支払方法
+     */
+    method: string;
+    /**
+     * 支払回数
+     */
+    payTimes: string;
+    /**
+     * 承認番号
+     */
+    approve: string;
+    /**
+     * トランザクションID
+     */
+    tranID: string;
+    /**
+     * 決済日付
+     */
+    tranDate: string;
+    /**
+     * MD5ハッシュ
+     * 出力パラメータのオーダーID、仕向け先コード、支払い方法、支払い回数、承認番号、トランザクションID、決済日付+ショップパスワードのハッシュ値を返却します。
+     */
+    checkString: string;
+    /**
+     * 加盟店自由項目1
+     */
+    clientField1?: string;
+    /**
+     * 加盟店自由項目2
+     */
+    clientField2?: string;
+    /**
+     * 加盟店自由項目3
+     */
+    clientField3?: string;
 }
